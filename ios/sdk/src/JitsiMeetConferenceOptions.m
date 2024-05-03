@@ -29,6 +29,8 @@
         _serverURL = nil;
         _room = nil;
         _token = nil;
+        _waitingAreaText = nil;
+        _meetingTitle = nil;
 
         _config = [[NSMutableDictionary alloc] init];
         _featureFlags = [[NSMutableDictionary alloc] init];
@@ -71,6 +73,14 @@
     [self setConfigOverride:@"subject" withValue:subject];
 }
 
+- (void)setWaitingAreaText:(NSString *)waitingAreaText {
+    [self setConfigOverride:@"waitingAreaText" withValue:waitingAreaText];
+}
+
+- (void)setMeetingTitle:(NSString *)meetingTitle {
+    [self setConfigOverride:@"meetingTitle" withValue:meetingTitle];
+}
+
 - (void)setConfigOverride:(NSString *_Nonnull)config withBoolean:(BOOL)value {
     [self setConfigOverride:config withValue:[NSNumber numberWithBool:value]];
 }
@@ -101,6 +111,8 @@
         _serverURL = builder.serverURL;
         _room = builder.room;
         _token = builder.token;
+        _waitingAreaText = builder.waitingAreaText;
+        _meetingTitle = builder.meetingTitle;
 
         _config = builder.config;
 
@@ -144,6 +156,14 @@
 
     if (_token != nil) {
         urlProps[@"jwt"] = _token;
+    }
+    
+    if (_waitingAreaText != nil){
+        urlProps[@"waitingAreaText"] = _waitingAreaText;
+    }
+    
+    if (_meetingTitle != nil){
+        urlProps[@"meetingTitle"] = _meetingTitle;
     }
 
     if (_userInfo != nil) {

@@ -1,2 +1,0 @@
-set RCT_METRO_PORT=8081
-adb reverse tcp:%RCT_METRO_PORT% tcp:%RCT_METRO_PORT%

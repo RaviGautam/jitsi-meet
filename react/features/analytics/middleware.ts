@@ -2,8 +2,6 @@ import { IReduxState } from "../app/types";
 import {
     CONFERENCE_JOINED,
     CONFERENCE_WILL_LEAVE,
-    SET_WAITING_TEXT,
-    SET_MEETING_TITLE,
     SET_ROOM,
 } from "../base/conference/actionTypes";
 import { SET_CONFIG } from "../base/config/actionTypes";

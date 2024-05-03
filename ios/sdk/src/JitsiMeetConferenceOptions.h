@@ -30,6 +30,15 @@
  */
 @property (nonatomic, copy, nullable) NSString *room;
 /**
+ * Waiting Area Text.
+ */
+@property (nonatomic, copy, nullable) NSString *waitingAreaText;
+/**
+ * Meeting Title.
+ */
+@property (nonatomic, copy, nullable) NSString *meetingTitle;
+
+/**
  * JWT token used for authentication.
  */
 @property (nonatomic, copy, nullable) NSString *token;
@@ -69,6 +78,9 @@
 
 @property (nonatomic, copy, nullable, readonly) NSString *room;
 @property (nonatomic, copy, nullable, readonly) NSString *token;
+
+@property (nonatomic, copy, nullable, readonly) NSString *waitingAreaText;
+@property (nonatomic, copy, nullable, readonly) NSString *meetingTitle;
 
 @property (nonatomic, readonly, nonnull) NSDictionary *featureFlags;
 

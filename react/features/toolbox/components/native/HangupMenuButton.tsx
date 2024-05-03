@@ -26,6 +26,7 @@ const HangupMenuButton = (): JSX.Element => {
             onPress = { onSelect }
             src = { IconHangup }
             type = { BUTTON_TYPES.PRIMARY } />
+            
     );
 };
 

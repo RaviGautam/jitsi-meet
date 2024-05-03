@@ -631,6 +631,10 @@ export interface IConfig {
         backButton?: string;
         disabled?: boolean;
     };
+    endMeetingOptionsHandler?: {
+        endMeetingOptions?: string;
+        disabled?: boolean;
+    };
     TextForWaitingArea?: {
         waitingAreaText?: string;
         disabled?: boolean;

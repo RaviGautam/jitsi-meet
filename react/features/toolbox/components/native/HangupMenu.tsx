@@ -28,6 +28,7 @@ function HangupMenu() {
     const inBreakoutRoom = useSelector(isInBreakoutRoom);
     const isModerator = useSelector((state: IReduxState) =>
         getLocalParticipant(state)?.role === PARTICIPANT_ROLE.MODERATOR);
+    console.log("----isModerator----", isModerator)
     const { DESTRUCTIVE, SECONDARY } = BUTTON_TYPES;
 
     const handleEndConference = useCallback(() => {

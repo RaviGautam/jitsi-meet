@@ -153,8 +153,9 @@ public class MainActivity extends JitsiMeetActivity {
             .setServerURL(buildURL(defaultURL))
             .setWaitingAreaText("Please wait... in waiting area while meeting starting.") // set custom Text for waiting area
             .setMeetingTitle("My Title") // set meeting title
-            .setFeatureFlag("backButtonHandler.enabled", true) // set buck button on meeting room
-            .setFeatureFlag("directJoin.enabled", true) //set Lobby screen disabled or enabled
+            .setFeatureFlag("backButtonHandler.enabled", true) // set back button on meeting room
+            .setFeatureFlag("directJoin.enabled", true) // set Lobby screen disabled or enabled
+            .setFeatureFlag("endMeetingOptions.enabled", true) // set options for end meeting
             .setFeatureFlag("welcomepage.enabled", true)
             .setFeatureFlag("resolution", 360)
             .setFeatureFlag("server-url-change.enabled", !configurationByRestrictions)

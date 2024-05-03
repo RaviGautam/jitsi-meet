@@ -35,9 +35,14 @@
 
     jitsiMeet.defaultConferenceOptions = [JitsiMeetConferenceOptions fromBuilder:^(JitsiMeetConferenceOptionsBuilder *builder) {
         [builder setFeatureFlag:@"welcomepage.enabled" withBoolean:YES];
+        [builder setFeatureFlag:@"backButtonHandler.enabled" withBoolean:YES];
+        [builder setFeatureFlag:@"directJoin.enabled" withBoolean:YES];
+        [builder setFeatureFlag:@"endMeetingOptions.enabled" withBoolean:YES];
         [builder setFeatureFlag:@"resolution" withValue:@(360)];
         [builder setFeatureFlag:@"ios.screensharing.enabled" withBoolean:YES];
         [builder setFeatureFlag:@"ios.recording.enabled" withBoolean:YES];
+        [builder setWaitingAreaText:@"waitingAreaText"];
+        [builder setMeetingTitle:@"meetingTitle" ];
     }];
 
   [jitsiMeet application:application didFinishLaunchingWithOptions:launchOptions];

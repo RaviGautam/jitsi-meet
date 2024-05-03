@@ -1,5 +1,5 @@
 import { IStateful } from "../base/app/types";
-import { MEETING_TITLE, WAITING_AREA_TEXT, WELCOME_PAGE_ENABLED, BACK_BUTTON_HANDLER, DIRECT_JOIN_MEETING_ENABLED } from "../base/flags/constants";
+import { MEETING_TITLE, WAITING_AREA_TEXT, WELCOME_PAGE_ENABLED, BACK_BUTTON_HANDLER, DIRECT_JOIN_MEETING_ENABLED, END_MEETING_OPTIONS } from "../base/flags/constants";
 import { getFeatureFlag } from "../base/flags/functions";
 import { toState } from "../base/redux/functions";
 
@@ -41,6 +41,16 @@ export function isBackButtonHandlerEnabled(stateful: IStateful) {
     return !config.backButtonHandler?.disabled;
 }
 
+
+export function isEndMeetingOptionsHandlerEnabled(stateful: IStateful) {
+    if (navigator.product === "ReactNative") {
+        return getFeatureFlag(stateful, END_MEETING_OPTIONS, false);
+    }
+
+    const config = toState(stateful)["features/base/config"];
+
+    return !config.endMeetingOptionsHandler?.disabled;
+}
 /**
  * Returns the configured custom URL (if any) to redirect to instead of the normal landing page.
  *

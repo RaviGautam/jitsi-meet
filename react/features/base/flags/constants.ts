@@ -294,7 +294,10 @@ export const MEETING_TITLE = 'meetingTitle.enabled';
 // set backButtonHandler
 export const BACK_BUTTON_HANDLER = 'backButtonHandler.enabled';
 
-// set direct join jitsi directjoin.enabled
+// set direct join jitsi 
 export const DIRECT_JOIN_MEETING_ENABLED = 'directJoin.enabled';
+
+// set options for end meeting
+export const END_MEETING_OPTIONS = 'endMeetingOptions.enabled';
 
 
