@@ -77,7 +77,7 @@ function Toolbox(props: IProps) {
         _width,
         _isEndMeetingOptions,
     } = props;
-    console.log("--_isEndMeetingOptions---", _isEndMeetingOptions);
+   
     if (!_visible) {
         return null;
     }

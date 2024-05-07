@@ -643,5 +643,17 @@ export interface IConfig {
         meetingTitle?: string;
         disabled?: boolean;
     };
+    minBitrateValue?: {
+        minBitrate?: number;
+        disabled?: boolean;
+    };
+    stdBitrateValue?: {
+        stdBitrate?: number;
+        disabled?: boolean;
+    };
+    maxBitrateValue?: {
+        maxBitrate?: number;
+        disabled?: boolean;
+    };
     whiteboard?: IWhiteboardConfig;
 }

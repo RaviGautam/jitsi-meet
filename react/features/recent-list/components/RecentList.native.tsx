@@ -1,27 +1,32 @@
-import React from 'react';
-import { WithTranslation } from 'react-i18next';
-import { GestureResponderEvent, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
-import { connect } from 'react-redux';
+import React from "react";
+import { WithTranslation } from "react-i18next";
+import {
+    GestureResponderEvent,
+    TouchableWithoutFeedback,
+    View,
+    ViewStyle,
+} from "react-native";
+import { connect } from "react-redux";
 
-import { getDefaultURL } from '../../app/functions.native';
-import { IReduxState, IStore } from '../../app/types';
-import { openSheet } from '../../base/dialog/actions';
-import { translate } from '../../base/i18n/functions';
-import NavigateSectionList from '../../base/react/components/native/NavigateSectionList';
-import { Item, Section } from '../../base/react/types';
-import styles from '../../welcome/components/styles';
-import { isRecentListEnabled, toDisplayableList } from '../functions.native';
+import { getDefaultURL } from "../../app/functions.native";
+import { IReduxState, IStore } from "../../app/types";
+import { openSheet } from "../../base/dialog/actions";
+import { translate } from "../../base/i18n/functions";
+import NavigateSectionList from "../../base/react/components/native/NavigateSectionList";
+import { Item, Section } from "../../base/react/types";
+import styles from "../../welcome/components/styles";
+import { isRecentListEnabled, toDisplayableList } from "../functions.native";
 
-import AbstractRecentList from './AbstractRecentList';
-import RecentListItemMenu from './RecentListItemMenu.native';
-import { DIRECT_JOIN_MEETING_ENABLED } from '../../base/flags/constants';
-import { getFeatureFlag } from '../../base/flags/functions';
+import AbstractRecentList from "./AbstractRecentList";
+import RecentListItemMenu from "./RecentListItemMenu.native";
+import { DIRECT_JOIN_MEETING_ENABLED } from "../../base/flags/constants";
+import { getFeatureFlag } from "../../base/flags/functions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /**
  * The type of the React {@code Component} props of {@link RecentList}.
  */
 interface IProps extends WithTranslation {
-
     /**
      * The default server URL.
      */
@@ -42,7 +47,7 @@ interface IProps extends WithTranslation {
     /**
      * The redux store's {@code dispatch} function.
      */
-    dispatch: IStore['dispatch'];
+    dispatch: IStore["dispatch"];
 
     /**
      * Callback to be invoked when pressing the list container.
@@ -81,27 +86,37 @@ class RecentList extends AbstractRecentList<IProps> {
             onListContainerPress,
             t,
             _defaultServerURL,
-            _recentList, 
+            _recentList,
             _isDirectJoin,
-            _room
+            _room,
         } = this.props; // @ts-ignore
 
         // console.log("----_recentList---", _recentList, _defaultServerURL, _room)
-        const recentList = toDisplayableList(_recentList, t, _defaultServerURL, _isDirectJoin, _room);
+        const recentList = toDisplayableList(
+            _recentList,
+            t,
+            _defaultServerURL,
+            _isDirectJoin,
+            _room
+        );
 
         return (
-            <TouchableWithoutFeedback
-                onPress = { onListContainerPress }>
-                <View style = { (disabled ? styles.recentListDisabled : styles.recentList) as ViewStyle }>
+            <TouchableWithoutFeedback onPress={onListContainerPress}>
+                <View
+                    style={
+                        (disabled
+                            ? styles.recentListDisabled
+                            : styles.recentList) as ViewStyle
+                    }
+                >
                     <NavigateSectionList
-                        disabled = { disabled }
-                        onLongPress = { this._onLongPress }
-                        onPress = { (e)=>this._onPress(e,_isDirectJoin, _room) }
-                        renderListEmptyComponent
-                            = { this._getRenderListEmptyComponent() }
+                        disabled={disabled}
+                        onLongPress={this._onLongPress}
+                        onPress={(e) => this._onPress(e, _isDirectJoin, _room)}
+                        renderListEmptyComponent={this._getRenderListEmptyComponent()}
                         // @ts-ignore
-                         sections = { recentList }
-                         />
+                        sections={recentList}
+                    />
                 </View>
             </TouchableWithoutFeedback>
         );
@@ -128,8 +143,8 @@ class RecentList extends AbstractRecentList<IProps> {
 export function _mapStateToProps(state: IReduxState) {
     return {
         _defaultServerURL: getDefaultURL(state),
-        _recentList: state['features/recent-list'],
-        _room: state['features/base/conference'].room ?? '',
+        _recentList: state["features/recent-list"],
+        _room: state["features/base/conference"].room ?? "",
         _isDirectJoin: Boolean(
             getFeatureFlag(state, DIRECT_JOIN_MEETING_ENABLED, false)
         ),

@@ -23,7 +23,13 @@ import { AbstractApp, IProps as AbstractAppProps } from "./AbstractApp";
 // Register middlewares and reducers.
 import "../middlewares.native";
 import "../reducers.native";
-import { setMeetingTitle, setWaitingText } from "../../base/conference/actions";
+import {
+    setMaxBitrate,
+    setMeetingTitle,
+    setMinBitrate,
+    setStdBitrate,
+    setWaitingText,
+} from "../../base/conference/actions";
 
 declare let __DEV__: any;
 
@@ -40,6 +46,10 @@ interface IProps extends AbstractAppProps {
     waitingAreaText?: String;
 
     meetingTitle?: String;
+
+    minBitrate?: Number;
+    stdBitrate?: Number;
+    maxBitrate?: Number;
 
     /**
      * An object with the feature flags.
@@ -115,7 +125,16 @@ export class App extends AbstractApp<IProps> {
      */
     async _extraInit() {
         const { dispatch, getState } = this.state.store ?? {};
-        const { flags = {}, url, userInfo, waitingAreaText, meetingTitle } = this.props;
+        const {
+            flags = {},
+            url,
+            userInfo,
+            waitingAreaText,
+            meetingTitle,
+            minBitrate,
+            stdBitrate,
+            maxBitrate
+        } = this.props;
         let callIntegrationEnabled =
             flags[CALL_INTEGRATION_ENABLED as keyof typeof flags];
 
@@ -176,7 +195,11 @@ export class App extends AbstractApp<IProps> {
 
         dispatch?.(setWaitingText(waitingAreaText || ""));
 
-        dispatch?.(setMeetingTitle(meetingTitle || ""))
+        dispatch?.(setMeetingTitle(meetingTitle || ""));
+
+        dispatch?.(setMinBitrate(minBitrate || ""));
+        dispatch?.(setStdBitrate(stdBitrate || ""));
+        dispatch?.(setMaxBitrate(maxBitrate || ""));
 
         // Update settings with feature-flag.
         if (typeof callIntegrationEnabled !== "undefined") {

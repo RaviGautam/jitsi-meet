@@ -23,7 +23,10 @@ import {
     setLocalSubject,
     setPassword,
     setSubject,
-    setMeetingTitle
+    setMeetingTitle,
+    setMinBitrate,
+    setStdBitrate,
+    setMaxBitrate
 } from '../../react/features/base/conference/actions';
 import { getCurrentConference, isP2pActive } from '../../react/features/base/conference/functions';
 import { overwriteConfig } from '../../react/features/base/config/actions';
@@ -312,6 +315,7 @@ function initCommands() {
             APP.store.dispatch(sendTones(tones, duration, pause));
         },
         'set-assumed-bandwidth-bps': value => {
+            console.log("---value--315-", value)
             logger.debug('Set assumed bandwidth bps command received', value);
 
             if (typeof value !== 'number' || isNaN(value)) {
@@ -371,6 +375,18 @@ function initCommands() {
         'meetingTitle': meetingTitle => {
             sendAnalytics(createApiEvent('meetingTitle.changed'));
             APP.store.dispatch(setMeetingTitle(meetingTitle));
+        },
+        'minBitrate': minBitrate => {
+            sendAnalytics(createApiEvent('minBitrate.changed'));
+            APP.store.dispatch(setMinBitrate(minBitrate));
+        },
+        'stdBitrate': stdBitrate => {
+            sendAnalytics(createApiEvent('stdBitrate.changed'));
+            APP.store.dispatch(setStdBitrate(stdBitrate));
+        },
+        'maxBitrate': maxBitrate => {
+            sendAnalytics(createApiEvent('maxBitrate.changed'));
+            APP.store.dispatch(setMaxBitrate(maxBitrate));
         },
         'submit-feedback': feedback => {
             sendAnalytics(createApiEvent('submit.feedback'));
@@ -1313,6 +1329,7 @@ class API {
      * @returns {void}
      */
     notifyVideoQualityChanged(videoQuality) {
+        console.log("---videoQuality--1317-", videoQuality)
         this._sendEvent({
             name: 'video-quality-changed',
             videoQuality

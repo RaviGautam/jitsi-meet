@@ -4,13 +4,13 @@
 ## Installation
 Inside your project, run;
 ```console
-npm i @jitsi/react-native-sdk
+npm i react-native-sdk-fmtech
 ```
 <br/><br/>Additionally, if not already installed, some dependencies will need to be added.
 
 This can be done by running the following script:
 ```console
-node node_modules/@jitsi/react-native-sdk/update_dependencies.js
+node node_modules/react-native-sdk-fmtech/update_dependencies.js
 ```
 This will check and update all your dependencies.<br/><br/>
 

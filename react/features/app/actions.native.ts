@@ -91,19 +91,11 @@ export function appNavigate(
         const { contextRoot, host, hostname, pathname, room } = location;
         const locationURL = new URL(location.toString());
         const { conference } = getConferenceState(getState());
-        console.log(
-            "----room---",
-            room,
-            "----conference---",
-            conference,
-            "---locationURL---",
-            locationURL
-        );
+    
 
         if (room) {
-            // console.log("----outside---");
+      
             if (conference) {
-                console.log("----if---");
                 // We need to check if the location is the same with the previous one.
                 const currentLocationURL =
                     conference?.getConnection()[JITSI_CONNECTION_URL_KEY];
@@ -121,7 +113,7 @@ export function appNavigate(
                     return;
                 }
             } else {
-                console.log("---else---pp");
+               
                 navigateRoot(screen.connecting, {
                     roomId: room,
                     hostname: hostname,
@@ -195,7 +187,7 @@ export function appNavigate(
 
             return;
         }
-        console.log(locationURL,'locationURL',room,'rooom')
+        
         dispatch(setLocationURL(locationURL));
         dispatch(setConfig(config, locationURL));
         dispatch(setRoom(room));
@@ -211,25 +203,23 @@ export function appNavigate(
         if(_isDirectJoin){
             dispatch(connect());
             navigateRoot(screen.conference.root);
-            console.log("inside diect join")
+          
             return;
         }
 
         if (!options.hidePrejoin && isPrejoinPageEnabled(getState())) {
-            console.log("---isPrejoinPageEnabled---");
+            
             if (
                 isUnsafeRoomWarningEnabled(getState()) &&
                 isInsecureRoomName(room)
             ) {
-                console.log("---unsafeRoomWarning---");
+              
                 navigateRoot(screen.unsafeRoomWarning);
             } else {
-                console.log("---preJoin---");
 
                 navigateRoot(screen.preJoin);
             }
         } else {
-            console.log("---conference- else--");
             dispatch(connect());
             navigateRoot(screen.conference.root);
         }

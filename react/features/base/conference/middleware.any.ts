@@ -64,7 +64,10 @@ import {
     SET_PENDING_SUBJECT_CHANGE,
     SET_ROOM,
     SET_WAITING_TEXT,
-    SET_MEETING_TITLE
+    SET_MEETING_TITLE,
+    SET_MAX_BITRATE,
+    SET_MIN_BITRATE,
+    SET_STD_BITRATE,
 } from "./actionTypes";
 import {
     authStatusChanged,
@@ -76,6 +79,9 @@ import {
     setSubject,
     updateConferenceMetadata,
     setMeetingTitle,
+    setMinBitrate,
+    setStdBitrate,
+    setMaxBitrate,
 } from "./actions";
 import { CONFERENCE_LEAVE_REASONS } from "./constants";
 import {
@@ -332,8 +338,14 @@ function _conferenceJoined(
 ) {
     const result = next(action);
     const { conference } = action;
-    const { pendingSubjectChange, waitingText, meetingTitle } =
-        getState()["features/base/conference"];
+    const {
+        pendingSubjectChange,
+        waitingText,
+        meetingTitle,
+        minBitrate,
+        stdBitrate,
+        maxBitrate
+    } = getState()["features/base/conference"];
     const { disableBeforeUnloadHandlers = false, requireDisplayName } =
         getState()["features/base/config"];
 
@@ -343,6 +355,9 @@ function _conferenceJoined(
 
     waitingText && dispatch(setWaitingText(waitingText));
     meetingTitle && dispatch(setMeetingTitle(meetingTitle));
+    minBitrate && dispatch(setMinBitrate(minBitrate));
+    stdBitrate && dispatch(setStdBitrate(stdBitrate));
+    maxBitrate && dispatch(setMaxBitrate(maxBitrate));
 
     // FIXME: Very dirty solution. This will work on web only.
     // When the user closes the window or quits the browser, lib-jitsi-meet
@@ -548,7 +563,14 @@ function _conferenceSubjectChanged(
     action: AnyAction
 ) {
     const result = next(action);
-    const { subject, waitingText, meetingTitle } = getState()["features/base/conference"];
+    const {
+        subject,
+        waitingText,
+        meetingTitle,
+        minBitrate,
+        maxBitrate,
+        stdBitrate,
+    } = getState()["features/base/conference"];
     console.log("---subject, waitingText----", subject, waitingText);
 
     if (subject) {
@@ -572,6 +594,26 @@ function _conferenceSubjectChanged(
         });
     }
 
+    if (minBitrate) {
+        dispatch({
+            type: SET_MIN_BITRATE,
+            minBitrate: undefined,
+        });
+    }
+
+    if (stdBitrate) {
+        dispatch({
+            type: SET_STD_BITRATE,
+            stdBitrate: undefined,
+        });
+    }
+
+    if (maxBitrate) {
+        dispatch({
+            type: SET_MAX_BITRATE,
+            maxBitrate: undefined,
+        });
+    }
     typeof APP === "object" && APP.API.notifySubjectChanged(subject);
 
     return result;
@@ -815,8 +857,15 @@ function _updateLocalParticipantInConference(
             "role" in participant &&
             participant.role === PARTICIPANT_ROLE.MODERATOR
         ) {
-            const { pendingSubjectChange, subject, waitingText, meetingTitle } =
-                getState()["features/base/conference"];
+            const {
+                pendingSubjectChange,
+                subject,
+                waitingText,
+                meetingTitle,
+                minBitrate,
+                stdBitrate,
+                maxBitrate,
+            } = getState()["features/base/conference"];
 
             // When the local user role is updated to moderator and we have a pending subject change
             // which was not reflected we need to set it (the first time we tried was before becoming moderator).
@@ -832,9 +881,24 @@ function _updateLocalParticipantInConference(
                 dispatch(setWaitingText(waitingText));
             }
 
-             if (typeof meetingTitle !== "undefined") {
+            if (typeof meetingTitle !== "undefined") {
                 console.log("--customText--707-", meetingTitle);
                 dispatch(setMeetingTitle(meetingTitle));
+            }
+
+            if (typeof minBitrate !== "undefined") {
+                console.log("--minBitrate--707-", minBitrate);
+                dispatch(setMinBitrate(minBitrate));
+            }
+
+            if (typeof stdBitrate !== "undefined") {
+                console.log("--stdBitrate--707-", stdBitrate);
+                dispatch(setStdBitrate(stdBitrate));
+            }
+
+            if (typeof maxBitrate !== "undefined") {
+                console.log("--maxBitrate--707-", maxBitrate);
+                dispatch(setMaxBitrate(maxBitrate));
             }
         }
     }
@@ -884,13 +948,14 @@ function _setAssumedBandwidthBps(
 ) {
     const state = getState();
     const conference = getCurrentConference(state);
+    console.log("----conference--888-", conference);
     const payload = Number(action.assumedBandwidthBps);
-
+    console.log("----payload--889-", payload);
     const assumedBandwidthBps =
         isNaN(payload) || payload < MIN_ASSUMED_BANDWIDTH_BPS
             ? MIN_ASSUMED_BANDWIDTH_BPS
             : payload;
-
+    console.log("--assumedBandwidthBps-893-", assumedBandwidthBps);
     if (conference) {
         conference.setAssumedBandwidthBps(assumedBandwidthBps);
     }

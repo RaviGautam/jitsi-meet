@@ -81,6 +81,18 @@
     [self setConfigOverride:@"meetingTitle" withValue:meetingTitle];
 }
 
+- (void)setMinBitrate:(NSString *)minBitrate {
+    [self setConfigOverride:@"minBitrate" withValue:minBitrate];
+}
+
+- (void)setMaxBitrate:(NSString *)maxBitrate {
+    [self setConfigOverride:@"maxBitrate" withValue:maxBitrate];
+}
+
+- (void)setStdBitrate:(NSString *)stdBitrate {
+    [self setConfigOverride:@"stdBitrate" withValue:stdBitrate];
+}
+
 - (void)setConfigOverride:(NSString *_Nonnull)config withBoolean:(BOOL)value {
     [self setConfigOverride:config withValue:[NSNumber numberWithBool:value]];
 }

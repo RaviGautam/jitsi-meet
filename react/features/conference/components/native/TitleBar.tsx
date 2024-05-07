@@ -10,7 +10,6 @@ import {
 import {
     CONFERENCE_TIMER_ENABLED,
     MEETING_TITLE,
-    WAITING_AREA_TEXT,
 } from "../../../base/flags/constants";
 import { getFeatureFlag } from "../../../base/flags/functions";
 import AudioDeviceToggleButton from "../../../mobile/audio-mode/components/AudioDeviceToggleButton";
@@ -81,7 +80,7 @@ const TitleBar = (props: IProps) => {
     if (!_visible) {
         return null;
     }
-console.log(props._meetingName,'props._meetingName',props._isMeetingTitleEnabled,props._roomNameEnabled,'props._meetingTitle',props._meetingTitle)
+
     return (
         <View style={styles.titleBarWrapper as ViewStyle}>
             <View style={styles.pipButtonContainer as ViewStyle}>

@@ -133,14 +133,6 @@ MiddlewareRegistry.register((store) => (next) => (action) => {
             }
             break;
 
-        // case SET_WAITING_TEXT:
-        //         // Update state with waitingAreaText
-        //         store.dispatch({
-        //           type: SET_WAITING_TEXT,
-        //           payload: action.payload,
-        //         });
-        //         break;
-
         case SET_ROOM: {
             // createHandlers is called before the SET_ROOM action is executed in order for Amplitude to initialize before
             // the deeplinking logic is executed (after the SET_ROOM action) so that the Amplitude device id is available

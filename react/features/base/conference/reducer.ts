@@ -30,7 +30,10 @@ import {
     SET_MEETING_TITLE,
     SET_START_MUTED_POLICY,
     SET_START_REACTIONS_MUTED,
-    UPDATE_CONFERENCE_METADATA
+    UPDATE_CONFERENCE_METADATA,
+    SET_MIN_BITRATE,
+    SET_STD_BITRATE,
+    SET_MAX_BITRATE
     
 } from './actionTypes';
 import { isRoomValid } from './functions';
@@ -47,7 +50,10 @@ const DEFAULT_STATE = {
     password: undefined,
     passwordRequired: undefined,
     waitingText: undefined,
-    meetingTitle: undefined
+    meetingTitle: undefined,
+    minBitrate: undefined,
+    stdBitrate: undefined,
+    maxBitrate: undefined
 };
 
 export interface IConferenceMetadata {
@@ -155,6 +161,9 @@ export interface IConferenceState {
     conferenceTimestamp?: number;
     waitingText?: string;
     meetingTitle?: string;
+    minBitrate?: number;
+    stdBitrate?: number;
+    maxBitrate?: number;
     e2eeSupported?: boolean;
     error?: Error;
     followMeEnabled?: boolean;
@@ -267,6 +276,15 @@ ReducerRegistry.register<IConferenceState>('features/base/conference',
 
         case SET_MEETING_TITLE:
         return set(state, 'meetingTitle', action.meetingTitle);
+
+        case SET_MIN_BITRATE:
+        return set(state, 'minBitrate', action.minBitrate);
+
+        case SET_STD_BITRATE:
+        return set(state, 'stdBitrate', action.stdBitrate);
+
+        case SET_MAX_BITRATE:
+        return set(state, 'maxBitrate', action.maxBitrate);
 
         case SET_ROOM:
             return _setRoom(state, action);

@@ -1,5 +1,5 @@
 import { IStateful } from "../base/app/types";
-import { MEETING_TITLE, WAITING_AREA_TEXT, WELCOME_PAGE_ENABLED, BACK_BUTTON_HANDLER, DIRECT_JOIN_MEETING_ENABLED, END_MEETING_OPTIONS } from "../base/flags/constants";
+import { MEETING_TITLE, WAITING_AREA_TEXT, WELCOME_PAGE_ENABLED, BACK_BUTTON_HANDLER, DIRECT_JOIN_MEETING_ENABLED, STD_BITRATE, MIN_BITRATE, MAX_BITRATE } from "../base/flags/constants";
 import { getFeatureFlag } from "../base/flags/functions";
 import { toState } from "../base/redux/functions";
 
@@ -93,5 +93,49 @@ export function isMeetingTitleEnabled(stateful: IStateful) {
     const config = toState(stateful)["features/base/config"];
 
     return !config.TextForMeetingTitle?.disabled;
-    // return toState(stateful)['features/base/config'].TextForMeetingTitle?.meetingTitle;
+}
+
+// set Min bitrate
+export function isMinBitrateEnabled(stateful: IStateful) {
+    if (navigator.product === "ReactNative") {
+        return getFeatureFlag(
+            stateful,
+            MIN_BITRATE,
+            false
+        );
+    }
+
+    const config = toState(stateful)["features/base/config"];
+
+    return !config.minBitrateValue?.disabled;
+}
+
+// set Std bitrate
+export function isStdBitrateEnabled(stateful: IStateful) {
+    if (navigator.product === "ReactNative") {
+        return getFeatureFlag(
+            stateful,
+            STD_BITRATE,
+            false
+        );
+    }
+
+    const config = toState(stateful)["features/base/config"];
+
+    return !config.stdBitrateValue?.disabled;
+}
+
+// set max bitrate
+export function isMaxBitrateEnabled(stateful: IStateful) {
+    if (navigator.product === "ReactNative") {
+        return getFeatureFlag(
+            stateful,
+            MAX_BITRATE,
+            false
+        );
+    }
+
+    const config = toState(stateful)["features/base/config"];
+
+    return !config.maxBitrateValue?.disabled;
 }

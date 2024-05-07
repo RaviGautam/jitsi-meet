@@ -63,6 +63,9 @@ import {
     SET_ASSUMED_BANDWIDTH_BPS,
     SET_WAITING_TEXT,
     SET_MEETING_TITLE,
+    SET_MIN_BITRATE,
+    SET_STD_BITRATE,
+    SET_MAX_BITRATE,
     SET_FOLLOW_ME,
     SET_OBFUSCATED_ROOM,
     SET_PASSWORD,
@@ -1125,6 +1128,54 @@ export function setMeetingTitle(meetingTitle: string | undefined) {
     };
 }
 
+export function setMinBitrate(minBitrate: number | undefined) {
+    console.log("--minBitrate---", minBitrate);
+    return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
+        const { conference } = getState()["features/base/conference"];
+
+        if (conference) {
+            conference.setMinBitrate(minBitrate || "");
+        } else {
+            dispatch({
+                type: SET_MIN_BITRATE,
+                minBitrate,
+            });
+        }
+    };
+}
+
+export function setStdBitrate(stdBitrate: number | undefined) {
+    console.log("--stdBitrate---", stdBitrate);
+    return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
+        const { conference } = getState()["features/base/conference"];
+
+        if (conference) {
+            conference.setStdBitrate(stdBitrate || "");
+        } else {
+            dispatch({
+                type: SET_STD_BITRATE,
+                stdBitrate,
+            });
+        }
+    };
+}
+
+export function setMaxBitrate(maxBitrate: number | undefined) {
+    console.log("--maxBitrate---", maxBitrate);
+    return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
+        const { conference } = getState()["features/base/conference"];
+
+        if (conference) {
+            conference.setMaxBitrate(maxBitrate || "");
+        } else {
+            dispatch({
+                type: SET_MAX_BITRATE,
+                maxBitrate,
+            });
+        }
+    };
+}
+
 /**
  * Sets the conference local subject.
  *
@@ -1151,6 +1202,7 @@ export function setLocalSubject(localSubject: string | undefined) {
  * }}
  */
 export function setAssumedBandwidthBps(assumedBandwidthBps: number) {
+    console.log("---assumedBandwidthBps-1154--", assumedBandwidthBps);
     return {
         type: SET_ASSUMED_BANDWIDTH_BPS,
         assumedBandwidthBps,

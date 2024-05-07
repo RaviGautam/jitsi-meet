@@ -1,6 +1,6 @@
-import { getAppProp } from '../app/functions';
-import { IStateful } from '../app/types';
-import { toState } from '../redux/functions';
+import { getAppProp } from "../app/functions";
+import { IStateful } from "../app/types";
+import { toState } from "../redux/functions";
 
 /**
  * Gets the value of a specific feature flag.
@@ -13,19 +13,23 @@ import { toState } from '../redux/functions';
  * @returns {*} The value of the specified React {@code Component} prop of the
  * currently mounted {@code App}.
  */
-export function getFeatureFlag(stateful: IStateful, flag: string, defaultValue?: boolean | string) {
-    const state = toState(stateful)['features/base/flags'];
+export function getFeatureFlag(
+    stateful: IStateful,
+    flag: string,
+    defaultValue?: boolean | string
+) {
+    const state = toState(stateful)["features/base/flags"];
 
     if (state) {
         const value = state[flag as keyof typeof state];
 
-        if (typeof value !== 'undefined') {
+        if (typeof value !== "undefined") {
             return value;
         }
     }
 
     // Maybe the value hasn't made it to the redux store yet, check the app props.
-    const flags = getAppProp(stateful, 'flags') || {};
+    const flags = getAppProp(stateful, "flags") || {};
 
     return flags[flag] || defaultValue;
 }

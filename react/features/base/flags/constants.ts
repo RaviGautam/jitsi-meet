@@ -300,4 +300,12 @@ export const DIRECT_JOIN_MEETING_ENABLED = 'directJoin.enabled';
 // set options for end meeting
 export const END_MEETING_OPTIONS = 'endMeetingOptions.enabled';
 
+// set Bitrate
+
+export const MIN_BITRATE = 'minBitrate';
+
+export const STD_BITRATE = 'stdBitrate';
+
+export const MAX_BITRATE = 'maxBitrate';
+
 

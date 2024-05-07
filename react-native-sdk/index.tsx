@@ -19,6 +19,7 @@ import { appNavigate } from './react/features/app/actions.native';
 import { App } from './react/features/app/components/App.native';
 import { setAudioMuted, setVideoMuted } from './react/features/base/media/actions';
 import { getRoomsInfo } from './react/features/breakout-rooms/functions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 interface IEventListeners {
@@ -49,6 +50,9 @@ interface IAppProps {
     serverURL?: string;
     waitingAreaText?: string;
     meetingTitle?: string;
+    minBitrate: number;
+    stdBitrate: number;
+    maxBitrate: number;
     style?: Object;
     token?: string;
     userInfo?: IUserInfo;
@@ -77,7 +81,11 @@ export const JitsiMeeting = forwardRef<JitsiRefProps, IAppProps>((props, ref) =>
         token,
         userInfo,
         waitingAreaText,
-        meetingTitle
+        meetingTitle,
+        minBitrate,
+        stdBitrate,
+        maxBitrate
+
     } = props;
 
     console.log("---flags---", flags)
@@ -127,7 +135,7 @@ export const JitsiMeeting = forwardRef<JitsiRefProps, IAppProps>((props, ref) =>
                     serverURL
                 };
             }
-
+            saveBitrateValues(minBitrate, stdBitrate, maxBitrate);
             setAppProps({
                 'flags': flags,
                 'rnSdkHandlers': {
@@ -146,10 +154,26 @@ export const JitsiMeeting = forwardRef<JitsiRefProps, IAppProps>((props, ref) =>
                 'url': urlProps,
                 'userInfo': userInfo,
                 'waitingAreaText': waitingAreaText,
-                'meetingTitle': meetingTitle
+                'meetingTitle': meetingTitle,
+                'minBitrate': minBitrate,
+                'stdBitrate': stdBitrate,
+                'maxBitrate': maxBitrate
+
             });
         }, []
     );
+
+    const saveBitrateValues = async(minBitrate, stdBitrate, maxBitrate)=> {
+        console.log("--minBitrate, stdBitrate, maxBitrate-176-", minBitrate, stdBitrate, maxBitrate)
+        try {
+            await AsyncStorage.setItem("minBitrate", minBitrate.toString());
+            await AsyncStorage.setItem("stdBitrate", stdBitrate.toString());
+            await AsyncStorage.setItem("maxBitrate", maxBitrate.toString());
+     
+        } catch (error) {
+            console.error("Set the value of minBitrate, stdBitrate, maxBitrate", error);
+        }
+    }
 
     // eslint-disable-next-line arrow-body-style
     useLayoutEffect(() => {

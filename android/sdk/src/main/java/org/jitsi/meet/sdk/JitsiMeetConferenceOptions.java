@@ -52,6 +52,10 @@ public class JitsiMeetConferenceOptions implements Parcelable {
     // set Title for meeting in jitsi room
     private String meetingTitle;
 
+    private Integer minBitrate;
+    private Integer stdBitrate;
+    private Integer maxBitrate;
+
     /**
      * Config. See: https://github.com/jitsi/jitsi-meet/blob/master/config.js
      */
@@ -87,6 +91,16 @@ public class JitsiMeetConferenceOptions implements Parcelable {
         return meetingTitle;
     }
 
+    public Integer getMinBitrate() {
+        return minBitrate;
+    }
+    public Integer getStdBitrate() {
+        return stdBitrate;
+    }
+    public Integer getMaxBitrate() {
+        return maxBitrate;
+    }
+
     public Bundle getFeatureFlags() {
         return featureFlags;
     }
@@ -104,6 +118,9 @@ public class JitsiMeetConferenceOptions implements Parcelable {
         private String token;
         private String waitingAreaText;
         private String meetingTitle;
+        private Integer minBitrate;
+        private Integer stdBitrate;
+        private Integer maxBitrate;
         private Bundle config;
         private Bundle featureFlags;
 
@@ -171,6 +188,25 @@ public class JitsiMeetConferenceOptions implements Parcelable {
 
             return this;
         }
+
+        public Builder setMinBitrate(Integer minBitrate) {
+            this.minBitrate = minBitrate;
+
+            return this;
+        }
+
+        public Builder setStdBitrate(Integer stdBitrate) {
+            this.stdBitrate = stdBitrate;
+
+            return this;
+        }
+
+        public Builder setMaxBitrate(Integer maxBitrate) {
+            this.maxBitrate = maxBitrate;
+
+            return this;
+        }
+
 
         /**
          * Indicates the conference will be joined with the microphone muted.
@@ -272,6 +308,9 @@ public class JitsiMeetConferenceOptions implements Parcelable {
             options.token = this.token;
             options.waitingAreaText = this.waitingAreaText;
             options.meetingTitle = this.meetingTitle;
+            options.minBitrate = this.minBitrate;
+            options.stdBitrate = this.stdBitrate;
+            options.maxBitrate = this.maxBitrate;
             options.config = this.config;
             options.featureFlags = this.featureFlags;
             options.userInfo = this.userInfo;
@@ -289,6 +328,9 @@ public class JitsiMeetConferenceOptions implements Parcelable {
         token = in.readString();
         waitingAreaText = in.readString();
         meetingTitle = in.readString();
+        minBitrate = in.readInt();
+        stdBitrate = in.readInt();
+        maxBitrate = in.readInt();
         config = in.readBundle();
         featureFlags = in.readBundle();
         userInfo = new JitsiMeetUserInfo(in.readBundle());
@@ -329,6 +371,18 @@ public class JitsiMeetConferenceOptions implements Parcelable {
             props.putString("meetingTitle", meetingTitle);
         }
 
+        if (minBitrate != null) {
+            props.putInt("minBitrate", minBitrate);
+        }
+
+        if (stdBitrate != null) {
+            props.putInt("stdBitrate", stdBitrate);
+        }
+
+        if (maxBitrate != null) {
+            props.putInt("maxBitrate", maxBitrate);
+        }
+
         if (userInfo != null) {
             props.putBundle("userInfo", userInfo.asBundle());
         }
@@ -361,6 +415,9 @@ public class JitsiMeetConferenceOptions implements Parcelable {
         dest.writeString(token);
         dest.writeString(waitingAreaText);
         dest.writeString(meetingTitle);
+        dest.writeInt(minBitrate);
+        dest.writeInt(stdBitrate);
+        dest.writeInt(maxBitrate);
         dest.writeBundle(config);
         dest.writeBundle(featureFlags);
         dest.writeBundle(userInfo != null ? userInfo.asBundle() : new Bundle());

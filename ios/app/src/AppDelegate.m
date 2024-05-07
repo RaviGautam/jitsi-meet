@@ -43,6 +43,10 @@
         [builder setFeatureFlag:@"ios.recording.enabled" withBoolean:YES];
         [builder setWaitingAreaText:@"waitingAreaText"];
         [builder setMeetingTitle:@"meetingTitle" ];
+        [builder setMinBitrate:@"minBitrate" ];
+        [builder setStdBitrate:@"stdBitrate" ];
+        [builder setMaxBitrate:@"maxBitRate" ];
+
     }];
 
   [jitsiMeet application:application didFinishLaunchingWithOptions:launchOptions];

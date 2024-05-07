@@ -38,6 +38,7 @@
  */
 @property (nonatomic, copy, nullable) NSString *meetingTitle;
 
+
 /**
  * JWT token used for authentication.
  */

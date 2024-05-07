@@ -77,7 +77,11 @@ public class MainActivity extends JitsiMeetActivity {
 
 
     // JitsiMeetActivity overrides
-    //
+    
+     // Get the values of minBitrate, stdBitrate, and maxBitrate from your React Native code
+     int minBitrate = getMinBitrateFromRN();
+     int stdBitrate = getStdBitrateFromRN();
+     int maxBitrate = getMaxBitrateFromRN();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,9 +162,29 @@ public class MainActivity extends JitsiMeetActivity {
             .setFeatureFlag("endMeetingOptions.enabled", true) // set options for end meeting
             .setFeatureFlag("welcomepage.enabled", true)
             .setFeatureFlag("resolution", 360)
+            .setMinBitrate( minBitrate)
+            .setStdBitrate(stdBitrate)
+            .setMaxBitrate( maxBitrate)
             .setFeatureFlag("server-url-change.enabled", !configurationByRestrictions)
             .build();
         JitsiMeet.setDefaultConferenceOptions(defaultOptions);
+
+
+    }
+
+    private int getMinBitrateFromRN() {
+        // Implement the logic to get minBitrate from React Native
+        return 100000; // Replace with the actual value
+    }
+
+    private int getStdBitrateFromRN() {
+        // Implement the logic to get stdBitrate from React Native
+        return 300000; // Replace with the actual value
+    }
+
+    private int getMaxBitrateFromRN() {
+        // Implement the logic to get maxBitrate from React Native
+        return 1000000; // Replace with the actual value
     }
 
     private void resolveRestrictions() {

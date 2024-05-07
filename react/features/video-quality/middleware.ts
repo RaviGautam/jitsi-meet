@@ -1,11 +1,11 @@
-import { CONFERENCE_JOINED } from '../base/conference/actionTypes';
-import { SET_CONFIG } from '../base/config/actionTypes';
-import MiddlewareRegistry from '../base/redux/MiddlewareRegistry';
+import { CONFERENCE_JOINED } from "../base/conference/actionTypes";
+import { SET_CONFIG } from "../base/config/actionTypes";
+import MiddlewareRegistry from "../base/redux/MiddlewareRegistry";
 
-import { setPreferredVideoQuality } from './actions';
-import logger from './logger';
+import { setPreferredVideoQuality } from "./actions";
+import logger from "./logger";
 
-import './subscriber';
+import "./subscriber";
 
 /**
  * Implements the middleware of the feature video-quality.
@@ -13,32 +13,47 @@ import './subscriber';
  * @param {Store} store - The redux store.
  * @returns {Function}
  */
-MiddlewareRegistry.register(({ dispatch, getState }) => next => action => {
+MiddlewareRegistry.register(({ dispatch, getState }) => (next) => (action) => {
     const result = next(action);
 
     switch (action.type) {
-    case CONFERENCE_JOINED: {
-        if (navigator.product === 'ReactNative') {
-            const { resolution } = getState()['features/base/config'];
+        case CONFERENCE_JOINED: {
+            if (navigator.product === "ReactNative") {
+                const { resolution } = getState()["features/base/config"];
 
-            if (typeof resolution !== 'undefined') {
-                dispatch(setPreferredVideoQuality(Number.parseInt(`${resolution}`, 10)));
-                logger.info(`Configured preferred receiver video frame height to: ${resolution}`);
+                if (typeof resolution !== "undefined") {
+                    dispatch(
+                        setPreferredVideoQuality(
+                            Number.parseInt(`${resolution}`, 10)
+                        )
+                    );
+                    logger.info(
+                        `Configured preferred receiver video frame height to: ${resolution}`
+                    );
+                }
             }
+            break;
         }
-        break;
-    }
-    case SET_CONFIG: {
-        const state = getState();
-        const { videoQuality = {} } = state['features/base/config'];
-        const { persistedPrefferedVideoQuality } = state['features/video-quality-persistent-storage'];
+        case SET_CONFIG: {
+            const state = getState();
+            const { videoQuality = {} } = state["features/base/config"];
+            // const { minBitrate, maxBitrate, stdBitrate } =
+            //     state["features/base/conference"];
+            const { persistedPrefferedVideoQuality } =
+                state["features/video-quality-persistent-storage"];
+            console.log("---videoQuality--35--", videoQuality);
+        
+            if (
+                videoQuality.persist &&
+                typeof persistedPrefferedVideoQuality !== "undefined"
+            ) {
+                dispatch(
+                    setPreferredVideoQuality(persistedPrefferedVideoQuality)
+                );
+            }
 
-        if (videoQuality.persist && typeof persistedPrefferedVideoQuality !== 'undefined') {
-            dispatch(setPreferredVideoQuality(persistedPrefferedVideoQuality));
+            break;
         }
-
-        break;
-    }
     }
 
     return result;

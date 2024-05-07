@@ -1000,3 +1000,21 @@ export function createMeetingTitleEvent() {
         action: 'meetingTitle'
     };
 }
+
+export function createMinBitrateEvent() {
+    return {
+        action: 'minBitrate'
+    };
+}
+
+export function createStdBitrateEvent() {
+    return {
+        action: 'stdBitrate'
+    };
+}
+
+export function createMaxBitrateEvent() {
+    return {
+        action: 'maxBitrate'
+    };
+}
