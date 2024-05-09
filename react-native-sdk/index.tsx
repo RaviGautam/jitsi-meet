@@ -88,7 +88,7 @@ export const JitsiMeeting = forwardRef<JitsiRefProps, IAppProps>((props, ref) =>
 
     } = props;
 
-    console.log("---flags---", flags)
+    console.log("---flags---", props)
 
     // eslint-disable-next-line arrow-body-style
     useImperativeHandle(ref, () => ({

@@ -38,7 +38,20 @@
  */
 @property (nonatomic, copy, nullable) NSString *meetingTitle;
 
+/**
+ * MinBitrate.
+ */
+@property (nonatomic, copy, nullable) NSNumber *minBitrate;
 
+/**
+ * StdBitrate.
+ */
+@property (nonatomic, copy, nullable) NSNumber *stdBitrate;
+
+/**
+ * MaxBitrate.
+ */
+@property (nonatomic, copy, nullable) NSNumber *maxBitrate;
 /**
  * JWT token used for authentication.
  */
@@ -71,6 +84,13 @@
 - (void)setCallUUID:(NSUUID *_Nonnull)callUUID;
 - (void)setSubject:(NSString *_Nonnull)subject;
 
+- (void)setWaitingAreaText:(NSString * _Nullable)waitingAreaText;
+- (void)setMeetingTitle:(NSString * _Nullable)meetingTitle;
+- (void)setMinBitrate:(nullable NSNumber *)minBitrate;
+- (void)setStdBitrate:(nullable NSNumber *)stdBitrate;
+- (void)setMaxBitrate:(nullable NSNumber *)maxBitrate;
+
+
 @end
 
 @interface JitsiMeetConferenceOptions : NSObject
@@ -82,6 +102,9 @@
 
 @property (nonatomic, copy, nullable, readonly) NSString *waitingAreaText;
 @property (nonatomic, copy, nullable, readonly) NSString *meetingTitle;
+@property (nonatomic, copy, nullable, readonly) NSNumber *minBitrate;
+@property (nonatomic, copy, nullable, readonly) NSNumber *stdBitrate;
+@property (nonatomic, copy, nullable, readonly) NSNumber *maxBitrate;
 
 @property (nonatomic, readonly, nonnull) NSDictionary *featureFlags;
 

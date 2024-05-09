@@ -77,6 +77,7 @@ export class App extends AbstractApp<IProps> {
     constructor(props: IProps) {
         super(props);
 
+        console.log("---props--80-", props);
         // In the Release configuration, React Native will (intentionally) throw
         // an unhandled JavascriptException for an unhandled JavaScript error.
         // This will effectively kill the app. In accord with the Web, do not
@@ -129,12 +130,36 @@ export class App extends AbstractApp<IProps> {
             flags = {},
             url,
             userInfo,
-            waitingAreaText,
-            meetingTitle,
-            minBitrate,
-            stdBitrate,
-            maxBitrate
+            // waitingAreaText,
+            // meetingTitle,
+            // minBitrate,
+            // stdBitrate,
+            // maxBitrate,
         } = this.props;
+
+        // Function to extract custom parameters based on platform
+        const extractCustomParams = (props) => {
+            if (Platform.OS === "ios") {
+                // Extract custom params from URL object for iOS
+                return props.url?.config ?? {};
+            } else if (Platform.OS === "android") {
+                // Directly access custom params for Android
+                return {
+                    minBitrate: props.minBitrate,
+                    stdBitrate: props.stdBitrate,
+                    maxBitrate: props.maxBitrate,
+                    meetingTitle: props.meetingTitle,
+                    waitingAreaText: props.waitingAreaText,
+                };
+            } else {
+                // Handle other platforms if needed
+                return {};
+            }
+        };
+
+        // Extract custom parameters based on platform
+        const customParams = extractCustomParams(this.props);
+
         let callIntegrationEnabled =
             flags[CALL_INTEGRATION_ENABLED as keyof typeof flags];
 
@@ -193,13 +218,21 @@ export class App extends AbstractApp<IProps> {
         // @ts-ignore
         dispatch?.(updateSettings(userInfo || {}));
 
-        dispatch?.(setWaitingText(waitingAreaText || ""));
+        // dispatch?.(setWaitingText(waitingAreaText || ""));
 
-        dispatch?.(setMeetingTitle(meetingTitle || ""));
+        // dispatch?.(setMeetingTitle(meetingTitle || ""));
 
-        dispatch?.(setMinBitrate(minBitrate || ""));
-        dispatch?.(setStdBitrate(stdBitrate || ""));
-        dispatch?.(setMaxBitrate(maxBitrate || ""));
+        // dispatch?.(setMinBitrate(minBitrate || ""));
+        // dispatch?.(setStdBitrate(stdBitrate || ""));
+        // dispatch?.(setMaxBitrate(maxBitrate || ""));
+
+        dispatch?.(setWaitingText(customParams.waitingAreaText || ""));
+
+        dispatch?.(setMeetingTitle(customParams.meetingTitle || ""));
+
+        dispatch?.(setMinBitrate(customParams.minBitrate || 0));
+        dispatch?.(setStdBitrate(customParams.stdBitrate || 0));
+        dispatch?.(setMaxBitrate(customParams.maxBitrate || 0));
 
         // Update settings with feature-flag.
         if (typeof callIntegrationEnabled !== "undefined") {

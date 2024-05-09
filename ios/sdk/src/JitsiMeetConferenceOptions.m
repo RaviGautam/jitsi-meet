@@ -31,7 +31,11 @@
         _token = nil;
         _waitingAreaText = nil;
         _meetingTitle = nil;
-
+        _minBitrate = nil;
+        _stdBitrate = nil;
+        _maxBitrate = nil;
+                
+                
         _config = [[NSMutableDictionary alloc] init];
         _featureFlags = [[NSMutableDictionary alloc] init];
 
@@ -81,15 +85,16 @@
     [self setConfigOverride:@"meetingTitle" withValue:meetingTitle];
 }
 
-- (void)setMinBitrate:(NSString *)minBitrate {
+
+- (void)setMinBitrate:(NSNumber *) minBitrate {
     [self setConfigOverride:@"minBitrate" withValue:minBitrate];
 }
 
-- (void)setMaxBitrate:(NSString *)maxBitrate {
+- (void)setMaxBitrate:(NSNumber *) maxBitrate {
     [self setConfigOverride:@"maxBitrate" withValue:maxBitrate];
 }
 
-- (void)setStdBitrate:(NSString *)stdBitrate {
+- (void)setStdBitrate:(NSNumber *)stdBitrate {
     [self setConfigOverride:@"stdBitrate" withValue:stdBitrate];
 }
 
@@ -125,6 +130,9 @@
         _token = builder.token;
         _waitingAreaText = builder.waitingAreaText;
         _meetingTitle = builder.meetingTitle;
+        _minBitrate = builder.minBitrate;
+        _stdBitrate = builder.stdBitrate;
+        _maxBitrate = builder.maxBitrate;
 
         _config = builder.config;
 
@@ -176,6 +184,18 @@
     
     if (_meetingTitle != nil){
         urlProps[@"meetingTitle"] = _meetingTitle;
+    }
+    
+    if(_minBitrate != nil){
+        urlProps[@"minBitrate"] = _minBitrate;
+    }
+    
+    if(_stdBitrate != nil){
+        urlProps[@"stdBitrate"] = _stdBitrate;
+    }
+    
+    if(_maxBitrate != nil){
+        urlProps[@"maxBitrate"] = _maxBitrate;
     }
 
     if (_userInfo != nil) {

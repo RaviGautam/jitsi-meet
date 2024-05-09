@@ -162,9 +162,9 @@ public class MainActivity extends JitsiMeetActivity {
             .setFeatureFlag("endMeetingOptions.enabled", true) // set options for end meeting
             .setFeatureFlag("welcomepage.enabled", true)
             .setFeatureFlag("resolution", 360)
-            .setMinBitrate( minBitrate)
-            .setStdBitrate(stdBitrate)
-            .setMaxBitrate( maxBitrate)
+            .setMinBitrate(minBitrate) // set minimum bitrate
+            .setStdBitrate(stdBitrate) // set standard bitrate
+            .setMaxBitrate(maxBitrate) // set maximum bitrate
             .setFeatureFlag("server-url-change.enabled", !configurationByRestrictions)
             .build();
         JitsiMeet.setDefaultConferenceOptions(defaultOptions);
