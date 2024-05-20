@@ -1,6 +1,6 @@
 {
     "name": "react-native-sdk-fmtech",
-    "version": "3.0.6",
+    "version": "3.0.9",
     "description": "React Native SDK for Jitsi Meet.",
     "main": "index.tsx",
     "license": "Apache-2.0",

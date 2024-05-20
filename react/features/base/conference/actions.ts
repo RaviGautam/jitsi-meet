@@ -5,6 +5,7 @@ import { setIAmVisitor } from "../../visitors/actions";
 import { iAmVisitor } from "../../visitors/functions";
 import { overwriteConfig } from "../config/actions";
 import { getReplaceParticipant } from "../config/functions";
+import { appNavigate } from "../../app/actions";
 import { connect, disconnect, hangup } from "../connection/actions";
 import { JITSI_CONNECTION_CONFERENCE_KEY } from "../connection/constants";
 import { JitsiConferenceEvents, JitsiE2ePingEvents } from "../lib-jitsi-meet";
@@ -93,6 +94,7 @@ import {
 } from "./functions";
 import logger from "./logger";
 import { IConferenceMetadata, IJitsiConference } from "./reducer";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /**
  * Adds conference (event) listeners.
@@ -756,14 +758,69 @@ export function endpointMessageReceived(participant: Object, data: Object) {
  *
  * @returns {Function}
  */
+// export function endConference() {
+//     return async (
+//         dispatch: IStore["dispatch"],
+//         getState: IStore["getState"]
+//     ) => {
+//         const { conference } = getConferenceState(toState(getState));
+//       console.log("-----conference--_numberOfParticipantsOnJoin-", conference.participants)
+//         conference?.end();
+//     };
+// }
+
 export function endConference() {
     return async (
         dispatch: IStore["dispatch"],
         getState: IStore["getState"]
     ) => {
-        const { conference } = getConferenceState(toState(getState));
+        const state = toState(getState());
+        const { conference } = getConferenceState(state);
 
-        conference?.end();
+        if (conference) {
+            const participants = conference.getParticipants();
+            if (Array.isArray(participants) || participants instanceof Map) {
+                for (const [key, participant] of participants.entries()) {
+                    await AsyncStorage.setItem(
+                        "Kicker",
+                        participant._conference.room.myroomjid
+                    );
+
+                    if (participant && participant.getId) {
+                        try {
+                            console.log(
+                                `Kicking out participant: ${participant.getId()}`
+                            );
+                            conference.kickParticipant(participant.getId());
+                        } catch (error) {
+                            console.error(
+                                `Failed to kick out participant: ${error}`
+                            );
+                        }
+                    } else {
+                        console.warn(
+                            "Encountered an invalid participant:",
+                            participant
+                        );
+                    }
+                }
+            } else {
+                console.error(
+                    "Participants is neither an array nor a map:",
+                    participants
+                );
+            }
+
+            try {
+                await conference.end();
+                dispatch(appNavigate(undefined));
+            } catch (error) {
+                console.error("Failed to end the conference:", error);
+            }
+        } else {
+            dispatch(appNavigate(undefined));
+            console.log("No active conference found.");
+        }
     };
 }
 

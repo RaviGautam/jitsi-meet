@@ -21,7 +21,7 @@ import RaiseHandButton from "./RaiseHandButton";
 import ScreenSharingButton from "./ScreenSharingButton";
 import VideoMuteButton from "./VideoMuteButton";
 import styles from "./styles";
-import { END_MEETING_OPTIONS } from "../../../base/flags/constants";
+import { DIRECT_JOIN_MEETING_ENABLED, END_MEETING_OPTIONS } from "../../../base/flags/constants";
 import { getFeatureFlag } from "../../../base/flags/functions";
 
 /**
@@ -59,6 +59,8 @@ interface IProps {
     _width: number;
 
     _isEndMeetingOptions: boolean;
+
+    _isDirectJoin: boolean;
 }
 
 /**
@@ -76,6 +78,7 @@ function Toolbox(props: IProps) {
         _iAmVisitor,
         _width,
         _isEndMeetingOptions,
+        _isDirectJoin
     } = props;
    
     if (!_visible) {
@@ -149,7 +152,7 @@ function Toolbox(props: IProps) {
                         toggledStyles={toggledButtonStyles}
                     />
                 )}
-                {_isEndMeetingOptions || _endConferenceSupported ? (
+                { _isEndMeetingOptions || _endConferenceSupported ? (
                     <HangupMenuButton />
                 ) : (
                     <HangupButton styles={hangupButtonStyles} />
@@ -182,6 +185,9 @@ function _mapStateToProps(state: IReduxState) {
         _isEndMeetingOptions: Boolean(
             getFeatureFlag(state, END_MEETING_OPTIONS, false)
         ),
+        _isDirectJoin: Boolean(
+            getFeatureFlag(state, DIRECT_JOIN_MEETING_ENABLED, false)
+        )
     };
 }
 

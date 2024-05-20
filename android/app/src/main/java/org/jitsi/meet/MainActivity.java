@@ -77,7 +77,7 @@ public class MainActivity extends JitsiMeetActivity {
 
 
     // JitsiMeetActivity overrides
-    
+
      // Get the values of minBitrate, stdBitrate, and maxBitrate from your React Native code
      int minBitrate = getMinBitrateFromRN();
      int stdBitrate = getStdBitrateFromRN();

@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import { IReduxState, IStore } from '../../../app/types';
-import ConfirmDialog from '../../../base/dialog/components/native/ConfirmDialog';
-import { translate } from '../../../base/i18n/functions';
-import { cancelWaitForOwner, login } from '../../actions.native';
-
+import { IReduxState, IStore } from "../../../app/types";
+import ConfirmDialog from "../../../base/dialog/components/native/ConfirmDialog";
+import { translate } from "../../../base/i18n/functions";
+import { cancelWaitForOwner, login } from "../../actions.native";
+import { DIRECT_JOIN_MEETING_ENABLED } from "../../../base/flags/constants";
+import { getFeatureFlag } from "../../../base/flags/functions";
 
 /**
  * The type of the React {@code Component} props of {@link WaitForOwnerDialog}.
  */
 interface IProps {
-
     /**
      * Whether to show alternative cancel button text.
      */
@@ -22,10 +22,12 @@ interface IProps {
      */
     _isConfirmHidden?: boolean;
 
+    _isDirectJoin?: boolean;
+
     /**
      * Redux store dispatch function.
      */
-    dispatch: IStore['dispatch'];
+    dispatch: IStore["dispatch"];
 
     /**
      * Invoked to obtain translated strings.
@@ -61,16 +63,25 @@ class WaitForOwnerDialog extends Component<IProps> {
      * @returns {ReactElement}
      */
     render() {
-        const { _isConfirmHidden } = this.props;
+        const { _isConfirmHidden, _isDirectJoin } = this.props;
 
         return (
-            <ConfirmDialog
-                cancelLabel = { this.props._alternativeCancelText ? 'dialog.WaitingForHostButton' : 'dialog.Cancel' }
-                confirmLabel = 'dialog.IamHost'
-                descriptionKey = 'dialog.WaitForHostMsg'
-                isConfirmHidden = { _isConfirmHidden }
-                onCancel = { this._onCancel }
-                onSubmit = { this._onLogin } />
+            <>
+                {!_isDirectJoin ? (
+                    <ConfirmDialog
+                        cancelLabel={
+                            this.props._alternativeCancelText
+                                ? "dialog.WaitingForHostButton"
+                                : "dialog.Cancel"
+                        }
+                        confirmLabel="dialog.IamHost"
+                        descriptionKey="dialog.WaitForHostMsg"
+                        isConfirmHidden={_isConfirmHidden}
+                        onCancel={this._onCancel}
+                        onSubmit={this._onLogin}
+                    />
+                ) : null}
+            </>
         );
     }
 
@@ -104,12 +115,16 @@ class WaitForOwnerDialog extends Component<IProps> {
  * @returns {IProps}
  */
 function mapStateToProps(state: IReduxState) {
-    const { membersOnly, lobbyWaitingForHost } = state['features/base/conference'];
-    const { locationURL } = state['features/base/connection'];
+    const { membersOnly, lobbyWaitingForHost } =
+        state["features/base/conference"];
+    const { locationURL } = state["features/base/connection"];
 
     return {
         _alternativeCancelText: membersOnly && lobbyWaitingForHost,
-        _isConfirmHidden: locationURL?.hostname?.includes('8x8.vc')
+        _isConfirmHidden: locationURL?.hostname?.includes("8x8.vc"),
+        _isDirectJoin: Boolean(
+            getFeatureFlag(state, DIRECT_JOIN_MEETING_ENABLED, false)
+        ),
     };
 }
 

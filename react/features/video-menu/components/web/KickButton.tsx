@@ -25,6 +25,7 @@ const KickButton = ({
     const dispatch = useDispatch();
 
     const handleClick = useCallback(() => {
+        console.log("----hihihihhi-------")
         notifyClick?.();
         if (notifyMode === NOTIFY_CLICK_MODE.PREVENT_AND_NOTIFY) {
             return;
@@ -39,7 +40,7 @@ const KickButton = ({
             icon = { IconUserDeleted }
             id = { `ejectlink_${participantID}` }
             onClick = { handleClick }
-            text = { t('videothumbnail.kick') } />
+            text = {" t('videothumbnail.kick')" } />
     );
 };
 

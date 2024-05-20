@@ -1,28 +1,36 @@
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
+import React, { PureComponent } from "react";
+import { connect } from "react-redux";
 
-import { IReduxState, IStore } from '../../../app/types';
-import { translate } from '../../../base/i18n/functions';
+import { IReduxState, IStore } from "../../../app/types";
+import { translate } from "../../../base/i18n/functions";
 import {
     getLocalParticipant,
     getParticipantById,
     getParticipantDisplayName,
     hasRaisedHand,
-    isParticipantModerator
-} from '../../../base/participants/functions';
-import { FakeParticipant, IParticipant } from '../../../base/participants/types';
+    isParticipantModerator,
+} from "../../../base/participants/functions";
+import {
+    FakeParticipant,
+    IParticipant,
+} from "../../../base/participants/types";
 import {
     isParticipantAudioMuted,
-    isParticipantVideoMuted
-} from '../../../base/tracks/functions.native';
-import { showContextMenuDetails, showSharedVideoMenu } from '../../actions.native';
-import type { MediaState } from '../../constants';
-import { getParticipantAudioMediaState, getParticipantVideoMediaState } from '../../functions';
+    isParticipantVideoMuted,
+} from "../../../base/tracks/functions.native";
+import {
+    showContextMenuDetails,
+    showSharedVideoMenu,
+} from "../../actions.native";
+import type { MediaState } from "../../constants";
+import {
+    getParticipantAudioMediaState,
+    getParticipantVideoMediaState,
+} from "../../functions";
 
-import ParticipantItem from './ParticipantItem';
+import ParticipantItem from "./ParticipantItem";
 
 interface IProps {
-
     /**
      * Media state for audio.
      */
@@ -76,7 +84,7 @@ interface IProps {
     /**
      * The redux dispatch function.
      */
-    dispatch: IStore['dispatch'];
+    dispatch: IStore["dispatch"];
 
     /**
      * The participant.
@@ -88,7 +96,6 @@ interface IProps {
  * Implements the MeetingParticipantItem component.
  */
 class MeetingParticipantItem extends PureComponent<IProps> {
-
     /**
      * Creates new MeetingParticipantItem instance.
      *
@@ -111,12 +118,14 @@ class MeetingParticipantItem extends PureComponent<IProps> {
             _local,
             _localVideoOwner,
             _participantID,
-            dispatch
+            dispatch,
         } = this.props;
-
+        console.log("----111111----");
         if (_fakeParticipant && _localVideoOwner) {
+            console.log("----111111----");
             dispatch(showSharedVideoMenu(_participantID));
         } else if (!_fakeParticipant) {
+            console.log("----2222222----");
             dispatch(showContextMenuDetails(_participantID, _local));
         } // else no-op
     }
@@ -136,20 +145,21 @@ class MeetingParticipantItem extends PureComponent<IProps> {
             _local,
             _participantID,
             _raisedHand,
-            _videoMediaState
+            _videoMediaState,
         } = this.props;
 
         return (
             <ParticipantItem
-                audioMediaState = { _audioMediaState }
-                disableModeratorIndicator = { _disableModeratorIndicator }
-                displayName = { _displayName }
-                isModerator = { _isModerator }
-                local = { _local }
-                onPress = { this._onPress }
-                participantID = { _participantID }
-                raisedHand = { _raisedHand }
-                videoMediaState = { _videoMediaState } />
+                audioMediaState={_audioMediaState}
+                disableModeratorIndicator={_disableModeratorIndicator}
+                displayName={_displayName}
+                isModerator={_isModerator}
+                local={_local}
+                onPress={this._onPress}
+                participantID={_participantID}
+                raisedHand={_raisedHand}
+                videoMediaState={_videoMediaState}
+            />
         );
     }
 }
@@ -164,16 +174,27 @@ class MeetingParticipantItem extends PureComponent<IProps> {
  */
 function mapStateToProps(state: IReduxState, ownProps: any) {
     const { participant } = ownProps;
-    const { ownerId } = state['features/shared-video'];
+    const { ownerId } = state["features/shared-video"];
     const localParticipantId = getLocalParticipant(state)?.id;
-    const _isAudioMuted = Boolean(participant && isParticipantAudioMuted(participant, state));
+    const _isAudioMuted = Boolean(
+        participant && isParticipantAudioMuted(participant, state)
+    );
     const _isVideoMuted = isParticipantVideoMuted(participant, state);
-    const audioMediaState = getParticipantAudioMediaState(participant, _isAudioMuted, state);
-    const videoMediaState = getParticipantVideoMediaState(participant, _isVideoMuted, state);
-    const { disableModeratorIndicator } = state['features/base/config'];
-    const raisedHand = hasRaisedHand(participant?.local
-        ? participant
-        : getParticipantById(state, participant?.id)
+    const audioMediaState = getParticipantAudioMediaState(
+        participant,
+        _isAudioMuted,
+        state
+    );
+    const videoMediaState = getParticipantVideoMediaState(
+        participant,
+        _isVideoMuted,
+        state
+    );
+    const { disableModeratorIndicator } = state["features/base/config"];
+    const raisedHand = hasRaisedHand(
+        participant?.local
+            ? participant
+            : getParticipantById(state, participant?.id)
     );
 
     return {
@@ -187,9 +208,8 @@ function mapStateToProps(state: IReduxState, ownProps: any) {
         _localVideoOwner: Boolean(ownerId === localParticipantId),
         _participantID: participant?.id,
         _raisedHand: raisedHand,
-        _videoMediaState: videoMediaState
+        _videoMediaState: videoMediaState,
     };
 }
-
 
 export default translate(connect(mapStateToProps)(MeetingParticipantItem));
