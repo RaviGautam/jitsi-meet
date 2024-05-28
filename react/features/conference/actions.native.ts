@@ -1,10 +1,10 @@
-import { IStore } from '../app/types';
-import { hideDialog, openDialog } from '../base/dialog/actions';
-import AlertDialog from '../base/dialog/components/native/AlertDialog';
-import { getParticipantDisplayName } from '../base/participants/functions';
+import { IStore } from "../app/types";
+import { endConference } from "../base/conference/actions";
+import { hideDialog, openDialog } from "../base/dialog/actions";
+import AlertDialog from "../base/dialog/components/native/AlertDialog";
+import { getParticipantDisplayName } from "../base/participants/functions";
 
-import { DISMISS_CALENDAR_NOTIFICATION } from './actionTypes';
-
+import { DISMISS_CALENDAR_NOTIFICATION } from "./actionTypes";
 
 /**
  * Notify that we've been kicked out of the conference.
@@ -15,22 +15,30 @@ import { DISMISS_CALENDAR_NOTIFICATION } from './actionTypes';
  * @returns {Function}
  */
 export function notifyKickedOut(participant: any, submit?: Function) {
-    return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
+    console.log("----notifyKickedOut-----");
+    return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         if (!participant || participant?.isReplaced?.()) {
             submit?.();
-
+            console.log("---dialog---21-");
             return;
         }
-
-        dispatch(openDialog(AlertDialog, {
-            contentKey: {
-                key: 'dialog.kickTitle',
-                params: {
-                    participantDisplayName: getParticipantDisplayName(getState, participant.getId())
-                }
-            },
-            onSubmit: submit
-        }));
+        console.log("---dialog.kickTitle--", submit);
+        dispatch(endConference());
+        submit();
+        // dispatch(
+        //     openDialog(AlertDialog, {
+        //         contentKey: {
+        //             key: "dialog.kickTitle",
+        //             params: {
+        //                 participantDisplayName: getParticipantDisplayName(
+        //                     getState,
+        //                     participant.getId()
+        //                 ),
+        //             },
+        //         },
+        //         onSubmit: submit,
+        //     })
+        // );
     };
 }
 
@@ -42,7 +50,7 @@ export function notifyKickedOut(participant: any, submit?: Function) {
  * @returns {Function}
  */
 export function notifyConferenceFailed(reasonKey: string, submit?: Function) {
-    return (dispatch: IStore['dispatch']) => {
+    return (dispatch: IStore["dispatch"]) => {
         if (!reasonKey) {
             submit?.();
 
@@ -52,17 +60,20 @@ export function notifyConferenceFailed(reasonKey: string, submit?: Function) {
         // we have to push the opening of the dialog to the queue
         // so that we make sure it will be visible after the events
         // of conference destroyed are done
-        setTimeout(() => dispatch(openDialog(AlertDialog, {
-            contentKey: {
-                key: reasonKey
-            },
-            params: {
-            },
-            onSubmit: () => {
-                submit?.();
-                dispatch(hideDialog(AlertDialog));
-            }
-        })));
+        setTimeout(() =>
+            dispatch(
+                openDialog(AlertDialog, {
+                    contentKey: {
+                        key: reasonKey,
+                    },
+                    params: {},
+                    onSubmit: () => {
+                        submit?.();
+                        dispatch(hideDialog(AlertDialog));
+                    },
+                })
+            )
+        );
     };
 }
 
@@ -73,6 +84,6 @@ export function notifyConferenceFailed(reasonKey: string, submit?: Function) {
  */
 export function dismissCalendarNotification() {
     return {
-        type: DISMISS_CALENDAR_NOTIFICATION
+        type: DISMISS_CALENDAR_NOTIFICATION,
     };
 }

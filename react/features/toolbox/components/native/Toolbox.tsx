@@ -21,7 +21,10 @@ import RaiseHandButton from "./RaiseHandButton";
 import ScreenSharingButton from "./ScreenSharingButton";
 import VideoMuteButton from "./VideoMuteButton";
 import styles from "./styles";
-import { DIRECT_JOIN_MEETING_ENABLED, END_MEETING_OPTIONS } from "../../../base/flags/constants";
+import {
+    DIRECT_JOIN_MEETING_ENABLED,
+    END_MEETING_OPTIONS,
+} from "../../../base/flags/constants";
 import { getFeatureFlag } from "../../../base/flags/functions";
 
 /**
@@ -58,6 +61,8 @@ interface IProps {
      */
     _width: number;
 
+    _numberOfParticipants: number;
+
     _isEndMeetingOptions: boolean;
 
     _isDirectJoin: boolean;
@@ -78,9 +83,12 @@ function Toolbox(props: IProps) {
         _iAmVisitor,
         _width,
         _isEndMeetingOptions,
-        _isDirectJoin
+        _numberOfParticipants,
+        _isDirectJoin,
     } = props;
-   
+
+    console.log("--_isEndMeetingOptions----", _isEndMeetingOptions)
+
     if (!_visible) {
         return null;
     }
@@ -152,7 +160,9 @@ function Toolbox(props: IProps) {
                         toggledStyles={toggledButtonStyles}
                     />
                 )}
-                { _isEndMeetingOptions || _endConferenceSupported ? (
+                {_numberOfParticipants > 2 ||
+                !_isEndMeetingOptions ||
+                _endConferenceSupported ? (
                     <HangupMenuButton />
                 ) : (
                     <HangupButton styles={hangupButtonStyles} />
@@ -174,12 +184,15 @@ function Toolbox(props: IProps) {
 function _mapStateToProps(state: IReduxState) {
     const { conference } = state["features/base/conference"];
     const endConferenceSupported = conference?.isEndConferenceSupported();
+    const numberOfParticipants = conference?.getParticipantCount();
+    console.log("---getParticipantCount---", numberOfParticipants);
 
     return {
         _endConferenceSupported: Boolean(endConferenceSupported),
         _styles: ColorSchemeRegistry.get(state, "Toolbox"),
         _visible: isToolboxVisible(state),
         _iAmVisitor: iAmVisitor(state),
+        _numberOfParticipants: numberOfParticipants,
         _width: state["features/base/responsive-ui"].clientWidth,
         _shouldDisplayReactionsButtons: shouldDisplayReactionsButtons(state),
         _isEndMeetingOptions: Boolean(
@@ -187,7 +200,7 @@ function _mapStateToProps(state: IReduxState) {
         ),
         _isDirectJoin: Boolean(
             getFeatureFlag(state, DIRECT_JOIN_MEETING_ENABLED, false)
-        )
+        ),
     };
 }
 

@@ -170,7 +170,7 @@ interface IProps extends AbstractProps {
     /*** 
      * Get direct join flag from mainactivity
     */
-    _isDirectJoin: boolean
+    _isDirectJoin: boolean;
 }
 
 type State = {

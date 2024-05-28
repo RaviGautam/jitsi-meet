@@ -226,6 +226,8 @@ export class App extends AbstractApp<IProps> {
         // dispatch?.(setStdBitrate(stdBitrate || ""));
         // dispatch?.(setMaxBitrate(maxBitrate || ""));
 
+        console.log("----customParams.waitingAreaText--customParams.meetingTitle-", customParams.waitingAreaText, customParams.meetingTitle)
+
         dispatch?.(setWaitingText(customParams.waitingAreaText || ""));
 
         dispatch?.(setMeetingTitle(customParams.meetingTitle || ""));

@@ -55,10 +55,10 @@ export * from "./actions.any";
 export function appNavigate(
     uri?: string,
     options: IReloadNowOptions = {},
-    _isDirectJoin?: boolean,
+    _isDirectJoin?: boolean
 ) {
     logger.info(`appNavigate to ${uri}`);
-    console.log(`appNavigate to ${uri}`, options,_isDirectJoin)
+    console.log(`appNavigate to ${uri}`, options, _isDirectJoin);
 
     return async (
         dispatch: IStore["dispatch"],
@@ -91,10 +91,8 @@ export function appNavigate(
         const { contextRoot, host, hostname, pathname, room } = location;
         const locationURL = new URL(location.toString());
         const { conference } = getConferenceState(getState());
-    
 
         if (room) {
-      
             if (conference) {
                 // We need to check if the location is the same with the previous one.
                 const currentLocationURL =
@@ -113,7 +111,6 @@ export function appNavigate(
                     return;
                 }
             } else {
-               
                 navigateRoot(screen.connecting, {
                     roomId: room,
                     hostname: hostname,
@@ -187,7 +184,7 @@ export function appNavigate(
 
             return;
         }
-        
+
         dispatch(setLocationURL(locationURL));
         dispatch(setConfig(config, locationURL));
         dispatch(setRoom(room));
@@ -200,24 +197,33 @@ export function appNavigate(
 
         dispatch(createDesiredLocalTracks());
         dispatch(clearNotifications());
-        if(_isDirectJoin){
+        if (_isDirectJoin) {
+            console.log("----directjoin---201")
             dispatch(connect());
             navigateRoot(screen.conference.root);
-          
+
             return;
+        } else {
+            console.log("----prejoin---206")
+            navigateRoot(screen.preJoin);
         }
 
         if (!options.hidePrejoin && isPrejoinPageEnabled(getState())) {
-            
             if (
                 isUnsafeRoomWarningEnabled(getState()) &&
                 isInsecureRoomName(room)
             ) {
-              
                 navigateRoot(screen.unsafeRoomWarning);
             } else {
-
-                navigateRoot(screen.preJoin);
+                // navigateRoot(screen.preJoin);
+                if (_isDirectJoin) {
+                    console.log("----directjoin---220")
+                    dispatch(connect());
+                    navigateRoot(screen.conference.root);
+                } else {
+                    console.log("----prejoin---222")
+                    navigateRoot(screen.preJoin);
+                }
             }
         } else {
             dispatch(connect());

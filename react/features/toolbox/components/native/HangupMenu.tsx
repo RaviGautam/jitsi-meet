@@ -44,7 +44,7 @@ function HangupMenu() {
         dispatch(hideSheet());
         sendAnalytics(createToolbarEvent('hangup'));
         dispatch(appNavigate(undefined));
-    }, [ hideSheet ]);
+    }, [ hideSheet, dispatch ]);
 
     const handleLeaveBreakoutRoom = useCallback(() => {
         dispatch(hideSheet());

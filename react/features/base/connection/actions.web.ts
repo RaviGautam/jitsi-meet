@@ -65,6 +65,7 @@ export function hangup(requestFeedback = false, feedbackTitle?: string) {
     // XXX For web based version we use conference hanging up logic from the old app.
     return async (dispatch: IStore['dispatch']) => {
         if (LocalRecordingManager.isRecordingLocally()) {
+            console.log("----hihihihi---866888--")
             dispatch(stopLocalVideoRecording());
             dispatch(showWarningNotification({
                 titleKey: 'localRecording.stopping',
@@ -73,6 +74,7 @@ export function hangup(requestFeedback = false, feedbackTitle?: string) {
 
             // wait 1000ms for the recording to end and start downloading
             await new Promise(res => {
+                console.log("----res---", res)
                 setTimeout(res, 1000);
             });
         }

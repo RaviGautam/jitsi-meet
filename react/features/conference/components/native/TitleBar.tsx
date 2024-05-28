@@ -76,7 +76,7 @@ interface IProps {
 const TitleBar = (props: IProps) => {
     const { _isParticipantsPaneEnabled, _visible } = props;
     const { t } = useTranslation();
-
+console.log("---props._meetingTitle----", props._meetingTitle)
     if (!_visible) {
         return null;
     }
@@ -95,7 +95,7 @@ const TitleBar = (props: IProps) => {
                         <ConferenceTimer textStyle={styles.roomTimer} />
                     </View>
                 )}
-                {props._roomNameEnabled && (props._meetingTitle=='' || props._meetingTitle=='' || props._meetingTitle==undefined || props._meetingTitle ==null) &&  (
+                {props._roomNameEnabled && (props._meetingTitle =='' || props._meetingTitle==undefined || props._meetingTitle ==null) &&  (
                     <View style={styles.roomNameView as ViewStyle}>
                         <Text numberOfLines={1} style={styles.roomName}>
                             {props._meetingName}
