@@ -33,7 +33,9 @@ import {
     UPDATE_CONFERENCE_METADATA,
     SET_MIN_BITRATE,
     SET_STD_BITRATE,
-    SET_MAX_BITRATE
+    SET_MAX_BITRATE,
+    SET_LOBY_TITLE,
+    SET_LOBY_DISCRIPTION
     
 } from './actionTypes';
 import { isRoomValid } from './functions';
@@ -51,6 +53,8 @@ const DEFAULT_STATE = {
     passwordRequired: undefined,
     waitingText: undefined,
     meetingTitle: undefined,
+    lobyTitle: undefined,
+    lobyDescription: undefined,
     minBitrate: undefined,
     stdBitrate: undefined,
     maxBitrate: undefined
@@ -138,6 +142,8 @@ export interface IJitsiConference {
     setAssumedBandwidthBps: (value: number) => void;
     setWaitingText: Function;
     setMeetingTitle: Function;
+    setLobyTitle: Function;
+    setLobyDescription: Function;
     setDesktopSharingFrameRate: Function;
     setDisplayName: Function;
     setLocalParticipantProperty: Function;
@@ -161,6 +167,8 @@ export interface IConferenceState {
     conferenceTimestamp?: number;
     waitingText?: string;
     meetingTitle?: string;
+    lobyTitle?: string;
+    lobyDescription?: string;
     minBitrate?: number;
     stdBitrate?: number;
     maxBitrate?: number;
@@ -276,6 +284,12 @@ ReducerRegistry.register<IConferenceState>('features/base/conference',
 
         case SET_MEETING_TITLE:
         return set(state, 'meetingTitle', action.meetingTitle);
+
+        case SET_LOBY_TITLE:
+        return set(state, 'lobyTitle', action.lobyTitle);
+
+        case SET_LOBY_DISCRIPTION:
+        return set(state, 'lobyDescription', action.lobyDescription);
 
         case SET_MIN_BITRATE:
         return set(state, 'minBitrate', action.minBitrate);

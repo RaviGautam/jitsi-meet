@@ -43,6 +43,8 @@
         [builder setFeatureFlag:@"ios.recording.enabled" withBoolean:YES];
         [builder setWaitingAreaText:@"Please wait... in waiting area while meeting starting."]; // set custom text for waiting area
         [builder setMeetingTitle:@"My Title" ]; // set meeting title
+        [builder setLobyTitle:@"Lobby Title" ]; // set lobby title
+        [builder setLobyDescription:@"Lobby Description" ]; // set lobby description
         [builder setMinBitrate:@(100000)]; // set minimum bitrate
         [builder setStdBitrate:@(300000) ]; // set standard bitrate
         [builder setMaxBitrate:@(1000000) ]; // set maximum bitrate

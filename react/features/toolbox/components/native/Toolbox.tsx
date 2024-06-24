@@ -87,7 +87,7 @@ function Toolbox(props: IProps) {
         _isDirectJoin,
     } = props;
 
-    console.log("--_isEndMeetingOptions----", _isEndMeetingOptions)
+    console.log("--_isEndMeetingOptions----", _isEndMeetingOptions);
 
     if (!_visible) {
         return null;
@@ -160,8 +160,8 @@ function Toolbox(props: IProps) {
                         toggledStyles={toggledButtonStyles}
                     />
                 )}
-                {_numberOfParticipants > 2 ||
-                !_isEndMeetingOptions ||
+                {_numberOfParticipants > 2 &&
+                !_isEndMeetingOptions &&
                 _endConferenceSupported ? (
                     <HangupMenuButton />
                 ) : (

@@ -37,6 +37,14 @@
  * Meeting Title.
  */
 @property (nonatomic, copy, nullable) NSString *meetingTitle;
+/**
+ * lobby Title.
+ */
+@property (nonatomic, copy, nullable) NSString *lobyTitle;
+/**
+ * Lobby Description.
+ */
+@property (nonatomic, copy, nullable) NSString *lobyDescription;
 
 /**
  * MinBitrate.
@@ -86,6 +94,8 @@
 
 - (void)setWaitingAreaText:(NSString * _Nullable)waitingAreaText;
 - (void)setMeetingTitle:(NSString * _Nullable)meetingTitle;
+- (void)setLobyTitle:(NSString * _Nullable)lobyTitle;
+- (void)setLobyDescription:(NSString * _Nullable)lobyDescription;
 - (void)setMinBitrate:(nullable NSNumber *)minBitrate;
 - (void)setStdBitrate:(nullable NSNumber *)stdBitrate;
 - (void)setMaxBitrate:(nullable NSNumber *)maxBitrate;
@@ -102,6 +112,8 @@
 
 @property (nonatomic, copy, nullable, readonly) NSString *waitingAreaText;
 @property (nonatomic, copy, nullable, readonly) NSString *meetingTitle;
+@property (nonatomic, copy, nullable, readonly) NSString *lobyTitle;
+@property (nonatomic, copy, nullable, readonly) NSString *lobyDescription;
 @property (nonatomic, copy, nullable, readonly) NSNumber *minBitrate;
 @property (nonatomic, copy, nullable, readonly) NSNumber *stdBitrate;
 @property (nonatomic, copy, nullable, readonly) NSNumber *maxBitrate;

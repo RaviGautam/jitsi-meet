@@ -1,5 +1,5 @@
 import { IStateful } from "../base/app/types";
-import { MEETING_TITLE, WAITING_AREA_TEXT, WELCOME_PAGE_ENABLED, BACK_BUTTON_HANDLER, DIRECT_JOIN_MEETING_ENABLED, STD_BITRATE, MIN_BITRATE, MAX_BITRATE } from "../base/flags/constants";
+import { MEETING_TITLE, WAITING_AREA_TEXT, WELCOME_PAGE_ENABLED, BACK_BUTTON_HANDLER, DIRECT_JOIN_MEETING_ENABLED, STD_BITRATE, MIN_BITRATE, MAX_BITRATE, LOBY_TITLE, LOBY_DESCRIPTION } from "../base/flags/constants";
 import { getFeatureFlag } from "../base/flags/functions";
 import { toState } from "../base/redux/functions";
 
@@ -93,6 +93,36 @@ export function isMeetingTitleEnabled(stateful: IStateful) {
     const config = toState(stateful)["features/base/config"];
 
     return !config.TextForMeetingTitle?.disabled;
+}
+
+// set loby title
+export function isLobyTitleTextEnabled(stateful: IStateful) {
+    if (navigator.product === "ReactNative") {
+        return getFeatureFlag(
+            stateful,
+            LOBY_TITLE,
+            false
+        );
+    }
+
+    const config = toState(stateful)["features/base/config"];
+
+    return !config.TextForLobyTitle?.disabled;
+}
+
+// set loby description
+export function isLobyDescriptionTextEnabled(stateful: IStateful) {
+    if (navigator.product === "ReactNative") {
+        return getFeatureFlag(
+            stateful,
+            LOBY_DESCRIPTION,
+            false
+        );
+    }
+
+    const config = toState(stateful)["features/base/config"];
+
+    return !config.TextForLobyDescription?.disabled;
 }
 
 // set Min bitrate

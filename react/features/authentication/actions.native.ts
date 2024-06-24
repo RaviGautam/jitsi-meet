@@ -62,6 +62,7 @@ export function cancelWaitForOwner() {
 
             // in case we are showing lobby and on top of it wait for owner
             // we do not want to navigate away from the conference
+            console.log("--appNavigate--65--")
             dispatch(appNavigate(undefined));
         }
     };
@@ -73,6 +74,7 @@ export function cancelWaitForOwner() {
  * @returns {Function}
  */
 export function redirectToDefaultLocation() {
+    console.log("--appNavigate--77--")
     return (dispatch: IStore['dispatch']) => dispatch(appNavigate(undefined));
 }
 

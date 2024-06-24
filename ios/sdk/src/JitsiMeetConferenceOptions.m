@@ -31,6 +31,8 @@
         _token = nil;
         _waitingAreaText = nil;
         _meetingTitle = nil;
+        _lobyTitle = nil;
+        _lobyDescription = nil;
         _minBitrate = nil;
         _stdBitrate = nil;
         _maxBitrate = nil;
@@ -85,6 +87,14 @@
     [self setConfigOverride:@"meetingTitle" withValue:meetingTitle];
 }
 
+- (void)setLobyTitle:(NSString *)lobyTitle {
+    [self setConfigOverride:@"lobyTitle" withValue:lobyTitle];
+}
+
+- (void)setLobyDescription:(NSString *)lobyDescription {
+    [self setConfigOverride:@"lobyDescription" withValue:lobyDescription];
+}
+
 
 - (void)setMinBitrate:(NSNumber *) minBitrate {
     [self setConfigOverride:@"minBitrate" withValue:minBitrate];
@@ -130,6 +140,8 @@
         _token = builder.token;
         _waitingAreaText = builder.waitingAreaText;
         _meetingTitle = builder.meetingTitle;
+        _lobyTitle = builder.lobyTitle;
+        _lobyDescription = builder.lobyDescription;
         _minBitrate = builder.minBitrate;
         _stdBitrate = builder.stdBitrate;
         _maxBitrate = builder.maxBitrate;
@@ -184,6 +196,12 @@
     
     if (_meetingTitle != nil){
         urlProps[@"meetingTitle"] = _meetingTitle;
+    }
+    if (_lobyTitle != nil){
+        urlProps[@"lobyTitle"] = _lobyTitle;
+    }
+    if (_lobyDescription != nil){
+        urlProps[@"lobyDescription"] = _lobyDescription;
     }
     
     if(_minBitrate != nil){

@@ -24,6 +24,8 @@ import { AbstractApp, IProps as AbstractAppProps } from "./AbstractApp";
 import "../middlewares.native";
 import "../reducers.native";
 import {
+    setLobyDescription,
+    setLobyTitle,
     setMaxBitrate,
     setMeetingTitle,
     setMinBitrate,
@@ -44,9 +46,9 @@ const DialogContainerWrapper = Platform.select({
  */
 interface IProps extends AbstractAppProps {
     waitingAreaText?: String;
-
     meetingTitle?: String;
-
+    lobyTitle?: String;
+    lobyDescription?: String;
     minBitrate?: Number;
     stdBitrate?: Number;
     maxBitrate?: Number;
@@ -130,11 +132,6 @@ export class App extends AbstractApp<IProps> {
             flags = {},
             url,
             userInfo,
-            // waitingAreaText,
-            // meetingTitle,
-            // minBitrate,
-            // stdBitrate,
-            // maxBitrate,
         } = this.props;
 
         // Function to extract custom parameters based on platform
@@ -148,8 +145,10 @@ export class App extends AbstractApp<IProps> {
                     minBitrate: props.minBitrate,
                     stdBitrate: props.stdBitrate,
                     maxBitrate: props.maxBitrate,
-                    meetingTitle: props.meetingTitle,
                     waitingAreaText: props.waitingAreaText,
+                    meetingTitle: props.meetingTitle,
+                    lobyTitle: props.lobyTitle,
+                    lobyDescription: props.lobyDescription
                 };
             } else {
                 // Handle other platforms if needed
@@ -218,19 +217,14 @@ export class App extends AbstractApp<IProps> {
         // @ts-ignore
         dispatch?.(updateSettings(userInfo || {}));
 
-        // dispatch?.(setWaitingText(waitingAreaText || ""));
-
-        // dispatch?.(setMeetingTitle(meetingTitle || ""));
-
-        // dispatch?.(setMinBitrate(minBitrate || ""));
-        // dispatch?.(setStdBitrate(stdBitrate || ""));
-        // dispatch?.(setMaxBitrate(maxBitrate || ""));
-
-        console.log("----customParams.waitingAreaText--customParams.meetingTitle-", customParams.waitingAreaText, customParams.meetingTitle)
+        console.log("----customParams.waitingAreaText--customParams.meetingTitle-", customParams.waitingAreaText, customParams.meetingTitle, customParams.lobyTitle, customParams.lobyDescription)
 
         dispatch?.(setWaitingText(customParams.waitingAreaText || ""));
 
         dispatch?.(setMeetingTitle(customParams.meetingTitle || ""));
+
+        dispatch?.(setLobyTitle(customParams.lobyTitle || ""));
+        dispatch?.(setLobyDescription(customParams.lobyDescription || ""));
 
         dispatch?.(setMinBitrate(customParams.minBitrate || 0));
         dispatch?.(setStdBitrate(customParams.stdBitrate || 0));

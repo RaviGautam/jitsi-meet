@@ -52,6 +52,12 @@ public class JitsiMeetConferenceOptions implements Parcelable {
     // set Title for meeting in jitsi room
     private String meetingTitle;
 
+    // set Title for lobby in jitsi room
+    private String lobyTitle;
+    
+    // set Title for lobby description in jitsi room
+    private String lobyDescription;
+
     private Integer minBitrate;
     private Integer stdBitrate;
     private Integer maxBitrate;
@@ -91,6 +97,13 @@ public class JitsiMeetConferenceOptions implements Parcelable {
         return meetingTitle;
     }
 
+    public String getLobyTitle() {
+        return lobyTitle;
+    }
+    public String getLobyDescription() {
+        return lobyDescription;
+    }
+
     public Integer getMinBitrate() {
         return minBitrate;
     }
@@ -118,6 +131,8 @@ public class JitsiMeetConferenceOptions implements Parcelable {
         private String token;
         private String waitingAreaText;
         private String meetingTitle;
+        private String lobyTitle;
+        private String lobyDescription;
         private Integer minBitrate;
         private Integer stdBitrate;
         private Integer maxBitrate;
@@ -182,9 +197,21 @@ public class JitsiMeetConferenceOptions implements Parcelable {
 
             return this;
         }
-
+       
         public Builder setMeetingTitle(String meetingTitle) {
             this.meetingTitle = meetingTitle;
+
+            return this;
+        }
+
+        public Builder setLobyTitle(String lobyTitle) {
+            this.lobyTitle = lobyTitle;
+
+            return this;
+        }
+
+        public Builder setLobyDescription(String lobyDescription) {
+            this.lobyDescription = lobyDescription;
 
             return this;
         }
@@ -308,6 +335,8 @@ public class JitsiMeetConferenceOptions implements Parcelable {
             options.token = this.token;
             options.waitingAreaText = this.waitingAreaText;
             options.meetingTitle = this.meetingTitle;
+            options.lobyTitle = this.lobyTitle;
+            options.lobyDescription = this.lobyDescription;
             options.minBitrate = this.minBitrate;
             options.stdBitrate = this.stdBitrate;
             options.maxBitrate = this.maxBitrate;
@@ -328,6 +357,8 @@ public class JitsiMeetConferenceOptions implements Parcelable {
         token = in.readString();
         waitingAreaText = in.readString();
         meetingTitle = in.readString();
+        lobyTitle = in.readString();
+        lobyDescription = in.readString();
         minBitrate = in.readInt();
         stdBitrate = in.readInt();
         maxBitrate = in.readInt();
@@ -369,6 +400,12 @@ public class JitsiMeetConferenceOptions implements Parcelable {
         }
         if (meetingTitle != null) {
             props.putString("meetingTitle", meetingTitle);
+        }
+        if (lobyTitle != null) {
+            props.putString("lobyTitle", lobyTitle);
+        }
+        if (lobyDescription != null) {
+            props.putString("lobyDescription", lobyDescription);
         }
 
         if (minBitrate != null) {
@@ -415,6 +452,8 @@ public class JitsiMeetConferenceOptions implements Parcelable {
         dest.writeString(token);
         dest.writeString(waitingAreaText);
         dest.writeString(meetingTitle);
+        dest.writeString(lobyTitle);
+        dest.writeString(lobyDescription);
         dest.writeInt(minBitrate);
         dest.writeInt(stdBitrate);
         dest.writeInt(maxBitrate);

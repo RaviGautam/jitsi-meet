@@ -68,6 +68,8 @@ import {
     SET_MAX_BITRATE,
     SET_MIN_BITRATE,
     SET_STD_BITRATE,
+    SET_LOBY_TITLE,
+    SET_LOBY_DISCRIPTION,
 } from "./actionTypes";
 import {
     authStatusChanged,
@@ -82,6 +84,8 @@ import {
     setMinBitrate,
     setStdBitrate,
     setMaxBitrate,
+    setLobyTitle,
+    setLobyDescription,
 } from "./actions";
 import { CONFERENCE_LEAVE_REASONS } from "./constants";
 import {
@@ -342,6 +346,8 @@ function _conferenceJoined(
         pendingSubjectChange,
         waitingText,
         meetingTitle,
+        lobyTitle,
+        lobyDescription,
         minBitrate,
         stdBitrate,
         maxBitrate
@@ -355,6 +361,8 @@ function _conferenceJoined(
 
     waitingText && dispatch(setWaitingText(waitingText));
     meetingTitle && dispatch(setMeetingTitle(meetingTitle));
+    lobyTitle && dispatch(setLobyTitle(lobyTitle));
+    lobyDescription && dispatch(setLobyDescription(lobyDescription));
     minBitrate && dispatch(setMinBitrate(minBitrate));
     stdBitrate && dispatch(setStdBitrate(stdBitrate));
     maxBitrate && dispatch(setMaxBitrate(maxBitrate));
@@ -567,6 +575,8 @@ function _conferenceSubjectChanged(
         subject,
         waitingText,
         meetingTitle,
+        lobyTitle,
+        lobyDescription,
         minBitrate,
         maxBitrate,
         stdBitrate,
@@ -591,6 +601,20 @@ function _conferenceSubjectChanged(
         dispatch({
             type: SET_MEETING_TITLE,
             meetingTitle: undefined,
+        });
+    }
+
+    if (lobyTitle) {
+        dispatch({
+            type: SET_LOBY_TITLE,
+            lobyTitle: undefined,
+        });
+    }
+
+    if (lobyDescription) {
+        dispatch({
+            type: SET_LOBY_DISCRIPTION,
+            lobyDescription: undefined,
         });
     }
 
@@ -862,6 +886,8 @@ function _updateLocalParticipantInConference(
                 subject,
                 waitingText,
                 meetingTitle,
+                lobyTitle,
+                lobyDescription,
                 minBitrate,
                 stdBitrate,
                 maxBitrate,
@@ -884,6 +910,16 @@ function _updateLocalParticipantInConference(
             if (typeof meetingTitle !== "undefined") {
                 console.log("--customText--707-", meetingTitle);
                 dispatch(setMeetingTitle(meetingTitle));
+            }
+
+            if (typeof lobyTitle !== "undefined") {
+                console.log("--customText--707-", lobyTitle);
+                dispatch(setLobyTitle(lobyTitle));
+            }
+
+            if (typeof lobyDescription !== "undefined") {
+                console.log("--customText--707-", lobyDescription);
+                dispatch(setLobyDescription(lobyDescription));
             }
 
             if (typeof minBitrate !== "undefined") {

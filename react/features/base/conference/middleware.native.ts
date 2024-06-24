@@ -26,6 +26,7 @@ MiddlewareRegistry.register(store => next => action => {
         ];
 
         dispatch(notifyConferenceFailed(reasonKey, () => {
+            console.log("--appNavigate--29--")
             dispatch(conferenceLeft(action.conference));
             dispatch(appNavigate(undefined));
         }));

@@ -30,6 +30,8 @@ const extractCustomParams = (initialProps) => {
             maxBitrate: initialProps.maxBitrate,
             meetingTitle: initialProps.meetingTitle,
             waitingAreaText: initialProps.waitingAreaText,
+            lobyTitle: initialProps.lobyTitle,
+            lobyDescription: initialProps.lobyDescription
         };
     } else {
         // Handle other platforms if needed
@@ -44,15 +46,19 @@ class Root extends PureComponent {
      * @returns {ReactElement}
      */
     componentDidMount() {
-        // console.log("--this.props---", this.props.url.config);
-        // const { minBitrate, stdBitrate, maxBitrate } = this.props;
-        // this.saveBitrateValues(minBitrate, stdBitrate, maxBitrate);
-
-        // Extract custom parameters based on platform
         const customParams = extractCustomParams(this.props);
         console.log("--customParams---", customParams);
-        const { minBitrate, stdBitrate, maxBitrate } = customParams;
+        const {
+            minBitrate,
+            stdBitrate,
+            maxBitrate,
+            meetingTitle,
+            waitingAreaText,
+            lobyTitle,
+            lobyDescription
+        } = customParams;
         this.saveBitrateValues(minBitrate, stdBitrate, maxBitrate);
+        this.saveTitleValues(meetingTitle, waitingAreaText, lobyTitle, lobyDescription);
     }
 
     async saveBitrateValues(minBitrate, stdBitrate, maxBitrate) {
@@ -70,6 +76,22 @@ class Root extends PureComponent {
             console.error("Error saving bitrate values:", error);
         }
     }
+
+    async saveTitleValues(meetingTitle, waitingAreaText, lobyTitle,lobyDescription) {
+        console.log(
+            "--meetingTitle, waitingAreaText---",
+            meetingTitle, waitingAreaText,"--lobyTitle,lobyDescription--", lobyTitle,lobyDescription
+        );
+        try {
+            await AsyncStorage.setItem("meetingTitle", meetingTitle.toString());
+            await AsyncStorage.setItem("waitingText", waitingAreaText.toString());
+            await AsyncStorage.setItem("lobyTitle", lobyTitle.toString());
+            await AsyncStorage.setItem("lobyDescription", lobyDescription.toString());
+        } catch (error) {
+            console.error("Error saving bitrate values:", error);
+        }
+    }
+
     render() {
         return <App {...this.props} />;
     }

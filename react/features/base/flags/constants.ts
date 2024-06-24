@@ -291,6 +291,12 @@ export const WAITING_AREA_TEXT = 'waitingAreaText.enabled';
 // set meeting title
 export const MEETING_TITLE = 'meetingTitle.enabled';
 
+// set loby title
+export const LOBY_TITLE = 'lobyTitle.enabled';
+
+// set loby Description
+export const LOBY_DESCRIPTION = 'lobyDescription.enabled';
+
 // set backButtonHandler
 export const BACK_BUTTON_HANDLER = 'backButtonHandler.enabled';
 

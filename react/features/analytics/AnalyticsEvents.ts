@@ -1001,6 +1001,22 @@ export function createMeetingTitleEvent() {
     };
 }
 
+//Set loby title
+
+export function createLobyTitleEvent() {
+    return {
+        action: 'lobyTitle'
+    };
+}
+
+//Set loby description
+
+export function createLobyDescriptionEvent() {
+    return {
+        action: 'lobyDescription'
+    };
+}
+
 export function createMinBitrateEvent() {
     return {
         action: 'minBitrate'

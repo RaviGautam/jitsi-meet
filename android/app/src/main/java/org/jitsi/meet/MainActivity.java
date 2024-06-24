@@ -30,6 +30,7 @@ import android.view.KeyEvent;
 
 import androidx.annotation.Nullable;
 
+import org.jitsi.meet.sdk.BuildConfig;
 import org.jitsi.meet.sdk.JitsiMeet;
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
@@ -91,7 +92,7 @@ public class MainActivity extends JitsiMeetActivity {
 
     @Override
     protected boolean extraInitialize() {
-        Log.d(this.getClass().getSimpleName(), "LIBRE_BUILD="+BuildConfig.LIBRE_BUILD);
+        Log.d(this.getClass().getSimpleName(), "LIBRE_BUILD="+ BuildConfig.LIBRE_BUILD);
 
         // Setup Crashlytics and Firebase Dynamic Links
         // Here we are using reflection since it may have been disabled at compile time.
@@ -157,6 +158,8 @@ public class MainActivity extends JitsiMeetActivity {
             .setServerURL(buildURL(defaultURL))
             .setWaitingAreaText("Please wait... in waiting area while meeting starting.") // set custom Text for waiting area
             .setMeetingTitle("My Title") // set meeting title
+            .setLobyTitle("Lobby Title") // set lobby title
+            .setLobyDescription("Lobby Description")  // set lobby description
             .setFeatureFlag("backButtonHandler.enabled", true) // set back button on meeting room
             .setFeatureFlag("directJoin.enabled", true) // set Lobby screen disabled or enabled
             .setFeatureFlag("endMeetingOptions.enabled", true) // set options for end meeting

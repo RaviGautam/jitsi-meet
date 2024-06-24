@@ -223,6 +223,8 @@ export default [
     'subject',
     'WaitingText',
     'meetingTitle',
+    'lobyTitle',
+    'lobyDescription',
     'testing',
     'toolbarButtons',
     'toolbarConfig',

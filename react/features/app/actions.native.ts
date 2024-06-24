@@ -252,6 +252,7 @@ export function maybeRedirectToWelcomePage(_options?: any): any {
  * @returns {Function}
  */
 export function reloadNow() {
+    console.log("---Hiiiiii---")
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const state = getState();
         const { locationURL } = state["features/base/connection"];

@@ -220,7 +220,7 @@ export class AbstractWelcomePage<P extends IProps> extends Component<
      * @returns {void}
      */
     _onJoin() {
-        console.log("clicked")
+        console.log("-----clicked---")
         const room = this.state.room || this.state.generatedRoomName;
         console.log("---room---209--", room, this.state.generatedRoomName,this.state.room);
 

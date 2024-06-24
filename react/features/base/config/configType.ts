@@ -643,6 +643,14 @@ export interface IConfig {
         meetingTitle?: string;
         disabled?: boolean;
     };
+    TextForLobyTitle?: {
+        lobyTitle?: string;
+        disabled?: boolean;
+    };
+    TextForLobyDescription?: {
+        lobyDescription?: string;
+        disabled?: boolean;
+    };
     minBitrateValue?: {
         minBitrate?: number;
         disabled?: boolean;

@@ -76,6 +76,8 @@ import {
     SET_START_MUTED_POLICY,
     SET_START_REACTIONS_MUTED,
     UPDATE_CONFERENCE_METADATA,
+    SET_LOBY_TITLE,
+    SET_LOBY_DISCRIPTION,
 } from "./actionTypes";
 import {
     AVATAR_URL_COMMAND,
@@ -1180,6 +1182,38 @@ export function setMeetingTitle(meetingTitle: string | undefined) {
             dispatch({
                 type: SET_MEETING_TITLE,
                 meetingTitle,
+            });
+        }
+    };
+}
+
+export function setLobyTitle(lobyTitle: string | undefined) {
+    console.log("--lobyTitle---", lobyTitle);
+    return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
+        const { conference } = getState()["features/base/conference"];
+
+        if (conference) {
+            conference.setLobyTitle(lobyTitle || "");
+        } else {
+            dispatch({
+                type: SET_LOBY_TITLE,
+                lobyTitle,
+            });
+        }
+    };
+}
+
+export function setLobyDescription(lobyDescription: string | undefined) {
+    console.log("--lobyDescription---", lobyDescription);
+    return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
+        const { conference } = getState()["features/base/conference"];
+
+        if (conference) {
+            conference.setLobyDescription(lobyDescription || "");
+        } else {
+            dispatch({
+                type: SET_LOBY_DISCRIPTION,
+                lobyDescription,
             });
         }
     };

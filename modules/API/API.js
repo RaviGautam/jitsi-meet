@@ -26,7 +26,9 @@ import {
     setMeetingTitle,
     setMinBitrate,
     setStdBitrate,
-    setMaxBitrate
+    setMaxBitrate,
+    setLobyTitle,
+    setLobyDescription
 } from '../../react/features/base/conference/actions';
 import { getCurrentConference, isP2pActive } from '../../react/features/base/conference/functions';
 import { overwriteConfig } from '../../react/features/base/config/actions';
@@ -375,6 +377,14 @@ function initCommands() {
         'meetingTitle': meetingTitle => {
             sendAnalytics(createApiEvent('meetingTitle.changed'));
             APP.store.dispatch(setMeetingTitle(meetingTitle));
+        },
+        'lobyTitle': lobyTitle => {
+            sendAnalytics(createApiEvent('lobyTitle.changed'));
+            APP.store.dispatch(setLobyTitle(lobyTitle));
+        },
+        'lobyDescription': lobyDescription => {
+            sendAnalytics(createApiEvent('lobyDescription.changed'));
+            APP.store.dispatch(setLobyDescription(lobyDescription));
         },
         'minBitrate': minBitrate => {
             sendAnalytics(createApiEvent('minBitrate.changed'));
