@@ -54,6 +54,7 @@ android {
             //signingConfig signingConfigs.debug
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-release.pro'
+            consumerProguardFiles 'proguard-project.txt'
             buildConfigField "boolean", "GOOGLE_SERVICES_ENABLED", "${googleServicesEnabled}"
             buildConfigField "boolean", "LIBRE_BUILD", "${rootProject.ext.libreBuild}"
         }

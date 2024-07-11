@@ -128,11 +128,7 @@ export class App extends AbstractApp<IProps> {
      */
     async _extraInit() {
         const { dispatch, getState } = this.state.store ?? {};
-        const {
-            flags = {},
-            url,
-            userInfo,
-        } = this.props;
+        const { flags = {}, url, userInfo } = this.props;
 
         // Function to extract custom parameters based on platform
         const extractCustomParams = (props) => {
@@ -148,7 +144,7 @@ export class App extends AbstractApp<IProps> {
                     waitingAreaText: props.waitingAreaText,
                     meetingTitle: props.meetingTitle,
                     lobyTitle: props.lobyTitle,
-                    lobyDescription: props.lobyDescription
+                    lobyDescription: props.lobyDescription,
                 };
             } else {
                 // Handle other platforms if needed
@@ -217,7 +213,13 @@ export class App extends AbstractApp<IProps> {
         // @ts-ignore
         dispatch?.(updateSettings(userInfo || {}));
 
-        console.log("----customParams.waitingAreaText--customParams.meetingTitle-", customParams.waitingAreaText, customParams.meetingTitle, customParams.lobyTitle, customParams.lobyDescription)
+        console.log(
+            "----customParams.waitingAreaText--customParams.meetingTitle-",
+            customParams.waitingAreaText,
+            customParams.meetingTitle,
+            customParams.lobyTitle,
+            customParams.lobyDescription
+        );
 
         dispatch?.(setWaitingText(customParams.waitingAreaText || ""));
 

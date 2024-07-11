@@ -1,6 +1,6 @@
 {
     "name": "react-native-sdk-fmtech",
-    "version": "4.0.9",
+    "version": "4.1.4",
     "description": "React Native SDK for Jitsi Meet.",
     "main": "index.tsx",
     "license": "Apache-2.0",
@@ -76,7 +76,7 @@
         "react-native-svg": "13.13.0",
         "react-native-video": "6.0.0-alpha.11",
         "react-native-watch-connectivity": "1.1.0",
-        "react-native-webrtc": "118.0.3",
+        "react-native-webrtc": "124.0.3",
         "react-native-webview": "13.5.1",
         "text-encoding": "0.7.0"
     },

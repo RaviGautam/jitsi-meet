@@ -144,6 +144,9 @@ export interface IJitsiConference {
     setMeetingTitle: Function;
     setLobyTitle: Function;
     setLobyDescription: Function;
+    setMinBitrate: Function;
+    setStdBitrate: Function;
+    setMaxBitrate: Function;
     setDesktopSharingFrameRate: Function;
     setDisplayName: Function;
     setLocalParticipantProperty: Function;

@@ -124,6 +124,7 @@ export function setPreferredVideoQuality(preferredVideoQuality: number) {
  */
 export function setVideoQuality(frameHeight: number) {
     return (dispatch: IStore['dispatch']) => {
+        console.log("---VIDEO_QUALITY_LEVELS.LOW----", frameHeight, VIDEO_QUALITY_LEVELS.LOW, "---MAX_VIDEO_QUALITY---", MAX_VIDEO_QUALITY)
         if (frameHeight < VIDEO_QUALITY_LEVELS.LOW) {
             logger.error(`Invalid frame height for video quality - ${frameHeight}`);
 
