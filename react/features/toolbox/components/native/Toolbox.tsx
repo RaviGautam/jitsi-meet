@@ -160,13 +160,14 @@ function Toolbox(props: IProps) {
                         toggledStyles={toggledButtonStyles}
                     />
                 )}
-                {_numberOfParticipants > 2 &&
-                !_isEndMeetingOptions &&
-                _endConferenceSupported ? (
-                    <HangupMenuButton />
-                ) : (
-                    <HangupButton styles={hangupButtonStyles} />
-                )}
+                {
+                    // _numberOfParticipants > 1 && || _endConferenceSupported
+                    !_isEndMeetingOptions  ? (
+                        <HangupMenuButton />
+                    ) : (
+                        <HangupButton styles={hangupButtonStyles} />
+                    )
+                }
             </SafeAreaView>
         </View>
     );
@@ -185,7 +186,6 @@ function _mapStateToProps(state: IReduxState) {
     const { conference } = state["features/base/conference"];
     const endConferenceSupported = conference?.isEndConferenceSupported();
     const numberOfParticipants = conference?.getParticipantCount();
-    console.log("---getParticipantCount---", numberOfParticipants);
 
     return {
         _endConferenceSupported: Boolean(endConferenceSupported),

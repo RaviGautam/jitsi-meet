@@ -23,7 +23,7 @@ import {
     DIRECT_JOIN_MEETING_ENABLED,
     FULLSCREEN_ENABLED,
     PIP_ENABLED,
-    END_MEETING_OPTIONS
+    END_MEETING_OPTIONS,
 } from "../../../base/flags/constants";
 import { getFeatureFlag } from "../../../base/flags/functions";
 import Container from "../../../base/react/components/native/Container";
@@ -166,10 +166,9 @@ interface IProps extends AbstractProps {
      */
     navigation: any;
 
-
-    /*** 
+    /***
      * Get direct join flag from mainactivity
-    */
+     */
     _isDirectJoin: boolean;
 }
 
@@ -237,14 +236,15 @@ class Conference extends AbstractConference<IProps, State> {
      * @inheritdoc
      */
     componentDidUpdate(prevProps: IProps) {
-        const { _audioOnlyEnabled, _showLobby, _startCarMode, _isDirectJoin } = this.props;
+        const { _audioOnlyEnabled, _showLobby, _startCarMode, _isDirectJoin } =
+            this.props;
 
         if (!prevProps._showLobby && _showLobby && !_isDirectJoin) {
-            console.log("---lobby----")
+            console.log("---lobby----");
             navigate(screen.lobby.root);
         }
 
-        if (prevProps._showLobby && !_showLobby ) {
+        if (prevProps._showLobby && !_showLobby) {
             console.log("---conference----");
             if (_audioOnlyEnabled && _startCarMode) {
                 return;
@@ -314,7 +314,10 @@ class Conference extends AbstractConference<IProps, State> {
      * @returns {boolean} Exiting the app is undesired, so {@code true} is always returned.
      */
     _onHardwareBackPress() {
-        console.log("--_isBackButtonEnabled-----", this.props._isBackButtonEnabled);
+        console.log(
+            "--_isBackButtonEnabled-----",
+            this.props._isBackButtonEnabled
+        );
         if (this.props._isBackButtonEnabled) {
             const { PictureInPicture } = NativeModules;
             console.log("----if---", PictureInPicture);

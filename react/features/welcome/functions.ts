@@ -1,5 +1,17 @@
 import { IStateful } from "../base/app/types";
-import { MEETING_TITLE, WAITING_AREA_TEXT, WELCOME_PAGE_ENABLED, BACK_BUTTON_HANDLER, DIRECT_JOIN_MEETING_ENABLED, STD_BITRATE, MIN_BITRATE, MAX_BITRATE, LOBY_TITLE, LOBY_DESCRIPTION } from "../base/flags/constants";
+import {
+    MEETING_TITLE,
+    WAITING_AREA_TEXT,
+    WELCOME_PAGE_ENABLED,
+    BACK_BUTTON_HANDLER,
+    DIRECT_JOIN_MEETING_ENABLED,
+    STD_BITRATE,
+    MIN_BITRATE,
+    MAX_BITRATE,
+    LOBY_TITLE,
+    LOBY_DESCRIPTION,
+    END_MEETING_OPTIONS,
+} from "../base/flags/constants";
 import { getFeatureFlag } from "../base/flags/functions";
 import { toState } from "../base/redux/functions";
 
@@ -41,7 +53,6 @@ export function isBackButtonHandlerEnabled(stateful: IStateful) {
     return !config.backButtonHandler?.disabled;
 }
 
-
 export function isEndMeetingOptionsHandlerEnabled(stateful: IStateful) {
     if (navigator.product === "ReactNative") {
         return getFeatureFlag(stateful, END_MEETING_OPTIONS, false);
@@ -65,11 +76,7 @@ export function getCustomLandingPageURL(stateful: IStateful) {
 
 export function isWaitingAreaTextEnabled(stateful: IStateful) {
     if (navigator.product === "ReactNative") {
-        return getFeatureFlag(
-            stateful,
-            WAITING_AREA_TEXT,
-            false
-        );
+        return getFeatureFlag(stateful, WAITING_AREA_TEXT, false);
     }
 
     const config = toState(stateful)["features/base/config"];
@@ -78,16 +85,11 @@ export function isWaitingAreaTextEnabled(stateful: IStateful) {
     // return toState(stateful)['features/base/config'].TextForWaitingArea?.waitingText;
 }
 
-
 // set meeting title
 
 export function isMeetingTitleEnabled(stateful: IStateful) {
     if (navigator.product === "ReactNative") {
-        return getFeatureFlag(
-            stateful,
-            MEETING_TITLE,
-            false
-        );
+        return getFeatureFlag(stateful, MEETING_TITLE, false);
     }
 
     const config = toState(stateful)["features/base/config"];
@@ -98,11 +100,7 @@ export function isMeetingTitleEnabled(stateful: IStateful) {
 // set loby title
 export function isLobyTitleTextEnabled(stateful: IStateful) {
     if (navigator.product === "ReactNative") {
-        return getFeatureFlag(
-            stateful,
-            LOBY_TITLE,
-            false
-        );
+        return getFeatureFlag(stateful, LOBY_TITLE, false);
     }
 
     const config = toState(stateful)["features/base/config"];
@@ -113,11 +111,7 @@ export function isLobyTitleTextEnabled(stateful: IStateful) {
 // set loby description
 export function isLobyDescriptionTextEnabled(stateful: IStateful) {
     if (navigator.product === "ReactNative") {
-        return getFeatureFlag(
-            stateful,
-            LOBY_DESCRIPTION,
-            false
-        );
+        return getFeatureFlag(stateful, LOBY_DESCRIPTION, false);
     }
 
     const config = toState(stateful)["features/base/config"];
@@ -128,11 +122,7 @@ export function isLobyDescriptionTextEnabled(stateful: IStateful) {
 // set Min bitrate
 export function isMinBitrateEnabled(stateful: IStateful) {
     if (navigator.product === "ReactNative") {
-        return getFeatureFlag(
-            stateful,
-            MIN_BITRATE,
-            false
-        );
+        return getFeatureFlag(stateful, MIN_BITRATE, false);
     }
 
     const config = toState(stateful)["features/base/config"];
@@ -143,11 +133,7 @@ export function isMinBitrateEnabled(stateful: IStateful) {
 // set Std bitrate
 export function isStdBitrateEnabled(stateful: IStateful) {
     if (navigator.product === "ReactNative") {
-        return getFeatureFlag(
-            stateful,
-            STD_BITRATE,
-            false
-        );
+        return getFeatureFlag(stateful, STD_BITRATE, false);
     }
 
     const config = toState(stateful)["features/base/config"];
@@ -158,11 +144,7 @@ export function isStdBitrateEnabled(stateful: IStateful) {
 // set max bitrate
 export function isMaxBitrateEnabled(stateful: IStateful) {
     if (navigator.product === "ReactNative") {
-        return getFeatureFlag(
-            stateful,
-            MAX_BITRATE,
-            false
-        );
+        return getFeatureFlag(stateful, MAX_BITRATE, false);
     }
 
     const config = toState(stateful)["features/base/config"];

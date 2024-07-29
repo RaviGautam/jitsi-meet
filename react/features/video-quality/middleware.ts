@@ -41,8 +41,7 @@ MiddlewareRegistry.register(({ dispatch, getState }) => (next) => (action) => {
             //     state["features/base/conference"];
             const { persistedPrefferedVideoQuality } =
                 state["features/video-quality-persistent-storage"];
-            console.log("---videoQuality--35--", videoQuality);
-        
+
             if (
                 videoQuality.persist &&
                 typeof persistedPrefferedVideoQuality !== "undefined"
