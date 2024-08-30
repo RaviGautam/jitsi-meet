@@ -165,8 +165,9 @@ function _addConferenceListeners(
 
     conference.on(
         JitsiConferenceEvents.PARTICIPANT_KICKED,
-        (kicker: any, kicked: any) =>
-            dispatch(participantKicked(kicker, kicked))
+        (kicker: any, kicked: any) => {
+            dispatch(participantKicked(kicker, kicked));
+        }
     );
 
     conference.on(
@@ -771,6 +772,140 @@ export function endpointMessageReceived(participant: Object, data: Object) {
 //     };
 // }
 
+// export function endConference() {
+//     return async (
+//         dispatch: IStore["dispatch"],
+//         getState: IStore["getState"]
+//     ) => {
+//         const state = toState(getState());
+//         const { conference } = getConferenceState(state);
+
+//         if (conference) {
+//             const participants = conference.getParticipants();
+//             if (Array.isArray(participants) || participants instanceof Map) {
+//                 for (const [key, participant] of participants.entries()) {
+//                     console.log("---participant---", participant)
+//                     if (participant._conference.room != null) {
+//                         await AsyncStorage.setItem(
+//                             "Kicker",
+//                             participant._conference.room.myroomjid
+//                         );
+//                     }
+
+//                     if (participant && participant.getId) {
+//                         try {
+//                             console.log(
+//                                 `Kicking out participant: ${participant.getId()}`
+//                             );
+//                             conference.kickParticipant(participant.getId());
+//                         } catch (error) {
+//                             console.log(
+//                                 `Failed to kick out participant: ${error}`
+//                             );
+//                             // console.error(
+//                             //     `Failed to kick out participant: ${error}`
+//                             // );
+//                         }
+//                     } else {
+//                         console.warn(
+//                             "Encountered an invalid participant:",
+//                             participant
+//                         );
+//                     }
+//                 }
+//             } else {
+//                 console.error(
+//                     "Participants is neither an array nor a map:",
+//                     participants
+//                 );
+//             }
+
+//             try {
+//                 await conference.end();
+//                 dispatch(appNavigate(undefined));
+//             } catch (error) {
+//                 console.error("Failed to end the conference:", error);
+//             }
+//         } else {
+//             dispatch(appNavigate(undefined));
+//             console.log("No active conference found.");
+//         }
+//     };
+// }
+
+
+// export function endConference() {
+//     return async (dispatch, getState) => {
+//         const state = toState(getState());
+//         const { conference } = getConferenceState(state);
+
+//         if (conference) {
+//             const participants = conference.getParticipants();
+
+//             if (Array.isArray(participants) || participants instanceof Map) {
+//                 const kickedParticipantIds = new Set();
+
+//                 for (const participant of participants.values()) {
+//                     const participantId = participant.getId?.();
+
+//                     if (kickedParticipantIds.has(participantId)) {
+//                         console.warn(`Participant ${participantId} has already been kicked.`);
+//                         continue;
+//                     }
+
+//                     const room = participant?._conference?.room;
+
+//                     if (!room || !room.myroomjid) {
+//                         console.log("Participant's room or roomJid is null or undefined for participant:", participantId);
+//                         continue; // Skip invalid participant
+//                     }
+
+//                     try {
+//                         await AsyncStorage.setItem("Kicker", room.myroomjid);
+//                     } catch (error) {
+//                         console.log("Failed to save kicker information:", error);
+//                     }
+
+//                     try {
+//                         console.log(`Kicking out participant: ${participantId}`);
+//                         await conference.kickParticipant(participantId);
+
+//                         // Wait for a moment to allow the participant to be removed
+//                         await new Promise(resolve => setTimeout(resolve, 5000));
+
+//                         const kickedParticipant = conference.getParticipantById(participantId);
+//                         if (kickedParticipant) {
+//                             console.warn(`Participant ${participantId} is still in the conference after kicking.`);
+//                         } else {
+//                             console.log(`Participant ${participantId} successfully kicked.`);
+//                         }
+
+//                         kickedParticipantIds.add(participantId);
+//                     } catch (error) {
+//                         console.log(`Failed to kick out participant ${participantId}: ${error}`);
+//                     }
+//                 }
+
+//                 // Wait a moment before ending the conference to ensure all participants are kicked
+//                 setTimeout(async () => {
+//                     try {
+//                         console.log("Ending conference");
+//                         await conference.end();
+//                         dispatch(appNavigate(undefined));
+//                     } catch (error) {
+//                         console.log("Failed to end the conference:", error);
+//                     }
+//                 }, 5000);
+//             } else {
+//                 console.warn("Participants is neither an array nor a map:", participants);
+//             }
+//         } else {
+//             console.warn("No active conference found.");
+//             dispatch(appNavigate(undefined));
+//         }
+//     };
+// }
+
 export function endConference() {
     return async (
         dispatch: IStore["dispatch"],
@@ -825,6 +960,8 @@ export function endConference() {
         }
     };
 }
+
+
 
 /**
  * Signals that we've been kicked out of the conference.
@@ -1156,7 +1293,7 @@ export function setSubject(subject: string | undefined) {
 }
 
 export function setWaitingText(waitingText: string | undefined) {
-    console.log("--waitingText---", waitingText);
+
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const { conference } = getState()["features/base/conference"];
 
@@ -1172,7 +1309,7 @@ export function setWaitingText(waitingText: string | undefined) {
 }
 
 export function setMeetingTitle(meetingTitle: string | undefined) {
-    console.log("--meetingTitle---", meetingTitle);
+    
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const { conference } = getState()["features/base/conference"];
 
@@ -1188,7 +1325,7 @@ export function setMeetingTitle(meetingTitle: string | undefined) {
 }
 
 export function setLobyTitle(lobyTitle: string | undefined) {
-    console.log("--lobyTitle---", lobyTitle);
+   
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const { conference } = getState()["features/base/conference"];
 
@@ -1204,7 +1341,6 @@ export function setLobyTitle(lobyTitle: string | undefined) {
 }
 
 export function setLobyDescription(lobyDescription: string | undefined) {
-    console.log("--lobyDescription---", lobyDescription);
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const { conference } = getState()["features/base/conference"];
 
@@ -1220,7 +1356,7 @@ export function setLobyDescription(lobyDescription: string | undefined) {
 }
 
 export function setMinBitrate(minBitrate: number | undefined) {
-    console.log("--minBitrate---", minBitrate);
+   
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const { conference } = getState()["features/base/conference"];
 
@@ -1236,7 +1372,7 @@ export function setMinBitrate(minBitrate: number | undefined) {
 }
 
 export function setStdBitrate(stdBitrate: number | undefined) {
-    console.log("--stdBitrate---", stdBitrate);
+   
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const { conference } = getState()["features/base/conference"];
 
@@ -1252,7 +1388,7 @@ export function setStdBitrate(stdBitrate: number | undefined) {
 }
 
 export function setMaxBitrate(maxBitrate: number | undefined) {
-    console.log("--maxBitrate---", maxBitrate);
+    
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const { conference } = getState()["features/base/conference"];
 

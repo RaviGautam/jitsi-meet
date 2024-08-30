@@ -1116,6 +1116,7 @@ export default {
      * @return {boolean} whether the participant is moderator
      */
     isParticipantModerator(id) {
+        console.log("--id--1119", id);
         const user = room.getParticipantById(id);
 
         return user && user.isModerator();
@@ -1361,11 +1362,12 @@ export default {
     },
 
     _createRoom(localTracks) {
+        console.log("--localTracks-1365-", localTracks)
         room = APP.connection.initJitsiConference(
             APP.conference.roomName,
             this._getConferenceOptions()
         );
-
+        console.log("--room-1370-", room)
         // Filter out the tracks that are muted (except on Safari).
         let tracks = localTracks;
 
@@ -1850,16 +1852,19 @@ export default {
         });
 
         room.on(JitsiConferenceEvents.USER_ROLE_CHANGED, (id, role) => {
+            console.log("--id, role--", id, role);
             if (this.isLocalId(id)) {
                 logger.info(`My role changed, new role: ${role}`);
 
                 if (role === "moderator") {
+                    console.log("--moderator--1859");
                     APP.store.dispatch(maybeSetLobbyChatMessageListener());
                 }
-
+                console.log("--participents--1862");
                 APP.store.dispatch(localParticipantRoleChanged(role));
                 APP.API.notifyUserRoleChanged(id, role);
             } else {
+                console.log("--participantRoleChanged--1866");
                 APP.store.dispatch(participantRoleChanged(id, role));
             }
         });
@@ -1970,8 +1975,8 @@ export default {
         room.on(
             JitsiConferenceEvents.DISPLAY_NAME_CHANGED,
             (id, displayName) => {
-                const formattedDisplayName =
-                    getNormalizedDisplayName(displayName);
+                console.log("--id, displayName--", id, displayName)
+                const formattedDisplayName = getNormalizedDisplayName(displayName);
                 const state = APP.store.getState();
                 const { defaultRemoteDisplayName } =
                     state["features/base/config"];

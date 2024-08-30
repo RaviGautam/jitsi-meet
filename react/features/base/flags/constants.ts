@@ -303,6 +303,9 @@ export const BACK_BUTTON_HANDLER = 'backButtonHandler.enabled';
 // set direct join jitsi
 export const DIRECT_JOIN_MEETING_ENABLED = 'directJoin.enabled';
 
+// set moderator join jitsi
+export const MODERATOR_OPTION = 'moderatorOption.enabled';
+
 // set options for end meeting
 export const END_MEETING_OPTIONS = 'endMeetingOptions.enabled';
 

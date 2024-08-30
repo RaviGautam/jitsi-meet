@@ -922,6 +922,14 @@ export function createDirectJoinMeetingEvent(action: string, actionSubject?: str
     };
 }
 
+export function createModeratorEnableEvent(action: string, actionSubject?: string, attributes = {}) {
+    return {
+        action: 'moderatorEnable',
+        actionSubject,
+        attributes,
+        source: 'moderatorEnable',
+    };
+}
 /**
  * Creates an event which indicates a screenshot of the screensharing has been taken.
  *
@@ -1034,3 +1042,5 @@ export function createMaxBitrateEvent() {
         action: 'maxBitrate'
     };
 }
+
+

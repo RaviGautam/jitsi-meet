@@ -37,14 +37,15 @@
         [builder setFeatureFlag:@"welcomepage.enabled" withBoolean:YES];
         [builder setFeatureFlag:@"backButtonHandler.enabled" withBoolean:YES]; // set back button on meeting room
         [builder setFeatureFlag:@"directJoin.enabled" withBoolean:YES]; // set Lobby screen disabled or enabled
+        [builder setFeatureFlag:@"moderatorOption.enabled" withBoolean:YES]; // set moderator options disabled or enabled
         [builder setFeatureFlag:@"endMeetingOptions.enabled" withBoolean:YES]; // set options for end meeting
         [builder setFeatureFlag:@"resolution" withValue:@(360)];
         [builder setFeatureFlag:@"ios.screensharing.enabled" withBoolean:YES];
         [builder setFeatureFlag:@"ios.recording.enabled" withBoolean:YES];
         [builder setWaitingAreaText:@"Please wait... in waiting area while meeting starting."]; // set custom text for waiting area
-        [builder setMeetingTitle:@"My Title" ]; // set meeting title
-        [builder setLobyTitle:@"Lobby Title" ]; // set lobby title
-        [builder setLobyDescription:@"Lobby Description" ]; // set lobby description
+        [builder setMeetingTitle:@"My Title"]; // set meeting title
+        [builder setLobyTitle:@"Lobby Title"]; // set lobby title
+        [builder setLobyDescription:@"Lobby Description"]; // set lobby description
         [builder setMinBitrate:@(100000)]; // set minimum bitrate
         [builder setStdBitrate:@(300000) ]; // set standard bitrate
         [builder setMaxBitrate:@(1000000) ]; // set maximum bitrate

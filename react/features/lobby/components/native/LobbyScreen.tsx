@@ -56,7 +56,6 @@ class LobbyScreen extends AbstractLobbyScreen<IProps> {
      */
     render() {
         const { _aspectRatio, _roomName, _meetingTitle } = this.props;
-        console.log(this.props, "----props----");
         let contentWrapperStyles;
         let contentContainerStyles;
         let largeVideoContainerStyles;
@@ -299,7 +298,7 @@ class LobbyScreen extends AbstractLobbyScreen<IProps> {
 function _mapStateToProps(state: IReduxState) {
     const { lobyTitle, lobyDescription, meetingTitle } =
         state["features/base/conference"];
-    console.log("---lobyTitle--282", lobyTitle);
+    
     return {
         ...abstractMapStateToProps(state),
         _aspectRatio: state["features/base/responsive-ui"].aspectRatio,

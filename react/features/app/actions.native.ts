@@ -66,15 +66,15 @@ export function appNavigate(
     ) => {
         let location = parseURIString(uri);
 
-        // console.log("----location---", location);
         // If the specified location (URI) does not identify a host, use the app's
         // default.
         if (!location?.host) {
+            console.log("--location?.host-73-")
             const defaultLocation = parseURIString(getDefaultURL(getState));
 
             if (location) {
                 location.host = defaultLocation.host;
-
+                console.log("--location?.host-78-")
                 // FIXME Turn location's host, hostname, and port properties into
                 // setters in order to reduce the risks of inconsistent state.
                 location.hostname = defaultLocation.hostname;
@@ -84,6 +84,7 @@ export function appNavigate(
                 location.protocol = defaultLocation.protocol;
             } else {
                 location = defaultLocation;
+                console.log("--location-88-")
             }
         }
 
@@ -91,14 +92,18 @@ export function appNavigate(
         const { contextRoot, host, hostname, pathname, room } = location;
         const locationURL = new URL(location.toString());
         const { conference } = getConferenceState(getState());
+        console.log("--contextRoot, host, hostname, pathname, room --", contextRoot, host, hostname, pathname, room )
 
         if (room) {
             if (conference) {
                 // We need to check if the location is the same with the previous one.
                 const currentLocationURL =
                     conference?.getConnection()[JITSI_CONNECTION_URL_KEY];
+                    console.log("--currentLocationURL--", currentLocationURL )
                 const { hostname: currentHostName, pathname: currentPathName } =
                     currentLocationURL;
+                    console.log("--currentHostName--", currentHostName,hostname )
+                    console.log("--currentPathName--", currentPathName,pathname )
 
                 if (
                     currentHostName === hostname &&
@@ -107,10 +112,13 @@ export function appNavigate(
                     logger.warn(
                         `Joining same conference using URL: ${currentLocationURL}`
                     );
-
+                    console.log(
+                        `Joining same conference using URL: ${currentLocationURL}`
+                    );
                     return;
                 }
             } else {
+                console.log("--hostname-114-", hostname, host, room);
                 navigateRoot(screen.connecting, {
                     roomId: room,
                     hostname: hostname,
@@ -198,13 +206,13 @@ export function appNavigate(
         dispatch(createDesiredLocalTracks());
         dispatch(clearNotifications());
         if (_isDirectJoin) {
-            console.log("----directjoin---201")
+            console.log("----directjoin---201");
             dispatch(connect());
             navigateRoot(screen.conference.root);
 
             return;
         } else {
-            console.log("----prejoin---206")
+            console.log("----prejoin---206");
             navigateRoot(screen.preJoin);
         }
 
@@ -217,11 +225,11 @@ export function appNavigate(
             } else {
                 // navigateRoot(screen.preJoin);
                 if (_isDirectJoin) {
-                    console.log("----directjoin---220")
+                    console.log("----directjoin---220");
                     dispatch(connect());
                     navigateRoot(screen.conference.root);
                 } else {
-                    console.log("----prejoin---222")
+                    console.log("----prejoin---222");
                     navigateRoot(screen.preJoin);
                 }
             }
@@ -252,7 +260,6 @@ export function maybeRedirectToWelcomePage(_options?: any): any {
  * @returns {Function}
  */
 export function reloadNow() {
-    console.log("---Hiiiiii---")
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const state = getState();
         const { locationURL } = state["features/base/connection"];

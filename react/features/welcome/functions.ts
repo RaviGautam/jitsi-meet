@@ -11,6 +11,7 @@ import {
     LOBY_TITLE,
     LOBY_DESCRIPTION,
     END_MEETING_OPTIONS,
+    MODERATOR_OPTION,
 } from "../base/flags/constants";
 import { getFeatureFlag } from "../base/flags/functions";
 import { toState } from "../base/redux/functions";
@@ -41,6 +42,16 @@ export function isDirectJoinMeetingEnabled(stateful: IStateful) {
     const config = toState(stateful)["features/base/config"];
 
     return !config.directJoinMeeting?.disabled;
+}
+
+export function isModeratorOptionEnabled(stateful: IStateful) {
+    if (navigator.product === "ReactNative") {
+        return getFeatureFlag(stateful, MODERATOR_OPTION, false);
+    }
+
+    const config = toState(stateful)["features/base/config"];
+
+    return !config.moderatorOptionHandler?.disabled;
 }
 
 export function isBackButtonHandlerEnabled(stateful: IStateful) {

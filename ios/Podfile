@@ -36,7 +36,7 @@ target 'JitsiMeetSDK' do
 
   # We use auto linking, but some dependencies are excluded from the lite build
   # (see react-native.config.js) so we add them here.
-
+  pod 'GoogleWebRTC'
   pod 'giphy-react-native-sdk', :path => '../node_modules/@giphy/react-native-sdk'
   pod 'RNCalendarEvents', :path => '../node_modules/react-native-calendar-events'
   pod 'RNGoogleSignin', :path => '../node_modules/@react-native-google-signin/google-signin'

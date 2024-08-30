@@ -350,7 +350,7 @@ function _conferenceJoined(
         lobyDescription,
         minBitrate,
         stdBitrate,
-        maxBitrate
+        maxBitrate,
     } = getState()["features/base/conference"];
     const { disableBeforeUnloadHandlers = false, requireDisplayName } =
         getState()["features/base/config"];
@@ -581,7 +581,6 @@ function _conferenceSubjectChanged(
         maxBitrate,
         stdBitrate,
     } = getState()["features/base/conference"];
-    console.log("---subject, waitingText----", subject, waitingText);
 
     if (subject) {
         dispatch({
@@ -903,27 +902,22 @@ function _updateLocalParticipantInConference(
             }
 
             if (typeof waitingText !== "undefined") {
-                console.log("--customText--707-", waitingText);
                 dispatch(setWaitingText(waitingText));
             }
 
             if (typeof meetingTitle !== "undefined") {
-                console.log("--customText--707-", meetingTitle);
                 dispatch(setMeetingTitle(meetingTitle));
             }
 
             if (typeof lobyTitle !== "undefined") {
-                console.log("--customText--707-", lobyTitle);
                 dispatch(setLobyTitle(lobyTitle));
             }
 
             if (typeof lobyDescription !== "undefined") {
-                console.log("--customText--707-", lobyDescription);
                 dispatch(setLobyDescription(lobyDescription));
             }
 
             if (typeof minBitrate !== "undefined") {
-                console.log("--minBitrate--707-", minBitrate);
                 dispatch(setMinBitrate(minBitrate));
             }
 

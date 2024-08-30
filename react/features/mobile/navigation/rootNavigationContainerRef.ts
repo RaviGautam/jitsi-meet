@@ -20,6 +20,7 @@ export const rootNavigationRef = React.createRef<NavigationContainerRef<any>>();
  * @returns {Function}
  */
 export function navigateRoot(name: string, params?: Object) {
+    console.log("--name, params--23", name, params)
     return rootNavigationRef.current?.navigate(name, params);
 }
 

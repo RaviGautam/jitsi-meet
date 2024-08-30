@@ -51,20 +51,18 @@ const TitleBar = (props: IProps) => {
                         typeof props._meetingTitle === "string" &&
                         props._meetingTitle.trim() !== ""
                     ) {
-                        console.log("--_meetingTitle--54-", props._meetingTitle)
                         title = props._meetingTitle;
                     } else {
                         const myTitle = await AsyncStorage.getItem(
                             "meetingTitle"
                         );
-                        console.log("--_meetingTitle--60-", myTitle)
+
                         title =
                             myTitle && myTitle.trim() !== ""
                                 ? myTitle
                                 : props._meetingName;
                     }
                 } else {
-                    console.log("--_meetingTitle--67-", props._meetingName)
                     title = props._meetingName;
                 }
 

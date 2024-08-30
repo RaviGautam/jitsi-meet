@@ -162,6 +162,7 @@ public class MainActivity extends JitsiMeetActivity {
             .setLobyDescription("Lobby Description")  // set lobby description
             .setFeatureFlag("backButtonHandler.enabled", true) // set back button on meeting room
             .setFeatureFlag("directJoin.enabled", true) // set Lobby screen disabled or enabled
+            .setFeatureFlag("moderatorOption.enabled", true) // set moderator option disabled or enabled
             .setFeatureFlag("endMeetingOptions.enabled", true) // set options for end meeting
             .setFeatureFlag("welcomepage.enabled", true)
             .setFeatureFlag("resolution", 360)

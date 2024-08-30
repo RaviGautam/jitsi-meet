@@ -65,6 +65,7 @@ import LonelyMeetingExperience from "./LonelyMeetingExperience";
 import TitleBar from "./TitleBar";
 import { EXPANDED_LABEL_TIMEOUT } from "./constants";
 import styles from "./styles";
+import { getParticipantCount } from "../../../base/participants/functions";
 
 /**
  * The type of the React {@code Component} props of {@link Conference}.
@@ -129,6 +130,8 @@ interface IProps extends AbstractProps {
     _pictureInPictureEnabled: boolean;
 
     _isBackButtonEnabled: boolean;
+
+    _numberOfParticipents: number;
 
     /**
      * The indicator which determines whether the UI is reduced (to accommodate
@@ -247,6 +250,7 @@ class Conference extends AbstractConference<IProps, State> {
         if (prevProps._showLobby && !_showLobby) {
             console.log("---conference----");
             if (_audioOnlyEnabled && _startCarMode) {
+                console.log("---249---");
                 return;
             }
 
@@ -404,9 +408,12 @@ class Conference extends AbstractConference<IProps, State> {
             _reducedUI,
             _shouldDisplayTileView,
             _toolboxVisible,
+            _numberOfParticipents
         } = this.props;
 
         let alwaysOnTitleBarStyles;
+
+        console.log("---_numberOfParticipents---", _numberOfParticipents)
 
         if (_reducedUI) {
             return this._renderContentForReducedUi();
@@ -446,7 +453,7 @@ class Conference extends AbstractConference<IProps, State> {
                      * The activity/loading indicator goes above everything, except
                      * the toolbox/toolbars and the dialogs.
                      */
-                    _connecting && (
+                   ( _connecting || _numberOfParticipents <= 1) && (
                         <TintedView>
                             <LoadingIndicator />
                         </TintedView>
@@ -640,6 +647,7 @@ function _mapStateToProps(state: IReduxState, _ownProps: any) {
         _isDirectJoin: Boolean(
             getFeatureFlag(state, DIRECT_JOIN_MEETING_ENABLED, false)
         ),
+        _numberOfParticipents: getParticipantCount(state),
     };
 }
 

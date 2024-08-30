@@ -79,7 +79,7 @@ export class App extends AbstractApp<IProps> {
     constructor(props: IProps) {
         super(props);
 
-        console.log("---props--80-", props);
+     
         // In the Release configuration, React Native will (intentionally) throw
         // an unhandled JavascriptException for an unhandled JavaScript error.
         // This will effectively kill the app. In accord with the Web, do not
@@ -213,13 +213,6 @@ export class App extends AbstractApp<IProps> {
         // @ts-ignore
         dispatch?.(updateSettings(userInfo || {}));
 
-        console.log(
-            "----customParams.waitingAreaText--customParams.meetingTitle-",
-            customParams.waitingAreaText,
-            customParams.meetingTitle,
-            customParams.lobyTitle,
-            customParams.lobyDescription
-        );
 
         dispatch?.(setWaitingText(customParams.waitingAreaText || ""));
 

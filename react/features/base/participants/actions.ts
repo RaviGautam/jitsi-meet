@@ -583,43 +583,72 @@ export function createVirtualScreenshareParticipant(
  * @param {JitsiParticipant} kicked - Information about participant that was kicked.
  * @returns {Promise}
  */
+// export function participantKicked(kicker: any, kicked: any) {
+//     return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
+//         const state = getState();
+//         const localParticipant = getLocalParticipant(state);
+//         const kickedId = kicked.getId();
+//         const kickerId = kicker.getId();
+//         console.log("---kickedId--", kickedId, '--kickerId--', kickerId)
+
+//         dispatch({
+//             type: PARTICIPANT_KICKED,
+//             kicked: kickedId,
+//             kicker: kickerId
+//         });
+
+//         if (kicked.isReplaced?.() || kickerId === localParticipant?.id) {
+//             return;
+//         }
+
+//         // dispatch(showNotification({
+//         //     titleArguments: {
+//         //         kicked:
+//         //             getParticipantDisplayName(state, kickedId),
+//         //         kicker:
+//         //             getParticipantDisplayName(state, kickerId)
+//         //     },
+//         //     titleKey: 'notify.kickParticipant'
+//         // }, NOTIFICATION_TIMEOUT_TYPE.MEDIUM));
+//     };
+// }
 export function participantKicked(kicker: any, kicked: any) {
     return async (
         dispatch: IStore["dispatch"],
         getState: IStore["getState"]
     ) => {
         let KickerId = await AsyncStorage.getItem("Kicker");
-        console.log("--KickerId--", KickerId);
+        // if (KickerId != null) {
+        //     KickerId = KickerId.split("/").pop();
+        // }
         KickerId = KickerId.split("/").pop();
+        console.log("--KickerId--594", KickerId, kicker?.getId());
         dispatch({
             type: PARTICIPANT_KICKED,
             kicked: kicked.getId(),
             kicker: kicker != undefined ? kicker?.getId() : KickerId,
         });
-
+        // kicker: kicker != undefined ? kicker?.getId() : KickerId,
         if (kicked.isReplaced?.()) {
             return;
         }
-        console.log("---kicker, kicked-1234--", kicker, kicked);
-        dispatch(
-            showNotification(
-                {
-                    titleArguments: {
-                        kicked: getParticipantDisplayName(
-                            getState,
-                            kicked.getId()
-                        ),
-                        kicker: getParticipantDisplayName(
-                            getState,
-                            kicker != undefined ? kicker?.getId() : KickerId
-                        ),
-                    },
-                    titleKey: "notify.kickParticipant",
-                },
-                NOTIFICATION_TIMEOUT_TYPE.MEDIUM
-            )
-        );
+        // dispatch(
+        //     showNotification(
+        //         {
+        //             titleArguments: {
+        //                 kicked: getParticipantDisplayName(
+        //                     getState,
+        //                     kicked.getId()
+        //                 ),
+        //                 kicker: getParticipantDisplayName(getState, KickerId),
+        //             },
+        //             titleKey: "notify.kickParticipant",
+        //         },
+        //         NOTIFICATION_TIMEOUT_TYPE.MEDIUM
+        //     )
+        // );
     };
+    // kicker != undefined ? kicker?.getId() : KickerId
 }
 
 /**

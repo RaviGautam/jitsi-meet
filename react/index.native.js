@@ -18,7 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Function to extract custom parameters based on platform
 const extractCustomParams = (initialProps) => {
-    console.log("--initialProps--", initialProps);
+
     if (Platform.OS === "ios") {
         // Extract custom params from URL object for iOS
         return initialProps.url?.config ?? {};
@@ -47,7 +47,6 @@ class Root extends PureComponent {
      */
     componentDidMount() {
         const customParams = extractCustomParams(this.props);
-        console.log("--customParams---", customParams);
         const {
             minBitrate,
             stdBitrate,
@@ -62,12 +61,7 @@ class Root extends PureComponent {
     }
 
     async saveBitrateValues(minBitrate, stdBitrate, maxBitrate) {
-        console.log(
-            "--minBitrate, stdBitrate, maxBitrate--32---",
-            minBitrate,
-            stdBitrate,
-            maxBitrate
-        );
+    
         try {
             await AsyncStorage.setItem("minBitrate", minBitrate.toString());
             await AsyncStorage.setItem("stdBitrate", stdBitrate.toString());
@@ -78,10 +72,7 @@ class Root extends PureComponent {
     }
 
     async saveTitleValues(meetingTitle, waitingAreaText, lobyTitle,lobyDescription) {
-        console.log(
-            "--meetingTitle, waitingAreaText---",
-            meetingTitle, waitingAreaText,"--lobyTitle,lobyDescription--", lobyTitle,lobyDescription
-        );
+      
         try {
             await AsyncStorage.setItem("meetingTitle", meetingTitle.toString());
             await AsyncStorage.setItem("waitingText", waitingAreaText.toString());

@@ -627,6 +627,10 @@ export interface IConfig {
         directJoin?: string;
         disabled?: boolean;
     };
+    moderatorOptionHandler?: {
+        moderatorOption?: string;
+        disabled?: boolean;
+    };
     backButtonHandler?: {
         backButton?: string;
         disabled?: boolean;

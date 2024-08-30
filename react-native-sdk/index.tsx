@@ -47,6 +47,7 @@ interface IFlags {
     "directJoin.enabled"?: boolean;
     "backButtonHandler.enabled"?: boolean;
     "endMeetingOptions.enabled"?: boolean;
+    "moderatorEnable.enabled"?: boolean;
 }
 
 
