@@ -1820,7 +1820,7 @@ export default {
 
             // The logic shared between RN and web.
             commonUserJoinedHandling(APP.store, room, user);
-
+        
             if (user.isHidden()) {
                 return;
             }
@@ -1857,7 +1857,6 @@ export default {
                 logger.info(`My role changed, new role: ${role}`);
 
                 if (role === "moderator") {
-                    console.log("--moderator--1859");
                     APP.store.dispatch(maybeSetLobbyChatMessageListener());
                 }
                 console.log("--participents--1862");

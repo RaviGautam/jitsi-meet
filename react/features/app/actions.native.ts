@@ -58,7 +58,7 @@ export function appNavigate(
     _isDirectJoin?: boolean
 ) {
     logger.info(`appNavigate to ${uri}`);
-    console.log(`appNavigate to ${uri}`, options, _isDirectJoin);
+    console.log(`appNavigate to ${uri}`, options);
 
     return async (
         dispatch: IStore["dispatch"],

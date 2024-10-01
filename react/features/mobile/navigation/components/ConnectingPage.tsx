@@ -20,11 +20,6 @@ const ConnectingPage = (props: IProps) => {
             <View style={navigationStyles.connectingScreenContent as ViewStyle}>
                 <SafeAreaView>
                     <LoadingIndicator color={TEXT_COLOR} size="large" />
-                    {/* <Text style={navigationStyles.connectingScreenText}>
-                        {`${t("connectingOverlay.joiningRoom")} ${
-                            props._waitingText
-                        }`}
-                    </Text> */}
                     {props._waitingText!='' && props._waitingText!=undefined && props._waitingText!=null ? 
                     
                      <Text style = { navigationStyles.connectingScreenText }>

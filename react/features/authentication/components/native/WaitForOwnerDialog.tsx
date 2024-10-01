@@ -64,7 +64,7 @@ class WaitForOwnerDialog extends Component<IProps> {
      */
     render() {
         const { _isConfirmHidden, _isDirectJoin } = this.props;
-        console.log("--- _isConfirmHidden, _isDirectJoin----",  _isConfirmHidden, _isDirectJoin)
+
 
         return (
             <>

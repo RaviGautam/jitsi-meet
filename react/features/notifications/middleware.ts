@@ -199,12 +199,10 @@ MiddlewareRegistry.register((store) => (next) => (action) => {
             const oldRole = oldParticipant?.role;
             
             if (
-                !isModeratorEnable &&
                 oldRole &&
                 oldRole !== role &&
-                role === PARTICIPANT_ROLE.MODERATOR
+                role === PARTICIPANT_ROLE.MODERATOR && !isModeratorEnable
             ) {
-                console.log("--inside block--", isModeratorEnable);
              
             
                     store.dispatch(

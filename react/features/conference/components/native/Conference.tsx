@@ -1,14 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useCallback } from "react";
-import {
-    BackHandler,
-    NativeModules,
-    Platform,
-    SafeAreaView,
-    StatusBar,
-    View,
-    ViewStyle,
-} from "react-native";
+import { BackHandler, NativeModules, Platform, SafeAreaView, StatusBar, View, ViewStyle} from "react-native";
 import { EdgeInsets, withSafeAreaInsets } from "react-native-safe-area-context";
 import { connect, useDispatch } from "react-redux";
 
@@ -29,10 +21,7 @@ import { getFeatureFlag } from "../../../base/flags/functions";
 import Container from "../../../base/react/components/native/Container";
 import LoadingIndicator from "../../../base/react/components/native/LoadingIndicator";
 import TintedView from "../../../base/react/components/native/TintedView";
-import {
-    ASPECT_RATIO_NARROW,
-    ASPECT_RATIO_WIDE,
-} from "../../../base/responsive-ui/constants";
+import {ASPECT_RATIO_NARROW, ASPECT_RATIO_WIDE, } from "../../../base/responsive-ui/constants";
 import { StyleType } from "../../../base/styles/functions.any";
 import TestConnectionInfo from "../../../base/testing/components/TestConnectionInfo";
 import { isCalendarEnabled } from "../../../calendar-sync/functions.native";
@@ -52,10 +41,7 @@ import Captions from "../../../subtitles/components/native/Captions";
 import { setToolboxVisible } from "../../../toolbox/actions.native";
 import Toolbox from "../../../toolbox/components/native/Toolbox";
 import { isToolboxVisible } from "../../../toolbox/functions.native";
-import {
-    AbstractConference,
-    abstractMapStateToProps,
-} from "../AbstractConference";
+import { AbstractConference, abstractMapStateToProps} from "../AbstractConference";
 import type { AbstractProps } from "../AbstractConference";
 import { isConnecting } from "../functions.native";
 
@@ -179,6 +165,7 @@ type State = {
     /**
      * The label that is currently expanded.
      */
+
     visibleExpandedLabel?: string;
 };
 
@@ -413,7 +400,7 @@ class Conference extends AbstractConference<IProps, State> {
 
         let alwaysOnTitleBarStyles;
 
-        console.log("---_numberOfParticipents---", _numberOfParticipents)
+       
 
         if (_reducedUI) {
             return this._renderContentForReducedUi();
@@ -453,7 +440,7 @@ class Conference extends AbstractConference<IProps, State> {
                      * The activity/loading indicator goes above everything, except
                      * the toolbox/toolbars and the dialogs.
                      */
-                   ( _connecting || _numberOfParticipents <= 1) && (
+                    _connecting && (
                         <TintedView>
                             <LoadingIndicator />
                         </TintedView>

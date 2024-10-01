@@ -82,9 +82,7 @@ function Toolbox(props: IProps) {
         _visible,
         _iAmVisitor,
         _width,
-        _isEndMeetingOptions,
-        _numberOfParticipants,
-        _isDirectJoin,
+        _isEndMeetingOptions
     } = props;
 
     

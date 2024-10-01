@@ -244,11 +244,8 @@ export class AbstractWelcomePage<P extends IProps> extends Component<
             // By the time the Promise of appNavigate settles, this component
             // may have already been unmounted.
 
-            console.log("---_isDirectJoin---", this.props._isDirectJoin);
-            // if (this.props._isDirectJoin) {
-            //     this.props.dispatch(setRoom(this.state.room));
-            //     navigateRoot(screen.conference.root);
-            // } else {
+      
+         
                 const onAppNavigateSettled = () =>
                     this._mounted && this.setState({ joining: false });
 

@@ -22,7 +22,7 @@ export function notifyKickedOut(participant: any, submit?: Function) {
             console.log("---dialog---21-");
             return;
         }
-        console.log("---dialog.kickTitle--", submit);
+
         dispatch(endConference());
         submit();
         // dispatch(

@@ -618,11 +618,13 @@ export function participantKicked(kicker: any, kicked: any) {
         getState: IStore["getState"]
     ) => {
         let KickerId = await AsyncStorage.getItem("Kicker");
+
         // if (KickerId != null) {
         //     KickerId = KickerId.split("/").pop();
         // }
         KickerId = KickerId.split("/").pop();
-        console.log("--KickerId--594", KickerId, kicker?.getId());
+        console.log("--KickerId--594", KickerId, kicker?.getId(),"--kicked.getId(),--", kicked.getId(), );
+        
         dispatch({
             type: PARTICIPANT_KICKED,
             kicked: kicked.getId(),

@@ -37,8 +37,7 @@ MiddlewareRegistry.register(({ dispatch, getState }) => (next) => (action) => {
         case SET_CONFIG: {
             const state = getState();
             const { videoQuality = {} } = state["features/base/config"];
-            // const { minBitrate, maxBitrate, stdBitrate } =
-            //     state["features/base/conference"];
+           
             const { persistedPrefferedVideoQuality } =
                 state["features/video-quality-persistent-storage"];
 

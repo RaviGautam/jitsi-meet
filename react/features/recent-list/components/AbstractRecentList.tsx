@@ -99,13 +99,10 @@ export default class AbstractRecentList<
     _onPress(url: string, _isDirectJoin: boolean, _room: String) {
         const { dispatch } = this.props;
 
-        console.log("---url---", url,_isDirectJoin,_room)
+
         sendAnalytics(createRecentClickedEvent("meeting.tile"));
-        // if (_isDirectJoin) {
-        //     dispatch(setRoom(_room));
-        //     navigateRoot(screen.conference.root);
-        // } else {
+      
             dispatch(appNavigate(url,{},_isDirectJoin));
-        // }
+   
     }
 }

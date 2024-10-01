@@ -930,19 +930,19 @@ export function endConference() {
                             );
                             conference.kickParticipant(participant.getId());
                         } catch (error) {
-                            console.error(
+                            console.log(
                                 `Failed to kick out participant: ${error}`
                             );
                         }
                     } else {
-                        console.warn(
+                        console.log(
                             "Encountered an invalid participant:",
                             participant
                         );
                     }
                 }
             } else {
-                console.error(
+                console.log(
                     "Participants is neither an array nor a map:",
                     participants
                 );
@@ -952,7 +952,7 @@ export function endConference() {
                 await conference.end();
                 dispatch(appNavigate(undefined));
             } catch (error) {
-                console.error("Failed to end the conference:", error);
+                console.log("Failed to end the conference:", error);
             }
         } else {
             dispatch(appNavigate(undefined));
@@ -960,7 +960,6 @@ export function endConference() {
         }
     };
 }
-
 
 
 /**
