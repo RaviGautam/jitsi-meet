@@ -1,6 +1,14 @@
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useCallback } from "react";
-import { BackHandler, NativeModules, Platform, SafeAreaView, StatusBar, View, ViewStyle} from "react-native";
+import {
+    BackHandler,
+    NativeModules,
+    Platform,
+    SafeAreaView,
+    StatusBar,
+    View,
+    ViewStyle,
+} from "react-native";
 import { EdgeInsets, withSafeAreaInsets } from "react-native-safe-area-context";
 import { connect, useDispatch } from "react-redux";
 
@@ -16,12 +24,16 @@ import {
     FULLSCREEN_ENABLED,
     PIP_ENABLED,
     END_MEETING_OPTIONS,
+    CUSTOM_LOADER_SHOW,
 } from "../../../base/flags/constants";
 import { getFeatureFlag } from "../../../base/flags/functions";
 import Container from "../../../base/react/components/native/Container";
 import LoadingIndicator from "../../../base/react/components/native/LoadingIndicator";
 import TintedView from "../../../base/react/components/native/TintedView";
-import {ASPECT_RATIO_NARROW, ASPECT_RATIO_WIDE, } from "../../../base/responsive-ui/constants";
+import {
+    ASPECT_RATIO_NARROW,
+    ASPECT_RATIO_WIDE,
+} from "../../../base/responsive-ui/constants";
 import { StyleType } from "../../../base/styles/functions.any";
 import TestConnectionInfo from "../../../base/testing/components/TestConnectionInfo";
 import { isCalendarEnabled } from "../../../calendar-sync/functions.native";
@@ -41,7 +53,10 @@ import Captions from "../../../subtitles/components/native/Captions";
 import { setToolboxVisible } from "../../../toolbox/actions.native";
 import Toolbox from "../../../toolbox/components/native/Toolbox";
 import { isToolboxVisible } from "../../../toolbox/functions.native";
-import { AbstractConference, abstractMapStateToProps} from "../AbstractConference";
+import {
+    AbstractConference,
+    abstractMapStateToProps,
+} from "../AbstractConference";
 import type { AbstractProps } from "../AbstractConference";
 import { isConnecting } from "../functions.native";
 
@@ -52,6 +67,7 @@ import TitleBar from "./TitleBar";
 import { EXPANDED_LABEL_TIMEOUT } from "./constants";
 import styles from "./styles";
 import { getParticipantCount } from "../../../base/participants/functions";
+import CustomLoader from "../../../base/react/components/native/CustomLoader";
 
 /**
  * The type of the React {@code Component} props of {@link Conference}.
@@ -159,6 +175,8 @@ interface IProps extends AbstractProps {
      * Get direct join flag from mainactivity
      */
     _isDirectJoin: boolean;
+
+    _isCustomLoaderShow: boolean;
 }
 
 type State = {
@@ -395,12 +413,11 @@ class Conference extends AbstractConference<IProps, State> {
             _reducedUI,
             _shouldDisplayTileView,
             _toolboxVisible,
-            _numberOfParticipents
+            _numberOfParticipents,
+            _isCustomLoaderShow,
         } = this.props;
 
         let alwaysOnTitleBarStyles;
-
-       
 
         if (_reducedUI) {
             return this._renderContentForReducedUi();
@@ -423,9 +440,21 @@ class Conference extends AbstractConference<IProps, State> {
                      */
                     _shouldDisplayTileView ? (
                         <TileView onClick={this._onClick} />
+                    ) : _isCustomLoaderShow && _numberOfParticipents <= 1 ? (
+                        /*
+                         * Show the CustomLoader when there is only one participant and _isCustomLoaderShow is true.
+                         */
+                        <CustomLoader
+                            numberOfParticipents={_numberOfParticipents}
+                        />
                     ) : (
+                        /*
+                         * Show LargeVideo when there are more than one participants or _isCustomLoaderShow is false.
+                         */
                         <LargeVideo onClick={this._onClick} />
                     )
+
+                    // <LargeVideo onClick={this._onClick} />
                 }
 
                 {
@@ -440,11 +469,42 @@ class Conference extends AbstractConference<IProps, State> {
                      * The activity/loading indicator goes above everything, except
                      * the toolbox/toolbars and the dialogs.
                      */
-                    _connecting && (
+                    // _connecting &&
+                    // _isCustomLoaderShow &&
+                    // _numberOfParticipents <= 1 ? (
+                    //     <TintedView>
+                    //         <CustomLoader
+                    //             numberOfParticipents={_numberOfParticipents}
+                    //         />
+                    //         {/* <LoadingIndicator /> */}
+                    //     </TintedView>
+                    // ) : (
+                    //     <TintedView>
+                    //         <LoadingIndicator />
+                    //     </TintedView>
+                    // )
+                }
+
+                {
+                    /*
+                     * The activity/loading indicator goes above everything, except
+                     * the toolbox/toolbars and the dialogs.
+                     */
+                    _isCustomLoaderShow &&
+                    _connecting &&
+                    _numberOfParticipents <= 1 ? (
                         <TintedView>
-                            <LoadingIndicator />
+                            <CustomLoader
+                                numberOfParticipents={_numberOfParticipents}
+                            />
                         </TintedView>
-                    )
+                    ) : (
+                        _connecting && (
+                            <TintedView>
+                                <LoadingIndicator />
+                            </TintedView>
+                        )
+                    ) // If not connecting, render nothing or another component
                 }
 
                 <View
@@ -530,17 +590,41 @@ class Conference extends AbstractConference<IProps, State> {
      * @private
      * @returns {React$Element}
      */
+    // _renderContentForReducedUi() {
+    //     const { _connecting, _numberOfParticipents } = this.props;
+
+    //     return (
+    //         <>
+    //             <LargeVideo onClick={this._onClick} />
+
+    //             {_connecting &&  _isCustomLoaderShow && _numberOfParticipents <= 1 && (
+    //                 <TintedView>
+    //                     <CustomLoader
+    //                         numberOfParticipents={_numberOfParticipents}
+    //                     />
+    //                     {/* <LoadingIndicator /> */}
+    //                 </TintedView>
+    //             )}
+    //         </>
+    //     );
+    // }
+
     _renderContentForReducedUi() {
-        const { _connecting } = this.props;
+        const { _connecting, _numberOfParticipents, _isCustomLoaderShow } =
+            this.props;
 
         return (
             <>
-                <LargeVideo onClick={this._onClick} />
-
-                {_connecting && (
+                {_isCustomLoaderShow &&
+                _connecting &&
+                _numberOfParticipents <= 1 ? (
                     <TintedView>
-                        <LoadingIndicator />
+                        <CustomLoader
+                            numberOfParticipents={_numberOfParticipents}
+                        />
                     </TintedView>
+                ) : (
+                    <LargeVideo onClick={this._onClick} />
                 )}
             </>
         );
@@ -633,6 +717,9 @@ function _mapStateToProps(state: IReduxState, _ownProps: any) {
         ),
         _isDirectJoin: Boolean(
             getFeatureFlag(state, DIRECT_JOIN_MEETING_ENABLED, false)
+        ),
+        _isCustomLoaderShow: Boolean(
+            getFeatureFlag(state, CUSTOM_LOADER_SHOW, false)
         ),
         _numberOfParticipents: getParticipantCount(state),
     };

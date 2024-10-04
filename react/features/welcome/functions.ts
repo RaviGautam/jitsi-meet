@@ -12,6 +12,7 @@ import {
     LOBY_DESCRIPTION,
     END_MEETING_OPTIONS,
     MODERATOR_OPTION,
+    CUSTOM_LOADER_SHOW,
 } from "../base/flags/constants";
 import { getFeatureFlag } from "../base/flags/functions";
 import { toState } from "../base/redux/functions";
@@ -52,6 +53,16 @@ export function isModeratorOptionEnabled(stateful: IStateful) {
     const config = toState(stateful)["features/base/config"];
 
     return !config.moderatorOptionHandler?.disabled;
+}
+
+export function isCustomLoaderShowEnabled(stateful: IStateful) {
+    if (navigator.product === "ReactNative") {
+        return getFeatureFlag(stateful, CUSTOM_LOADER_SHOW, false);
+    }
+
+    const config = toState(stateful)["features/base/config"];
+
+    return !config.customLoaderShowHandler?.disabled;
 }
 
 export function isBackButtonHandlerEnabled(stateful: IStateful) {

@@ -631,6 +631,10 @@ export interface IConfig {
         moderatorOption?: string;
         disabled?: boolean;
     };
+    customLoaderShowHandler?: {
+        customLoaderShow?: string;
+        disabled?: boolean;
+    };
     backButtonHandler?: {
         backButton?: string;
         disabled?: boolean;

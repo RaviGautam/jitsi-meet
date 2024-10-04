@@ -164,6 +164,7 @@ public class MainActivity extends JitsiMeetActivity {
             .setFeatureFlag("directJoin.enabled", true) // set Lobby screen disabled or enabled
             .setFeatureFlag("moderatorOption.enabled", true) // set moderator option disabled or enabled
             .setFeatureFlag("endMeetingOptions.enabled", true) // set options for end meeting
+            .setFeatureFlag("customLoaderShow.enabled", true) // set custom loader disabled or enabled
             .setFeatureFlag("welcomepage.enabled", true)
             .setFeatureFlag("resolution", 360)
             .setMinBitrate(minBitrate) // set minimum bitrate
@@ -172,8 +173,6 @@ public class MainActivity extends JitsiMeetActivity {
             .setFeatureFlag("server-url-change.enabled", !configurationByRestrictions)
             .build();
         JitsiMeet.setDefaultConferenceOptions(defaultOptions);
-
-
     }
 
     private int getMinBitrateFromRN() {

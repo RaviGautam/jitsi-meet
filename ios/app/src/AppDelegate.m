@@ -39,6 +39,7 @@
         [builder setFeatureFlag:@"directJoin.enabled" withBoolean:YES]; // set Lobby screen disabled or enabled
         [builder setFeatureFlag:@"moderatorOption.enabled" withBoolean:YES]; // set moderator options disabled or enabled
         [builder setFeatureFlag:@"endMeetingOptions.enabled" withBoolean:YES]; // set options for end meeting
+        [builder setFeatureFlag:@"customLoaderShow.enabled" withBoolean:YES]; // set options for Custom Loader
         [builder setFeatureFlag:@"resolution" withValue:@(360)];
         [builder setFeatureFlag:@"ios.screensharing.enabled" withBoolean:YES];
         [builder setFeatureFlag:@"ios.recording.enabled" withBoolean:YES];
