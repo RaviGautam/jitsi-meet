@@ -612,46 +612,118 @@ export function createVirtualScreenshareParticipant(
 //         // }, NOTIFICATION_TIMEOUT_TYPE.MEDIUM));
 //     };
 // }
+
+// 7 oct 2024
+
+// export function participantKicked(kicker: any, kicked: any) {
+//     return async (
+//         dispatch: IStore["dispatch"],
+//         getState: IStore["getState"]
+//     ) => {
+//         let KickerId = await AsyncStorage.getItem("Kicker");
+
+//         // if (KickerId != null) {
+//         //     KickerId = KickerId.split("/").pop();
+//         // }
+//         KickerId = KickerId.split("/").pop();
+//         console.log("--KickerId--594", KickerId, kicker?.getId(),"--kicked.getId(),--", kicked.getId(), );
+        
+//         dispatch({
+//             type: PARTICIPANT_KICKED,
+//             kicked: kicked.getId(),
+//             kicker: kicker != undefined ? kicker?.getId() : KickerId,
+//         });
+//         // kicker: kicker != undefined ? kicker?.getId() : KickerId,
+//         if (kicked.isReplaced?.()) {
+//             return;
+//         }
+//         // dispatch(
+//         //     showNotification(
+//         //         {
+//         //             titleArguments: {
+//         //                 kicked: getParticipantDisplayName(
+//         //                     getState,
+//         //                     kicked.getId()
+//         //                 ),
+//         //                 kicker: getParticipantDisplayName(getState, KickerId),
+//         //             },
+//         //             titleKey: "notify.kickParticipant",
+//         //         },
+//         //         NOTIFICATION_TIMEOUT_TYPE.MEDIUM
+//         //     )
+//         // );
+//     };
+//     // kicker != undefined ? kicker?.getId() : KickerId
+// }
+
+// export function participantKicked(kicker: any, kicked: any) {
+//     return async (
+//         dispatch: IStore["dispatch"],
+//         getState: IStore["getState"]
+//     ) => {
+//         let KickerId = await AsyncStorage.getItem("Kicker");
+
+//         if (KickerId) {
+//             KickerId = KickerId.split("/").pop();
+//         }
+
+//         console.log("--KickerId--594", KickerId, kicker?.getId(), "--kicked.getId(),--", kicked.getId());
+
+//         dispatch({
+//             type: PARTICIPANT_KICKED,
+//             kicked: kicked.getId(),
+//             kicker: kicker?.getId() ? kicker.getId() : KickerId,
+//         });
+
+//         if (kicked.isReplaced?.()) {
+//             return;
+//         }
+
+//         // Optional: You can add a notification or additional logic here
+//     };
+// }
+
+
 export function participantKicked(kicker: any, kicked: any) {
     return async (
         dispatch: IStore["dispatch"],
         getState: IStore["getState"]
     ) => {
-        let KickerId = await AsyncStorage.getItem("Kicker");
+        try {
+            let KickerId = await AsyncStorage.getItem("Kicker");
 
-        // if (KickerId != null) {
-        //     KickerId = KickerId.split("/").pop();
-        // }
-        KickerId = KickerId.split("/").pop();
-        console.log("--KickerId--594", KickerId, kicker?.getId(),"--kicked.getId(),--", kicked.getId(), );
-        
-        dispatch({
-            type: PARTICIPANT_KICKED,
-            kicked: kicked.getId(),
-            kicker: kicker != undefined ? kicker?.getId() : KickerId,
-        });
-        // kicker: kicker != undefined ? kicker?.getId() : KickerId,
-        if (kicked.isReplaced?.()) {
-            return;
+            if (KickerId) {
+                KickerId = KickerId.split("/").pop();
+            } else {
+                console.log("KickerId not found in AsyncStorage.");
+            }
+
+            console.log(
+                "--KickerId--594",
+                KickerId,
+                kicker?.getId(),
+                "--kicked.getId(),--",
+                kicked.getId()
+            );
+
+            dispatch({
+                type: PARTICIPANT_KICKED,
+                kicked: kicked.getId(),
+                kicker: kicker?.getId() ? kicker.getId() : KickerId,
+            });
+
+            if (kicked.isReplaced?.()) {
+                return;
+            }
+
+            // Optional: Add notification or additional logic here
+        } catch (error) {
+            console.log("Error in participantKicked:", error);
         }
-        // dispatch(
-        //     showNotification(
-        //         {
-        //             titleArguments: {
-        //                 kicked: getParticipantDisplayName(
-        //                     getState,
-        //                     kicked.getId()
-        //                 ),
-        //                 kicker: getParticipantDisplayName(getState, KickerId),
-        //             },
-        //             titleKey: "notify.kickParticipant",
-        //         },
-        //         NOTIFICATION_TIMEOUT_TYPE.MEDIUM
-        //     )
-        // );
     };
-    // kicker != undefined ? kicker?.getId() : KickerId
 }
+
+
 
 /**
  * Create an action which pins a conference participant.

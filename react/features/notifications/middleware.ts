@@ -182,7 +182,7 @@ MiddlewareRegistry.register((store) => (next) => (action) => {
                 false
             );
 
-            console.log("----isModeratorEnable:----", isModeratorEnable);
+            
             if (disableModeratorIndicator) {
                 return next(action);
             }
