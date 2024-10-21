@@ -13,7 +13,7 @@ import AbstractHangupButton from '../../base/toolbox/components/AbstractHangupBu
  *
  * @augments AbstractHangupButton
  */
-class HangupButton extends AbstractHangupButton<AbstractButtonProps> {
+class HangupButtonToEnd extends AbstractHangupButton<AbstractButtonProps> {
     _hangup: Function;
 
     accessibilityLabel = 'toolbar.accessibilityLabel.hangup';
@@ -28,11 +28,10 @@ class HangupButton extends AbstractHangupButton<AbstractButtonProps> {
      */
     constructor(props: AbstractButtonProps) {
         super(props);
-
+		console.log("~~~~~~~ HangupButtonToEnd endConference")
         this._hangup = _.once(() => {
             sendAnalytics(createToolbarEvent('hangup'));
-            // this.props.dispatch(endConference());
-          this.props.dispatch(leaveConference());
+			this.props.dispatch(endConference());
         });
     }
 
@@ -48,4 +47,4 @@ class HangupButton extends AbstractHangupButton<AbstractButtonProps> {
     }
 }
 
-export default translate(connect()(HangupButton));
+export default translate(connect()(HangupButtonToEnd));

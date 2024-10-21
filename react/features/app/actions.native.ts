@@ -69,9 +69,9 @@ export function appNavigate(
         // If the specified location (URI) does not identify a host, use the app's
         // default.
         if (!location?.host) {
-            console.log("--location?.host-73-")
+            console.log("--location?.host-72-")
             const defaultLocation = parseURIString(getDefaultURL(getState));
-
+            console.log("--defaultLocation-74-", defaultLocation)
             if (location) {
                 location.host = defaultLocation.host;
                 console.log("--location?.host-78-")

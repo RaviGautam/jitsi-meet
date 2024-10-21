@@ -38,7 +38,7 @@ MiddlewareRegistry.register(store => next => action => {
  */
 function _shareRoom(roomURL: string, { dispatch, getState }: IStore) {
     const dialInEnabled = getFeatureFlag(getState(), INVITE_DIAL_IN_ENABLED, true);
-
+console.log("--dialInEnabled--41-", dialInEnabled)
     getShareInfoText(getState(), roomURL, false /* useHtml */, !dialInEnabled /* skipDialIn */)
         .then(message => {
             const title = `${getName()} Conference`;

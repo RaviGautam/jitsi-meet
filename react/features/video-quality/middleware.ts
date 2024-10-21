@@ -20,7 +20,7 @@ MiddlewareRegistry.register(({ dispatch, getState }) => (next) => (action) => {
         case CONFERENCE_JOINED: {
             if (navigator.product === "ReactNative") {
                 const { resolution } = getState()["features/base/config"];
-
+                console.log("--resolution--23--", resolution);
                 if (typeof resolution !== "undefined") {
                     dispatch(
                         setPreferredVideoQuality(
@@ -37,10 +37,13 @@ MiddlewareRegistry.register(({ dispatch, getState }) => (next) => (action) => {
         case SET_CONFIG: {
             const state = getState();
             const { videoQuality = {} } = state["features/base/config"];
-           
+            console.log("--videoQuality-40-", videoQuality);
             const { persistedPrefferedVideoQuality } =
                 state["features/video-quality-persistent-storage"];
-
+            console.log(
+                "---persistedPrefferedVideoQuality---",
+                persistedPrefferedVideoQuality, videoQuality.persist
+            );
             if (
                 videoQuality.persist &&
                 typeof persistedPrefferedVideoQuality !== "undefined"

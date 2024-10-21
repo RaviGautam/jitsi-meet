@@ -239,6 +239,7 @@ export function updateCalendarEvent(id: string, calendarId: string) {
         }
 
         const { locationURL } = getState()['features/base/connection'];
+        console.log("--locationURL--242-", locationURL)
         const newRoomName = generateRoomWithoutSeparator();
         let href = locationURL?.href ?? '';
 

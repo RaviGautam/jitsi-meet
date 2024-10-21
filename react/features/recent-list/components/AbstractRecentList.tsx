@@ -98,7 +98,7 @@ export default class AbstractRecentList<
      */
     _onPress(url: string, _isDirectJoin: boolean, _room: String) {
         const { dispatch } = this.props;
-
+   console.log("--url-101---", url, )
 
         sendAnalytics(createRecentClickedEvent("meeting.tile"));
       

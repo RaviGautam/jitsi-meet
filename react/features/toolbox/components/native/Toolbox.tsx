@@ -13,7 +13,7 @@ import TileViewButton from "../../../video-layout/components/TileViewButton";
 import { iAmVisitor } from "../../../visitors/functions";
 import { getMovableButtons, isToolboxVisible } from "../../functions.native";
 import HangupButton from "../HangupButton";
-
+import HangupButtonToEnd from "../HangupButtonToEnd";
 import AudioMuteButton from "./AudioMuteButton";
 import HangupMenuButton from "./HangupMenuButton";
 import OverflowMenuButton from "./OverflowMenuButton";
@@ -26,7 +26,9 @@ import {
     END_MEETING_OPTIONS,
 } from "../../../base/flags/constants";
 import { getFeatureFlag } from "../../../base/flags/functions";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getLocalParticipant } from "../../../base/participants/functions";
+import { PARTICIPANT_ROLE } from "../../../base/participants/constants";
 /**
  * The type of {@link Toolbox}'s React {@code Component} props.
  */
@@ -82,10 +84,14 @@ function Toolbox(props: IProps) {
         _visible,
         _iAmVisitor,
         _width,
-        _isEndMeetingOptions
+        _isEndMeetingOptions,
     } = props;
 
-    
+    const isModerator = useSelector(
+        (state: IReduxState) =>
+            getLocalParticipant(state)?.role === PARTICIPANT_ROLE.MODERATOR
+    );
+    console.log("----isModerator--92--", isModerator);
 
     if (!_visible) {
         return null;
@@ -160,8 +166,15 @@ function Toolbox(props: IProps) {
                 )}
                 {
                     // _numberOfParticipants > 1 && || _endConferenceSupported
-                    !_isEndMeetingOptions  ? (
+                    // !_isEndMeetingOptions  ? (
+                    //     <HangupMenuButton />
+                    // ) : (
+                    //     <HangupButton styles={hangupButtonStyles} />
+                    // )
+                    _isEndMeetingOptions && _endConferenceSupported ? (
                         <HangupMenuButton />
+                    ) : !_isEndMeetingOptions && isModerator ? (
+                        <HangupButtonToEnd styles={hangupButtonStyles} />
                     ) : (
                         <HangupButton styles={hangupButtonStyles} />
                     )

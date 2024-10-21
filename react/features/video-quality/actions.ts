@@ -108,6 +108,7 @@ export function setMaxReceiverVideoQualityForVerticalFilmstrip(maxReceiverVideoQ
  * }}
  */
 export function setPreferredVideoQuality(preferredVideoQuality: number) {
+    console.log("--preferredVideoQuality--", preferredVideoQuality)
     return {
         type: SET_PREFERRED_VIDEO_QUALITY,
         preferredVideoQuality
@@ -123,6 +124,7 @@ export function setPreferredVideoQuality(preferredVideoQuality: number) {
  * @returns {void}
  */
 export function setVideoQuality(frameHeight: number) {
+    console.log("--setVideoQuality-126-", frameHeight)
     return (dispatch: IStore['dispatch']) => {
         console.log("---VIDEO_QUALITY_LEVELS.LOW----", frameHeight, VIDEO_QUALITY_LEVELS.LOW, "---MAX_VIDEO_QUALITY---", MAX_VIDEO_QUALITY)
         if (frameHeight < VIDEO_QUALITY_LEVELS.LOW) {

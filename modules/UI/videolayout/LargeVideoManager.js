@@ -753,14 +753,15 @@ export default class LargeVideoManager {
      */
     _onVideoResolutionUpdate() {
         const { height, width } = this.videoContainer.getStreamSize();
+        console.log("--height, width----", height, width)
         const { resolution } = APP.store.getState()['features/large-video'];
-
+console.log("--resolution--757--", resolution)
         if (height !== resolution) {
             APP.store.dispatch(updateKnownLargeVideoResolution(height));
         }
 
         const currentAspectRatio = height === 0 ? 0 : width / height;
-
+        console.log("--currentAspectRatio--763--", currentAspectRatio)
         if (this._videoAspectRatio !== currentAspectRatio) {
             this._videoAspectRatio = currentAspectRatio;
             this.resize();

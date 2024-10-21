@@ -115,9 +115,14 @@ const statsEmitter = {
      * @returns {void}
      */
     _onStatsUpdated(localUserId: string, stats: IStats) {
+        console.log("--stats-118--", stats)
         const allUserFramerates = stats.framerate || {};
         const allUserResolutions = stats.resolution || {};
         const allUserCodecs = stats.codec || {};
+
+        console.log("--allUserFramerates-122--", allUserFramerates)
+        console.log("--allUserResolutions-122--", allUserResolutions)
+        console.log("--allUserCodecs-122--", allUserCodecs)
 
         // FIXME resolution and framerate are maps keyed off of user ids with
         // stat values. Receivers of stats expect resolution and framerate to
@@ -128,7 +133,7 @@ const statsEmitter = {
             resolution: allUserResolutions[localUserId as keyof typeof allUserResolutions],
             codec: allUserCodecs[localUserId as keyof typeof allUserCodecs]
         });
-
+        console.log("--modifiedLocalStats-135--", modifiedLocalStats)
         this._emitStatsUpdate(localUserId, modifiedLocalStats);
 
         // Get all the unique user ids from the framerate and resolution stats
@@ -136,30 +141,33 @@ const statsEmitter = {
         const framerateUserIds = Object.keys(allUserFramerates);
         const resolutionUserIds = Object.keys(allUserResolutions);
         const codecUserIds = Object.keys(allUserCodecs);
-
+        console.log("--framerateUserIds-143--", framerateUserIds)
+        console.log("--resolutionUserIds-144--", resolutionUserIds)
+        console.log("--codecUserIds-145--", codecUserIds)
         _.union(framerateUserIds, resolutionUserIds, codecUserIds)
             .filter(id => id !== localUserId)
             .forEach(id => {
                 const remoteUserStats: IStats = {};
-
+                console.log("--remoteUserStats-150--", remoteUserStats)
                 const framerate = allUserFramerates[id as keyof typeof allUserFramerates];
-
+                console.log("--framerate-152--", framerate)
                 if (framerate) {
                     remoteUserStats.framerate = framerate;
                 }
 
                 const resolution = allUserResolutions[id as keyof typeof allUserResolutions];
-
+                console.log("--resolution-158--", resolution)
                 if (resolution) {
                     remoteUserStats.resolution = resolution;
                 }
 
                 const codec = allUserCodecs[id as keyof typeof allUserCodecs];
+                console.log("--codec-164--", codec)
 
                 if (codec) {
                     remoteUserStats.codec = codec;
                 }
-
+                console.log("--remoteUserStats-169--", remoteUserStats)
                 this._emitStatsUpdate(id, remoteUserStats);
             });
     }

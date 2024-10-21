@@ -258,6 +258,7 @@ ReducerRegistry.register<IConferenceState>('features/base/conference',
             const assumedBandwidthBps = action.assumedBandwidthBps >= 0
                 ? Number(action.assumedBandwidthBps)
                 : undefined;
+                console.log("--assumedBandwidthBps--261-", assumedBandwidthBps)
 
             return set(state, 'assumedBandwidthBps', assumedBandwidthBps);
         }

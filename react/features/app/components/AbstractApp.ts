@@ -91,7 +91,7 @@ export class AbstractApp<P extends IProps = IProps> extends BaseApp<P> {
      * @returns {void}
      */
     _openURL(url: string | Object) {
-        console.log("--appNavigate--94--")
+        console.log("--appNavigate--94--", url)
         this.state.store?.dispatch(appNavigate(toURLString(url)));
     }
 }

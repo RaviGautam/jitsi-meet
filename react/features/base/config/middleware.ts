@@ -50,14 +50,16 @@ function _setConfig({ dispatch, getState }: IStore, next: Function, action: AnyA
 
     // Update the config with user defined settings.
     const settings = state['features/base/settings'];
+    console.log("--settings---53-", settings)
     const config: IConfig = {};
 
+    console.log("--config---56-", config)
     if (typeof settings.disableP2P !== 'undefined') {
         config.p2p = { enabled: !settings.disableP2P };
     }
-
+    
     const resolutionFlag = getFeatureFlag(state, 'resolution');
-
+    console.log("--resolutionFlag---62-", resolutionFlag)
     if (typeof resolutionFlag !== 'undefined') {
         config.resolution = resolutionFlag;
     }
@@ -79,7 +81,7 @@ function _setConfig({ dispatch, getState }: IStore, next: Function, action: AnyA
             maxStageParticipants: action.config.filmstrip.stageFilmstripParticipants
         }));
     }
-
+console.log("--updateConfig-84-", config )
     dispatch(updateConfig(config));
 
     // FIXME On Web we rely on the global 'config' variable which gets altered

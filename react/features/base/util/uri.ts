@@ -614,6 +614,7 @@ export function addHashParamsToURL(url: URL, hashParamsToAdd: Object = {}) {
  * @returns {string}
  */
 export function getDecodedURI(uri: string) {
+    console.log("--uri-617--",uri)
     return decodeURI(uri.replace(/^https?:\/\//i, ''));
 }
 

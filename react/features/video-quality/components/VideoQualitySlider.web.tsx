@@ -226,6 +226,7 @@ class VideoQualitySlider extends Component<IProps> {
      */
     _enableHighDefinition() {
         sendAnalytics(createEvent("high"));
+        console.log("Video quality: high enabled");
         logger.log("Video quality: high enabled");
         this._setPreferredVideoQuality(HIGH);
     }
@@ -239,6 +240,7 @@ class VideoQualitySlider extends Component<IProps> {
      */
     _enableLowDefinition() {
         sendAnalytics(createEvent("low"));
+        console.log("Video quality: low enabled");
         logger.log("Video quality: low enabled");
         this._setPreferredVideoQuality(LOW);
     }
@@ -252,6 +254,7 @@ class VideoQualitySlider extends Component<IProps> {
      */
     _enableStandardDefinition() {
         sendAnalytics(createEvent("standard"));
+        console.log("Video quality: standard enabled");
         logger.log("Video quality: standard enabled");
         this._setPreferredVideoQuality(STANDARD);
     }
@@ -265,6 +268,7 @@ class VideoQualitySlider extends Component<IProps> {
      */
     _enableUltraHighDefinition() {
         sendAnalytics(createEvent("ultra high"));
+        console.log("Video quality: ultra high enabled");
         logger.log("Video quality: ultra high enabled");
         this._setPreferredVideoQuality(ULTRA);
     }

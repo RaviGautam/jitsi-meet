@@ -117,7 +117,7 @@ class CalendarListContent extends Component<IProps> {
      */
     _onPress(url: string, analyticsEventName = 'meeting.tile') {
         sendAnalytics(createCalendarClickedEvent(analyticsEventName));
-
+console.log("--url-120-", url)
         this.props.dispatch(appNavigate(url));
     }
 

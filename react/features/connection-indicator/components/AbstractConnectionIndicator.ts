@@ -161,8 +161,10 @@ class AbstractConnectionIndicator<P extends IProps, S extends IState> extends Co
      * @returns {void}
      */
     _onStatsUpdated(stats = { connectionQuality: undefined }) {
+        console.log("--stats-164-", stats)
         // Rely on React to batch setState actions.
         const { connectionQuality } = stats;
+        console.log("--connectionQuality-167-", connectionQuality)
         const newPercentageState = typeof connectionQuality === 'undefined'
             ? {} : { percent: connectionQuality };
         const newStats = Object.assign(

@@ -257,7 +257,7 @@ class ConnectionStatusComponent extends PureComponent<IProps, IState> {
      */
     _onStatsUpdated(stats = {}) {
         const newState = this._buildState(stats);
-
+        console.log("--newState-260-", newState)
         this.setState(newState);
     }
 
