@@ -267,15 +267,15 @@ var config = {
     // util#browser#usesNewGumFlow. The constraints are independent from
     // this config's resolution value. Defaults to requesting an ideal
     // resolution of 720p.
-    constraints: {
-        video: {
-            height: {
-                ideal: 720,
-                max: 720,
-                min: 240,
-            },
-        },
-    },
+    // constraints: {
+    //     video: {
+    //         height: {
+    //             ideal: 720,
+    //             max: 720,
+    //             min: 240,
+    //         },
+    //     },
+    // },
 
     // Enable / disable simulcast support.
     // disableSimulcast: false,
@@ -449,118 +449,118 @@ var config = {
     // startLastN: 1,
 
     // Specify the settings for video quality optimizations on the client.
-    videoQuality: {
-        // Provides a way to set the codec preference on desktop based endpoints.
-       codecPreferenceOrder: ["VP9", "VP8", "H264"],
+    // videoQuality: {
+    //     // Provides a way to set the codec preference on desktop based endpoints.
+    //    codecPreferenceOrder: ["VP9", "VP8", "H264"],
 
-        // Codec specific settings for scalability modes and max bitrates.
-        // av1: {
-        //     maxBitratesVideo: {
-        //         low: 100000, // Minimum bitrate set to 100 kbps
-        //         standard: 256000, // Target/current bitrate set to 256 kbps
-        //         high: 256000, // Maximum bitrate set to 256 kbps
-        //        // ssHigh: 2500000,
-        //     },
-        //     scalabilityModeEnabled: true,
-        //     useSimulcast: false,
-        //     useKSVC: true,
-        // },
-        vp9: {
-            maxBitratesVideo: {
-                low: 100000, // Minimum bitrate set to 100 kbps
-                standard: 256000, // Target/current bitrate set to 256 kbps
-                high: 256000, // Maximum bitrate set to 256 kbps
-               // ssHigh: 2500000,
-            },
-            scalabilityModeEnabled: true,
-            useSimulcast: false,
-            useKSVC: true,
-        },
-        vp8: {
-            maxBitratesVideo: {
-                low: 100000, // Minimum bitrate set to 100 kbps
-                standard: 256000, // Target/current bitrate set to 256 kbps
-                high: 256000, // Maximum bitrate set to 256 kbps
-               // ssHigh: 2500000,
-            },
-            scalabilityModeEnabled: false,
-        },
-        h264: {
-            maxBitratesVideo: {
-                low: 100000, // Minimum bitrate set to 100 kbps
-                standard: 256000, // Target/current bitrate set to 256 kbps
-                high: 256000, // Maximum bitrate set to 256 kbps
-               // ssHigh: 2500000,
-            },
-            scalabilityModeEnabled: true,
-        },
+    //     // Codec specific settings for scalability modes and max bitrates.
+    //     av1: {
+    //         maxBitratesVideo: {
+    //             low: 100000, // Minimum bitrate set to 100 kbps
+    //             standard: 256000, // Target/current bitrate set to 256 kbps
+    //             high: 256000, // Maximum bitrate set to 256 kbps
+    //            // ssHigh: 2500000,
+    //         },
+    //         scalabilityModeEnabled: true,
+    //         useSimulcast: false,
+    //         useKSVC: true,
+    //     },
+    //     vp9: {
+    //         maxBitratesVideo: {
+    //             low: 100000, // Minimum bitrate set to 100 kbps
+    //             standard: 256000, // Target/current bitrate set to 256 kbps
+    //             high: 256000, // Maximum bitrate set to 256 kbps
+    //            // ssHigh: 2500000,
+    //         },
+    //         scalabilityModeEnabled: true,
+    //         useSimulcast: false,
+    //         useKSVC: true,
+    //     },
+    //     vp8: {
+    //         maxBitratesVideo: {
+    //             low: 100000, // Minimum bitrate set to 100 kbps
+    //             standard: 256000, // Target/current bitrate set to 256 kbps
+    //             high: 256000, // Maximum bitrate set to 256 kbps
+    //            // ssHigh: 2500000,
+    //         },
+    //         scalabilityModeEnabled: false,
+    //     },
+    //     h264: {
+    //         maxBitratesVideo: {
+    //             low: 100000, // Minimum bitrate set to 100 kbps
+    //             standard: 256000, // Target/current bitrate set to 256 kbps
+    //             high: 256000, // Maximum bitrate set to 256 kbps
+    //            // ssHigh: 2500000,
+    //         },
+    //         scalabilityModeEnabled: true,
+    //     },
 
-        //    DEPRECATED! Use `codec specific settings` instead.
-        // Provides a way to configure the maximum bitrates that will be enforced on the simulcast streams for
-        // video tracks. The keys in the object represent the type of the stream (LD, SD or HD) and the values
-        // are the max.bitrates to be set on that particular type of stream. The actual send may vary based on
-        // the available bandwidth calculated by the browser, but it will be capped by the values specified here.
-        // This is currently not implemented on app based clients on mobile.
-           maxBitratesVideo: {
-            VP9: {
-                    low: 100000, // Minimum bitrate set to 100 kbps
-                    standard: 256000, // Target/current bitrate set to 256 kbps
-                    high: 256000, // Maximum bitrate set to 256 kbps
-                    //  low: 100000,
-                    //  standard: 300000,
-                    //  high: 1200000,
-                 },
-                 VP8: {
-                    low: 100000, // Minimum bitrate set to 100 kbps
-                    standard: 256000, // Target/current bitrate set to 256 kbps
-                    high: 256000, // Maximum bitrate set to 256 kbps
-                    //  low: 200000,
-                    //  standard: 500000,
-                    //  high: 1500000,
-                 },
-                 H264: {
-                    low: 100000, // Minimum bitrate set to 100 kbps
-                    standard: 256000, // Target/current bitrate set to 256 kbps
-                    high: 256000, // Maximum bitrate set to 256 kbps
-                    //  low: 200000,
-                    //  standard: 500000,
-                    //  high: 1500000,
-                 },
-           },
+    //     //    DEPRECATED! Use `codec specific settings` instead.
+    //     // Provides a way to configure the maximum bitrates that will be enforced on the simulcast streams for
+    //     // video tracks. The keys in the object represent the type of the stream (LD, SD or HD) and the values
+    //     // are the max.bitrates to be set on that particular type of stream. The actual send may vary based on
+    //     // the available bandwidth calculated by the browser, but it will be capped by the values specified here.
+    //     // This is currently not implemented on app based clients on mobile.
+    //     //    maxBitratesVideo: {
+    //     //     VP9: {
+    //     //             low: 100000, // Minimum bitrate set to 100 kbps
+    //     //             standard: 256000, // Target/current bitrate set to 256 kbps
+    //     //             high: 256000, // Maximum bitrate set to 256 kbps
+    //     //             //  low: 100000,
+    //     //             //  standard: 300000,
+    //     //             //  high: 1200000,
+    //     //          },
+    //     //          VP8: {
+    //     //             low: 100000, // Minimum bitrate set to 100 kbps
+    //     //             standard: 256000, // Target/current bitrate set to 256 kbps
+    //     //             high: 256000, // Maximum bitrate set to 256 kbps
+    //     //             //  low: 200000,
+    //     //             //  standard: 500000,
+    //     //             //  high: 1500000,
+    //     //          },
+    //     //          H264: {
+    //     //             low: 100000, // Minimum bitrate set to 100 kbps
+    //     //             standard: 256000, // Target/current bitrate set to 256 kbps
+    //     //             high: 256000, // Maximum bitrate set to 256 kbps
+    //     //             //  low: 200000,
+    //     //             //  standard: 500000,
+    //     //             //  high: 1500000,
+    //     //          },
+    //     //    },
 
-        // The options can be used to override default thresholds of video thumbnail heights corresponding to
-        // the video quality levels used in the application. At the time of this writing the allowed levels are:
-        //     'low' - for the low quality level (180p at the time of this writing)
-        //     'standard' - for the medium quality level (360p)
-        //     'high' - for the high quality level (720p)
-        // The keys should be positive numbers which represent the minimal thumbnail height for the quality level.
-        //
-        // With the default config value below the application will use 'low' quality until the thumbnails are
-        // at least 360 pixels tall. If the thumbnail height reaches 720 pixels then the application will switch to
-        // the high quality.
-        //    minHeightForQualityLvl: {
-        //        360: 'standard',
-        //        720: 'high',
-        //    },
+    //     // The options can be used to override default thresholds of video thumbnail heights corresponding to
+    //     // the video quality levels used in the application. At the time of this writing the allowed levels are:
+    //     //     'low' - for the low quality level (180p at the time of this writing)
+    //     //     'standard' - for the medium quality level (360p)
+    //     //     'high' - for the high quality level (720p)
+    //     // The keys should be positive numbers which represent the minimal thumbnail height for the quality level.
+    //     //
+    //     // With the default config value below the application will use 'low' quality until the thumbnails are
+    //     // at least 360 pixels tall. If the thumbnail height reaches 720 pixels then the application will switch to
+    //     // the high quality.
+    //     //    minHeightForQualityLvl: {
+    //     //        360: 'standard',
+    //     //        720: 'high',
+    //     //    },
 
-        // Provides a way to set the codec preference on mobile devices, both on RN and mobile browser based endpoint
-           mobileCodecPreferenceOrder: [ 'VP9', 'VP8', 'H264' ],
+    //     // Provides a way to set the codec preference on mobile devices, both on RN and mobile browser based endpoint
+    //        mobileCodecPreferenceOrder: [ 'VP9', 'VP8', 'H264' ],
 
-        // DEPRECATED! Use `codecPreferenceOrder/mobileCodecPreferenceOrder` instead.
-        // Provides a way to prevent a video codec from being negotiated on the JVB connection. The codec specified
-        // here will be removed from the list of codecs present in the SDP answer generated by the client. If the
-        // same codec is specified for both the disabled and preferred option, the disable settings will prevail.
-        // Note that 'VP8' cannot be disabled since it's a mandatory codec, the setting will be ignored in this case.
-        //    disabledCodec: 'H264',
+    //     // DEPRECATED! Use `codecPreferenceOrder/mobileCodecPreferenceOrder` instead.
+    //     // Provides a way to prevent a video codec from being negotiated on the JVB connection. The codec specified
+    //     // here will be removed from the list of codecs present in the SDP answer generated by the client. If the
+    //     // same codec is specified for both the disabled and preferred option, the disable settings will prevail.
+    //     // Note that 'VP8' cannot be disabled since it's a mandatory codec, the setting will be ignored in this case.
+    //     //    disabledCodec: 'H264',
 
-        // DEPRECATED! Use `codecPreferenceOrder/mobileCodecPreferenceOrder` instead.
-        // Provides a way to set a preferred video codec for the JVB connection. If 'H264' is specified here,
-        // simulcast will be automatically disabled since JVB doesn't support H264 simulcast yet. This will only
-        // rearrange the the preference order of the codecs in the SDP answer generated by the browser only if the
-        // preferred codec specified here is present. Please ensure that the JVB offers the specified codec for this
-        // to take effect.
-        //    preferredCodec: 'VP8',
-    },
+    //     // DEPRECATED! Use `codecPreferenceOrder/mobileCodecPreferenceOrder` instead.
+    //     // Provides a way to set a preferred video codec for the JVB connection. If 'H264' is specified here,
+    //     // simulcast will be automatically disabled since JVB doesn't support H264 simulcast yet. This will only
+    //     // rearrange the the preference order of the codecs in the SDP answer generated by the browser only if the
+    //     // preferred codec specified here is present. Please ensure that the JVB offers the specified codec for this
+    //     // to take effect.
+    //     //    preferredCodec: 'VP8',
+    // },
 
     // Notification timeouts
     // notificationTimeouts: {

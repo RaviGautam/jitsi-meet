@@ -111,7 +111,7 @@ console.log("--updateConfig-84-", config )
 function _updateSettings({ dispatch }: IStore, next: Function, action: AnyAction) {
     const { config: { doNotFlipLocalVideo } } = action;
 
-    console.log("--config-114-", config)
+  
 
     if (doNotFlipLocalVideo === true) {
         dispatch(updateSettings({
