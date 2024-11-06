@@ -579,6 +579,7 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
      */
     _setupListeners() {
         this._transport.on('event', ({ name, ...data }) => {
+            console.log("--data-582--", data)
             const userID = data.id;
 
             switch (name) {
@@ -678,6 +679,7 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
                 break;
             case 'video-quality-changed':
                 this._videoQuality = data.videoQuality;
+                console.log("--this._videoQuality--", this._videoQuality)
                 break;
             case 'breakout-rooms-updated':
                 this.updateNumberOfParticipants(data.rooms);

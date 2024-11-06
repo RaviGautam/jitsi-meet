@@ -26,7 +26,7 @@ import Labels from "./Labels";
 import styles from "./styles";
 
 interface IProps {
-    _meetingTitle: string;
+    // _meetingTitle: string;
     _conferenceTimerEnabled: boolean;
     _isMeetingTitleEnabled: boolean;
     _createOnPress: Function;
@@ -39,27 +39,31 @@ interface IProps {
 const TitleBar = (props: IProps) => {
     const [Title, setTitle] = useState<string>("");
     const { _isParticipantsPaneEnabled, _visible } = props;
+    const [meetingTextValue, setMeetingTextValue] = useState("");
     const { t } = useTranslation();
 
     useEffect(() => {
         const fetchTitle = async () => {
             try {
                 let title = "";
-
+                const myTitle = await AsyncStorage.getItem(
+                    "meetingTitle"
+                );
+                setMeetingTextValue(myTitle)
                 if (props._isMeetingTitleEnabled) {
                     if (
-                        typeof props._meetingTitle === "string" &&
-                        props._meetingTitle.trim() !== ""
+                        typeof meetingTextValue === "string" &&
+                        meetingTextValue.trim() !== ""
                     ) {
-                        title = props._meetingTitle;
+                        title = meetingTextValue;
                     } else {
                         const myTitle = await AsyncStorage.getItem(
                             "meetingTitle"
                         );
 
                         title =
-                            myTitle && myTitle.trim() !== ""
-                                ? myTitle
+                        meetingTextValue && meetingTextValue.trim() !== ""
+                                ? meetingTextValue
                                 : props._meetingName;
                     }
                 } else {
@@ -74,7 +78,7 @@ const TitleBar = (props: IProps) => {
         };
 
         fetchTitle();
-    }, [props._isMeetingTitleEnabled, props._meetingTitle, props._meetingName]);
+    }, [props._isMeetingTitleEnabled, meetingTextValue, props._meetingName]);
 
     if (!_visible) {
         return null;
@@ -149,7 +153,7 @@ function _mapStateToProps(state: IReduxState) {
         _meetingName: getConferenceName(state),
         _roomNameEnabled: isRoomNameEnabled(state),
         _visible: isToolboxVisible(state),
-        _meetingTitle: meetingTitle,
+        // _meetingTitle: meetingTitle,
         _isMeetingTitleEnabled: Boolean(
             getFeatureFlag(state, MEETING_TITLE, true)
         ),

@@ -58,7 +58,7 @@ ReducerRegistry.register<IVideoQualityPersistedState>('features/video-quality-pe
     switch (action.type) {
     case SET_PREFERRED_VIDEO_QUALITY: {
         const { preferredVideoQuality } = action;
-
+console.log("--preferredVideoQuality-61-", preferredVideoQuality)
         return {
             ...state,
             persistedPrefferedVideoQuality: preferredVideoQuality
@@ -99,7 +99,7 @@ ReducerRegistry.register<IVideoQualityState>('features/video-quality',
             action.maxReceiverVideoQuality);
     case SET_PREFERRED_VIDEO_QUALITY: {
         const { preferredVideoQuality } = action;
-
+console.log("--preferredVideoQuality-102-", preferredVideoQuality)
         return {
             ...state,
             preferredVideoQuality
@@ -119,8 +119,12 @@ ReducerRegistry.register<IVideoQualityState>('features/video-quality',
  * @returns {Object} The new state after the reduction of the specified action.
  */
 function _setConfig(state: IVideoQualityState, { config }: { config: IConfig; }) {
+    console.log("--state-122-", state)
+    console.log("--config-123-", config?.videoQuality)
     const configuredMap = config?.videoQuality?.minHeightForQualityLvl;
+    console.log("--configuredMap-125-", configuredMap)
     const convertedMap = validateMinHeightForQualityLvl(configuredMap);
+    console.log("--convertedMap-127-", convertedMap)
 
     if (configuredMap && !convertedMap) {
         logger.error('Invalid config value videoQuality.minHeightForQualityLvl');

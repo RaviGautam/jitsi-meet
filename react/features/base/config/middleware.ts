@@ -53,7 +53,7 @@ function _setConfig({ dispatch, getState }: IStore, next: Function, action: AnyA
     console.log("--settings---53-", settings)
     const config: IConfig = {};
 
-    console.log("--config---56-", config)
+
     if (typeof settings.disableP2P !== 'undefined') {
         config.p2p = { enabled: !settings.disableP2P };
     }
@@ -110,6 +110,8 @@ console.log("--updateConfig-84-", config )
  */
 function _updateSettings({ dispatch }: IStore, next: Function, action: AnyAction) {
     const { config: { doNotFlipLocalVideo } } = action;
+
+    console.log("--config-114-", config)
 
     if (doNotFlipLocalVideo === true) {
         dispatch(updateSettings({

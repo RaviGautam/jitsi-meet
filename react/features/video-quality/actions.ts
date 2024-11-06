@@ -108,7 +108,7 @@ export function setMaxReceiverVideoQualityForVerticalFilmstrip(maxReceiverVideoQ
  * }}
  */
 export function setPreferredVideoQuality(preferredVideoQuality: number) {
-    console.log("--preferredVideoQuality--", preferredVideoQuality)
+    console.log("--preferredVideoQuality-111-", preferredVideoQuality)
     return {
         type: SET_PREFERRED_VIDEO_QUALITY,
         preferredVideoQuality

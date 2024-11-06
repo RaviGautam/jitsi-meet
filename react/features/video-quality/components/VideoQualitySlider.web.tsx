@@ -282,6 +282,7 @@ class VideoQualitySlider extends Component<IProps> {
      */
     _mapCurrentQualityToSliderValue() {
         const { _audioOnly, _sendrecvVideoQuality } = this.props;
+        console.log("-- _audioOnly, _sendrecvVideoQuality-285-",  _audioOnly, _sendrecvVideoQuality)
         const { _sliderOptions } = this;
 
         if (_audioOnly) {

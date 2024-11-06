@@ -14,7 +14,7 @@ import { getURLWithoutParams } from './utils';
  */
 export function getCurrentConferenceUrl(stateful: IStateful) {
     const state = toState(stateful);
-    console.log("--state-17-", state)
+
     let currentUrl;
 
 
@@ -45,7 +45,7 @@ export function getCurrentConferenceUrl(stateful: IStateful) {
  */
 export function getInviteURL(stateOrGetState: IStateful): string {
     const state = toState(stateOrGetState);
-    console.log("--state-48-", state)
+ 
     let locationURL
         = state instanceof URL
             ? state
@@ -83,7 +83,7 @@ export function getInviteURL(stateOrGetState: IStateful): string {
  */
 export function isInviteURLReady(stateOrGetState: IStateful): boolean {
     const state = toState(stateOrGetState);
-console.log("--state-85-", state)
+
     return Boolean(state['features/base/connection'].locationURL || state['features/base/config'].locationURL);
 }
 

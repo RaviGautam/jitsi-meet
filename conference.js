@@ -481,6 +481,8 @@ export default {
      * without any video tracks.
      * @returns {Promise<JitsiLocalTrack[]>, Object}
      */
+
+
     createInitialLocalTracks(options = {}) {
         const errors = {};
 
@@ -738,6 +740,7 @@ export default {
      */
     async init({ roomName }) {
         const state = APP.store.getState();
+        
         const initialOptions = {
             startAudioOnly: config.startAudioOnly,
             startScreenSharing: config.startScreenSharing,

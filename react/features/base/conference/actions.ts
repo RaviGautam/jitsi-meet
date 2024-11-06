@@ -1364,14 +1364,14 @@ export function setWaitingText(waitingText: string | undefined) {
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const { conference } = getState()["features/base/conference"];
 
-        if (conference) {
-            conference.setWaitingText(waitingText || "");
-        } else {
-            dispatch({
-                type: SET_WAITING_TEXT,
-                waitingText,
-            });
-        }
+        // if (conference) {
+        //     conference.setWaitingText(waitingText || "");
+        // } else {
+        //     dispatch({
+        //         type: SET_WAITING_TEXT,
+        //         waitingText,
+        //     });
+        // }
     };
 }
 
@@ -1380,14 +1380,14 @@ export function setMeetingTitle(meetingTitle: string | undefined) {
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const { conference } = getState()["features/base/conference"];
 
-        if (conference) {
-            conference.setMeetingTitle(meetingTitle || "");
-        } else {
-            dispatch({
-                type: SET_MEETING_TITLE,
-                meetingTitle,
-            });
-        }
+        // if (conference) {
+        //     conference.setMeetingTitle(meetingTitle || "");
+        // } else {
+        //     dispatch({
+        //         type: SET_MEETING_TITLE,
+        //         meetingTitle,
+        //     });
+        // }
     };
 }
 
@@ -1396,14 +1396,14 @@ export function setLobyTitle(lobyTitle: string | undefined) {
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const { conference } = getState()["features/base/conference"];
 
-        if (conference) {
-            conference.setLobyTitle(lobyTitle || "");
-        } else {
-            dispatch({
-                type: SET_LOBY_TITLE,
-                lobyTitle,
-            });
-        }
+        // if (conference) {
+        //     conference.setLobyTitle(lobyTitle || "");
+        // } else {
+        //     dispatch({
+        //         type: SET_LOBY_TITLE,
+        //         lobyTitle,
+        //     });
+        // }
     };
 }
 
@@ -1411,14 +1411,14 @@ export function setLobyDescription(lobyDescription: string | undefined) {
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const { conference } = getState()["features/base/conference"];
 
-        if (conference) {
-            conference.setLobyDescription(lobyDescription || "");
-        } else {
-            dispatch({
-                type: SET_LOBY_DISCRIPTION,
-                lobyDescription,
-            });
-        }
+        // if (conference) {
+        //     conference.setLobyDescription(lobyDescription || "");
+        // } else {
+        //     dispatch({
+        //         type: SET_LOBY_DISCRIPTION,
+        //         lobyDescription,
+        //     });
+        // }
     };
 }
 
@@ -1427,14 +1427,14 @@ export function setMinBitrate(minBitrate: number | undefined) {
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const { conference } = getState()["features/base/conference"];
 
-        if (conference) {
-            conference.setMinBitrate(minBitrate || "");
-        } else {
-            dispatch({
-                type: SET_MIN_BITRATE,
-                minBitrate,
-            });
-        }
+        // if (conference) {
+        //     conference.setMinBitrate(minBitrate || "");
+        // } else {
+        //     dispatch({
+        //         type: SET_MIN_BITRATE,
+        //         minBitrate,
+        //     });
+        // }
     };
 }
 
@@ -1443,14 +1443,14 @@ export function setStdBitrate(stdBitrate: number | undefined) {
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const { conference } = getState()["features/base/conference"];
 
-        if (conference) {
-            conference.setStdBitrate(stdBitrate || "");
-        } else {
-            dispatch({
-                type: SET_STD_BITRATE,
-                stdBitrate,
-            });
-        }
+        // if (conference) {
+        //     conference.setStdBitrate(stdBitrate || "");
+        // } else {
+        //     dispatch({
+        //         type: SET_STD_BITRATE,
+        //         stdBitrate,
+        //     });
+        // }
     };
 }
 
@@ -1459,14 +1459,14 @@ export function setMaxBitrate(maxBitrate: number | undefined) {
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const { conference } = getState()["features/base/conference"];
 
-        if (conference) {
-            conference.setMaxBitrate(maxBitrate || "");
-        } else {
-            dispatch({
-                type: SET_MAX_BITRATE,
-                maxBitrate,
-            });
-        }
+        // if (conference) {
+        //     conference.setMaxBitrate(maxBitrate || "");
+        // } else {
+        //     dispatch({
+        //         type: SET_MAX_BITRATE,
+        //         maxBitrate,
+        //     });
+        // }
     };
 }
 

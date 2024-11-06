@@ -72,10 +72,14 @@ class Root extends PureComponent {
     }
 
     async saveTitleValues(meetingTitle, waitingAreaText, lobyTitle,lobyDescription) {
+        console.log("--waitingAreaText---", waitingAreaText,)
+      console.log("--meetingTitle---", meetingTitle,)
+      console.log("--lobyTitle---", lobyTitle,)
+      console.log("--lobyDescription---", lobyDescription,)
       
         try {
-            await AsyncStorage.setItem("meetingTitle", meetingTitle.toString());
             await AsyncStorage.setItem("waitingText", waitingAreaText.toString());
+            await AsyncStorage.setItem("meetingTitle", meetingTitle.toString());
             await AsyncStorage.setItem("lobyTitle", lobyTitle.toString());
             await AsyncStorage.setItem("lobyDescription", lobyDescription.toString());
         } catch (error) {

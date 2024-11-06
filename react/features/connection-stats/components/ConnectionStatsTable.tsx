@@ -307,7 +307,7 @@ const ConnectionStatsTable = ({
 }: IProps) => {
     const { classes, cx } = useStyles();
     const { t } = useTranslation();
-
+console.log("--bitrate--310-", bitrate)
     const _renderResolution = () => {
         let resolutionString = 'N/A';
 
@@ -629,6 +629,7 @@ const ConnectionStatsTable = ({
     );
 
     const _renderBitrate = () => {
+        console.log("--_renderBitrate--632--", bitrate)
         const { download, upload } = bitrate || {};
 
         return (

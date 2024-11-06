@@ -34,12 +34,29 @@ const statsEmitter = {
      * {@code statsEmitter} should subscribe for stat updates.
      * @returns {void}
      */
-    startListeningForStats(conference: IJitsiConference) {
-        conference.on(JitsiConnectionQualityEvents.LOCAL_STATS_UPDATED,
-            (stats: IStats) => this._onStatsUpdated(conference.myUserId(), stats));
+    // startListeningForStats(conference: IJitsiConference) {
+    //     conference.on(JitsiConnectionQualityEvents.LOCAL_STATS_UPDATED,
+    //         (stats: IStats) => this._onStatsUpdated(conference.myUserId(), stats));
 
-        conference.on(JitsiConnectionQualityEvents.REMOTE_STATS_UPDATED,
-            (id: string, stats: IStats) => this._emitStatsUpdate(id, stats));
+    //     conference.on(JitsiConnectionQualityEvents.REMOTE_STATS_UPDATED,
+    //         (id: string, stats: IStats) => this._emitStatsUpdate(id, stats));
+    // },
+    startListeningForStats(conference: IJitsiConference) {
+        console.log("startListeningForStats: Listening for local and remote stats updates.");
+    
+        // Listen for local stats updates
+        conference.on(JitsiConnectionQualityEvents.LOCAL_STATS_UPDATED, (stats: IStats) => {
+            console.log("LOCAL_STATS_UPDATED event triggered.");
+            console.log("Local Stats:", stats);  // Log the stats data
+            this._onStatsUpdated(conference.myUserId(), stats);
+        });
+    
+        // Listen for remote stats updates
+        conference.on(JitsiConnectionQualityEvents.REMOTE_STATS_UPDATED, (id: string, stats: IStats) => {
+            console.log("REMOTE_STATS_UPDATED event triggered for user ID:", id);
+            console.log("Remote Stats:", stats);  // Log the stats data
+            this._emitStatsUpdate(id, stats);
+        });
     },
 
     /**
