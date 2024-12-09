@@ -31,7 +31,10 @@ export function muteLocal(enable: boolean, mediaType: MediaType, stopScreenShari
     return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
         const isAudio = mediaType === MEDIA_TYPE.AUDIO;
 
+        console.log("--isAudio-34-", isAudio)
+
         if (!isAudio && mediaType !== MEDIA_TYPE.VIDEO) {
+
             logger.error(`Unsupported media type: ${mediaType}`);
 
             return;
@@ -68,7 +71,9 @@ export function muteLocal(enable: boolean, mediaType: MediaType, stopScreenShari
  * @returns {Function}
  */
 export function muteRemote(participantId: string, mediaType: MediaType) {
+    console.log("--participantId-74-", participantId, mediaType)
     return (dispatch: IStore['dispatch']) => {
+        console.log("--mediaType-75-", mediaType)
         if (mediaType !== MEDIA_TYPE.AUDIO && mediaType !== MEDIA_TYPE.VIDEO) {
             logger.error(`Unsupported media type: ${mediaType}`);
 
@@ -90,6 +95,8 @@ export function muteAllParticipants(exclude: Array<string>, mediaType: MediaType
     return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
         const state = getState();
         const localId = getLocalParticipant(state)?.id ?? '';
+
+        console.log("---localId--98-", localId)
 
         if (!exclude.includes(localId)) {
             dispatch(muteLocal(true, mediaType, mediaType !== MEDIA_TYPE.AUDIO));

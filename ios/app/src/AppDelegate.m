@@ -25,7 +25,7 @@
 
 @implementation AppDelegate
 
--             (BOOL)application:(UIApplication *)application
+- (BOOL)application:(UIApplication *)application
   didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     JitsiMeet *jitsiMeet = [JitsiMeet sharedInstance];
 

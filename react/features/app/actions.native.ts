@@ -71,7 +71,7 @@ export function appNavigate(
         if (!location?.host) {
             console.log("--location?.host-72-")
             const defaultLocation = parseURIString(getDefaultURL(getState));
-            console.log("--defaultLocation-74-", defaultLocation)
+            console.log("--defaultLocation-74-")
             if (location) {
                 location.host = defaultLocation.host;
                 console.log("--location?.host-78-")
@@ -92,18 +92,17 @@ export function appNavigate(
         const { contextRoot, host, hostname, pathname, room } = location;
         const locationURL = new URL(location.toString());
         const { conference } = getConferenceState(getState());
-        console.log("--contextRoot, host, hostname, pathname, room --", contextRoot, host, hostname, pathname, room )
+        
 
         if (room) {
             if (conference) {
                 // We need to check if the location is the same with the previous one.
                 const currentLocationURL =
                     conference?.getConnection()[JITSI_CONNECTION_URL_KEY];
-                    console.log("--currentLocationURL--", currentLocationURL )
+                    console.log("--currentLocationURL--")
                 const { hostname: currentHostName, pathname: currentPathName } =
                     currentLocationURL;
-                    console.log("--currentHostName--", currentHostName,hostname )
-                    console.log("--currentPathName--", currentPathName,pathname )
+                    console.log("--currentHostName--")
 
                 if (
                     currentHostName === hostname &&
@@ -118,7 +117,7 @@ export function appNavigate(
                     return;
                 }
             } else {
-                console.log("--hostname-114-", hostname, host, room);
+                console.log("--hostname-114-");
                 navigateRoot(screen.connecting, {
                     roomId: room,
                     hostname: hostname,

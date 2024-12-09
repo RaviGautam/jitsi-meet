@@ -135,6 +135,8 @@ function _addConferenceListeners(
         (err: string, ...args: any[]) =>
             dispatch(conferenceFailed(conference, err, ...args))
     );
+
+    console.log("--JitsiConferenceEvents.CONFERENCE_JOINED---139---", JitsiConferenceEvents.CONFERENCE_JOINED)
     conference.on(JitsiConferenceEvents.CONFERENCE_JOINED, (..._args: any[]) =>
         dispatch(conferenceJoined(conference))
     );
@@ -186,6 +188,8 @@ function _addConferenceListeners(
         const audioMuted = Boolean(conference.isStartAudioMuted());
         const videoMuted = Boolean(conference.isStartVideoMuted());
         const localTracks = getLocalTracks(state["features/base/tracks"]);
+
+        console.log("--audioMuted-190-", audioMuted);
 
         sendAnalytics(
             createStartMutedConfigurationEvent("remote", audioMuted, videoMuted)
@@ -563,6 +567,8 @@ export function _conferenceWillJoin(conference: IJitsiConference) {
         const localTracks = getLocalTracks(state["features/base/tracks"]).map(
             (t) => t.jitsiTrack
         );
+
+        console.log("--localTracks-571-", localTracks)
 
         if (localTracks.length && !iAmVisitor(state)) {
             _addLocalTracksToConference(conference, localTracks);
@@ -1120,6 +1126,7 @@ export function onStartMutedPolicyChanged(
     audioMuted: boolean,
     videoMuted: boolean
 ) {
+    console.log("--audioMuted-videoMuted-1125-", audioMuted, videoMuted)
     return {
         type: SET_START_MUTED_POLICY,
         startAudioMutedPolicy: audioMuted,
@@ -1324,6 +1331,7 @@ export function setStartMutedPolicy(
     startAudioMuted: boolean,
     startVideoMuted: boolean
 ) {
+    console.log("--startAudioMuted-startVideoMuted-1330-", startAudioMuted, startVideoMuted)
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const conference = getCurrentConference(getState());
 

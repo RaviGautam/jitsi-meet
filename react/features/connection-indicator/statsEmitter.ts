@@ -47,14 +47,13 @@ const statsEmitter = {
         // Listen for local stats updates
         conference.on(JitsiConnectionQualityEvents.LOCAL_STATS_UPDATED, (stats: IStats) => {
             console.log("LOCAL_STATS_UPDATED event triggered.");
-            console.log("Local Stats:", stats);  // Log the stats data
+            
             this._onStatsUpdated(conference.myUserId(), stats);
         });
     
         // Listen for remote stats updates
         conference.on(JitsiConnectionQualityEvents.REMOTE_STATS_UPDATED, (id: string, stats: IStats) => {
             console.log("REMOTE_STATS_UPDATED event triggered for user ID:", id);
-            console.log("Remote Stats:", stats);  // Log the stats data
             this._emitStatsUpdate(id, stats);
         });
     },
@@ -132,14 +131,14 @@ const statsEmitter = {
      * @returns {void}
      */
     _onStatsUpdated(localUserId: string, stats: IStats) {
-        console.log("--stats-118--", stats)
+        console.log("--stats-118--")
         const allUserFramerates = stats.framerate || {};
         const allUserResolutions = stats.resolution || {};
         const allUserCodecs = stats.codec || {};
 
-        console.log("--allUserFramerates-122--", allUserFramerates)
-        console.log("--allUserResolutions-122--", allUserResolutions)
-        console.log("--allUserCodecs-122--", allUserCodecs)
+        console.log("--allUserFramerates-122--")
+        console.log("--allUserResolutions-122--")
+        console.log("--allUserCodecs-122--")
 
         // FIXME resolution and framerate are maps keyed off of user ids with
         // stat values. Receivers of stats expect resolution and framerate to
@@ -150,7 +149,7 @@ const statsEmitter = {
             resolution: allUserResolutions[localUserId as keyof typeof allUserResolutions],
             codec: allUserCodecs[localUserId as keyof typeof allUserCodecs]
         });
-        console.log("--modifiedLocalStats-135--", modifiedLocalStats)
+        console.log("--modifiedLocalStats-135--")
         this._emitStatsUpdate(localUserId, modifiedLocalStats);
 
         // Get all the unique user ids from the framerate and resolution stats
@@ -179,12 +178,12 @@ const statsEmitter = {
                 }
 
                 const codec = allUserCodecs[id as keyof typeof allUserCodecs];
-                console.log("--codec-164--", codec)
+                console.log("--codec-164--")
 
                 if (codec) {
                     remoteUserStats.codec = codec;
                 }
-                console.log("--remoteUserStats-169--", remoteUserStats)
+                console.log("--remoteUserStats-169--")
                 this._emitStatsUpdate(id, remoteUserStats);
             });
     }

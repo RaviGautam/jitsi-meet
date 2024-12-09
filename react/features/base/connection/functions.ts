@@ -20,7 +20,6 @@ export function getCurrentConferenceUrl(stateful: IStateful) {
 
     if (isInviteURLReady(state)) {
         currentUrl = toURLString(getInviteURL(state));
-        console.log("--currentUrl-23-", currentUrl)
     }
 
     // Check if the URL doesn't end with a slash
@@ -28,7 +27,7 @@ export function getCurrentConferenceUrl(stateful: IStateful) {
         currentUrl = undefined;
     }
 
-    console.log("--currentUrl-31-", currentUrl)
+
     return currentUrl ? currentUrl : undefined;
 }
 
@@ -50,7 +49,7 @@ export function getInviteURL(stateOrGetState: IStateful): string {
         = state instanceof URL
             ? state
             : state['features/base/connection'].locationURL;
-            console.log("--locationURL-48-", locationURL)
+            
 
     // If there's no locationURL on the base/connection feature try the base/config where it's set earlier.
     if (!locationURL) {
@@ -62,16 +61,14 @@ export function getInviteURL(stateOrGetState: IStateful): string {
     }
 
     const { inviteDomain } = state['features/dynamic-branding'];
-    console.log("--inviteDomain-59-", inviteDomain)
+    
     const urlWithoutParams = getURLWithoutParams(locationURL);
-    console.log("--urlWithoutParams-61-", urlWithoutParams)
     if (inviteDomain) {
         const meetingId
             = state['features/base/config'].brandingRoomAlias || urlWithoutParams.pathname.replace(/\//, '');
-        console.log("---meetingId-67-", meetingId)
+        
         return `${inviteDomain}/${meetingId}`;
     }
-    console.log("--urlWithoutParams-73-", urlWithoutParams.href)
     return urlWithoutParams.href;
 }
 

@@ -97,6 +97,8 @@ class AudioTrack extends Component<IProps> {
         if (this._ref?.current) {
             const audio = this._ref?.current;
             const { _muted, _volume } = this.props;
+            console.log("--audio-100-", audio)
+            console.log("--_muted-101-", _muted)
 
             if (typeof _volume === 'number') {
                 audio.volume = _volume;
@@ -149,6 +151,10 @@ class AudioTrack extends Component<IProps> {
             const currentVolume = audio.volume;
             const nextVolume = nextProps._volume;
 
+            console.log("--audio-154-", audio);
+            console.log("--currentVolume-155-", currentVolume);
+            console.log("--nextVolume-156-", nextVolume);
+
             if (typeof nextVolume === 'number' && !isNaN(nextVolume) && currentVolume !== nextVolume) {
                 if (nextVolume === 0) {
                     logger.debug(`Setting audio element ${nextProps?.id} volume to 0`);
@@ -157,7 +163,10 @@ class AudioTrack extends Component<IProps> {
             }
 
             const currentMuted = audio.muted;
+            console.log("--currentMuted-164-", currentMuted);
+
             const nextMuted = nextProps._muted;
+            console.log("--nextMuted-164-", nextMuted);
 
             if (typeof nextMuted === 'boolean' && currentMuted !== nextMuted) {
                 logger.debug(`Setting audio element ${nextProps?.id} muted to true`);

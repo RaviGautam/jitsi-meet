@@ -57,6 +57,7 @@ export function _addLocalTracksToConference(
         conference: IJitsiConference,
         localTracks: Array<Object>) {
     const conferenceLocalTracks = conference.getLocalTracks();
+    console.log("--conferenceLocalTracks--", conferenceLocalTracks)
     const promises = [];
 
     for (const track of localTracks) {

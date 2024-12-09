@@ -159,8 +159,9 @@ export function submitMoreTab(newState: any) {
 export function submitModeratorTab(newState: any) {
     return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
         const currentState = getModeratorTabProps(getState());
-
+        console.log("--currentState.followMeEnabled--",currentState.followMeEnabled,"---newState.followMeEnabled---", newState.followMeEnabled)
         if (newState.followMeEnabled !== currentState.followMeEnabled) {
+   
             dispatch(setFollowMe(newState.followMeEnabled));
         }
 

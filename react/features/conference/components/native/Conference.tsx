@@ -228,6 +228,7 @@ class Conference extends AbstractConference<IProps, State> {
     componentDidMount() {
         const { _audioOnlyEnabled, _startCarMode, navigation } = this.props;
 
+        console.log("--_audioOnlyEnabled-230-", _audioOnlyEnabled, _startCarMode)
         BackHandler.addEventListener(
             "hardwareBackPress",
             this._onHardwareBackPress
@@ -253,7 +254,7 @@ class Conference extends AbstractConference<IProps, State> {
         }
 
         if (prevProps._showLobby && !_showLobby) {
-            console.log("---conference----");
+            console.log("---conference----", _audioOnlyEnabled, _startCarMode );
             if (_audioOnlyEnabled && _startCarMode) {
                 console.log("---249---");
                 return;

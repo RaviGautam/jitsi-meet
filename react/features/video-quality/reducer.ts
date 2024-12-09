@@ -119,12 +119,12 @@ console.log("--preferredVideoQuality-102-", preferredVideoQuality)
  * @returns {Object} The new state after the reduction of the specified action.
  */
 function _setConfig(state: IVideoQualityState, { config }: { config: IConfig; }) {
-    console.log("--state-122-", state)
-    console.log("--config-123-", config?.videoQuality)
+    console.log("--state-122-")
+    console.log("--config-123-")
     const configuredMap = config?.videoQuality?.minHeightForQualityLvl;
-    console.log("--configuredMap-125-", configuredMap)
+    console.log("--configuredMap-125-")
     const convertedMap = validateMinHeightForQualityLvl(configuredMap);
-    console.log("--convertedMap-127-", convertedMap)
+    console.log("--convertedMap-127-")
 
     if (configuredMap && !convertedMap) {
         logger.error('Invalid config value videoQuality.minHeightForQualityLvl');

@@ -74,6 +74,8 @@ const VideoLayout = {
     updateVideoMutedForNoTracks(participantId) {
         const participant = APP.conference.getParticipantById(participantId);
 
+        console.log("--participant-77-", participant)
+
         if (participant && !participant.getTracksByMediaType('video').length) {
             VideoLayout._updateLargeVideoIfDisplayed(participantId, true);
         }

@@ -50,7 +50,7 @@ function _setConfig({ dispatch, getState }: IStore, next: Function, action: AnyA
 
     // Update the config with user defined settings.
     const settings = state['features/base/settings'];
-    console.log("--settings---53-", settings)
+    
     const config: IConfig = {};
 
 
@@ -59,7 +59,7 @@ function _setConfig({ dispatch, getState }: IStore, next: Function, action: AnyA
     }
     
     const resolutionFlag = getFeatureFlag(state, 'resolution');
-    console.log("--resolutionFlag---62-", resolutionFlag)
+   
     if (typeof resolutionFlag !== 'undefined') {
         config.resolution = resolutionFlag;
     }

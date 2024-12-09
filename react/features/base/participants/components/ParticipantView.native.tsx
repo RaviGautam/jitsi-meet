@@ -138,6 +138,8 @@ class ParticipantView extends Component<IProps> {
             t
         } = this.props;
 
+        console.log("--_participantName--", _participantName)
+
         // XXX Consider splitting this component into 2: one for the large view
         // and one for the thumbnail. Some of these don't apply to both.
         const containerStyle = {
@@ -171,11 +173,12 @@ class ParticipantView extends Component<IProps> {
             disableVideo,
             onPress
         } = this.props;
-
+      console.log("--disableVideo-176-", disableVideo )
         const testHintId
             = this.props.testHintId
                 ? this.props.testHintId
                 : `org.jitsi.meet.Participant#${this.props.participantId}`;
+
 
         const renderSharedVideo = _isSharedVideoParticipant && !disableVideo;
 
@@ -252,8 +255,9 @@ function _mapStateToProps(state: IReduxState, ownProps: any) {
 function shouldRenderParticipantVideo(stateful: IStateful, id: string) {
     const state = toState(stateful);
     const participant = getParticipantById(state, id);
-
+    
     if (!participant) {
+        console.log("--participant-261-")
         return false;
     }
 
@@ -261,22 +265,26 @@ function shouldRenderParticipantVideo(stateful: IStateful, id: string) {
     const videoTrack = getVideoTrackByParticipant(state, participant);
 
     if (!videoTrack) {
+        console.log("--videoTrack-268-")
         return false;
     }
 
     if (!shouldRenderVideoTrack(videoTrack, /* waitForVideoStarted */ false)) {
+        console.log("--shouldRenderVideoTrack-274-")
         return false;
     }
 
     /* Then check if the participant connection or track streaming status is active. */
     if (!videoTrack.local && !isTrackStreamingStatusActive(videoTrack)) {
+        console.log("--videoTrack-277-")
         return false;
     }
 
     /* Then check if audio-only mode is not active. */
     const audioOnly = state['features/base/audio-only'].enabled;
-
+    console.log("--audioOnly-282-")
     if (!audioOnly) {
+        console.log("--audioOnly-284-")
         return true;
     }
 

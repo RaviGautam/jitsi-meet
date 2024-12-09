@@ -307,6 +307,7 @@ function _mapStateToProps(state: IReduxState, ownProps: any) {
     const _matchesSearch = participantMatchesSearch(participant, searchString);
 
     const _isAudioMuted = Boolean(participant && isParticipantAudioMuted(participant, state));
+    console.log("--_isAudioMuted-310-", _isAudioMuted)
     const _isVideoMuted = isParticipantVideoMuted(participant, state);
     const _audioMediaState = getParticipantAudioMediaState(participant, _isAudioMuted, state);
     const _videoMediaState = getParticipantVideoMediaState(participant, _isVideoMuted, state);

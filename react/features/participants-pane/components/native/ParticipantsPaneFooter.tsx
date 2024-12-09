@@ -46,6 +46,8 @@ const ParticipantsPaneFooter = (): JSX.Element => {
         [ dispatch ]);
     const showMoreActions = useSelector(isMoreActionsVisible);
     const showMuteAll = useSelector(isMuteAllVisible);
+    
+    console.log("--showMuteAll-49-", showMuteAll)
 
     return (
         <View style = { styles.participantsPaneFooterContainer as ViewStyle }>

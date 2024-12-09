@@ -107,13 +107,10 @@ MiddlewareRegistry.register(({ dispatch, getState }) => (next) => (action) => {
         case SET_CONFIG: {
             const state = getState();
             const { videoQuality = {} } = state["features/base/config"];
-            console.log("--videoQuality-40-", videoQuality);
+            console.log("--videoQuality-40-");
             const { persistedPrefferedVideoQuality } =
                 state["features/video-quality-persistent-storage"];
-            console.log(
-                "---persistedPrefferedVideoQuality---",
-                persistedPrefferedVideoQuality, videoQuality.persist
-            );
+            
             if (
                 videoQuality.persist &&
                 typeof persistedPrefferedVideoQuality !== "undefined"

@@ -160,7 +160,7 @@ class VideoTrack extends AbstractVideoTrack<IProps> {
             style,
             eventHandlers
         } = this.props;
-
+console.log("--muted-163-", muted)
         return (
 
             <Video

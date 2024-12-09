@@ -80,6 +80,7 @@
 
 import { RTCPeerConnection as PC, RTCSessionDescription } from 'react-native-webrtc';
 import { synthesizeIPv6Addresses } from './ipv6utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
  * Override PeerConnection to synthesize IPv6 addresses and adjust the SDP bitrate.
@@ -93,16 +94,21 @@ export default class RTCPeerConnection extends PC {
      * @returns {Promise<undefined>} A promise which is resolved once the operation is complete.
      */
     async setRemoteDescription(description) {
-        console.log("---Original description---", description);
-
+        console.log("---Original description---");
+        const minBitrateValue = await AsyncStorage.getItem("minBitrate")
+        console.log("---minBitrateValue---", minBitrateValue);
+        const min = parseInt(await AsyncStorage.getItem("minBitrate")) || 100;
+        const max = parseInt(await AsyncStorage.getItem("maxBitrate")) || 256;
+        const std = parseInt(await AsyncStorage.getItem("stdBitrate")) || 256;
+    
         // Modify the SDP to adjust bitrate settings (Min: 100kbps, Max: 256kbps, Current: 256kbps)
-        const modifiedSDP = this.modifyBitrateInSDP(description.sdp, 100, 256, 256);
+        const modifiedSDP = this.modifyBitrateInSDP(description.sdp, min, max, std);
         const updatedDescription = new RTCSessionDescription({
             type: description.type,
             sdp: modifiedSDP
         });
 
-        console.log("---Modified description---", updatedDescription);
+        console.log("---Modified description---");
 
         // Synthesize IPv6 addresses in the SDP and pass to setRemoteDescription
         const finalDescription = await synthesizeIPv6Addresses(updatedDescription);

@@ -35,6 +35,7 @@ import { MEDIA_STATE, QUICK_ACTION_BUTTON, REDUCER_KEY } from './constants';
  * @returns {MediaState}
  */
 export function isForceMuted(participant: IParticipant | undefined, mediaType: MediaType, state: IReduxState) {
+    console.log("--participant-38-", participant, "--mediaType--", mediaType)
     if (isEnabledFromState(mediaType, state)) {
         if (participant?.local) {
             return !isLocalParticipantApprovedFromState(mediaType, state);
@@ -61,10 +62,13 @@ export function isForceMuted(participant: IParticipant | undefined, mediaType: M
  */
 export function getParticipantAudioMediaState(participant: IParticipant | undefined,
         muted: Boolean, state: IReduxState) {
+            console.log("--participant-65-", participant, "--muted--", muted)   
     const dominantSpeaker = getDominantSpeakerParticipant(state);
+    console.log("--dominantSpeaker-67-", dominantSpeaker, "")
 
     if (muted) {
         if (isForceMuted(participant, MEDIA_TYPE.AUDIO, state)) {
+            console.log("---MEDIA_TYPE.AUDIO---")
             return MEDIA_STATE.FORCE_MUTED;
         }
 
@@ -148,7 +152,9 @@ export function getQuickActionButtonType(
     const isVideoForceMuted = isForceMuted(participant, MEDIA_TYPE.VIDEO, state);
 
     if (isLocalParticipantModerator(state)) {
+
         if (!isAudioMuted) {
+            console.log("--isAudioMuted-157-",isAudioMuted)
             return QUICK_ACTION_BUTTON.MUTE;
         }
         if (!isVideoMuted) {
@@ -213,6 +219,9 @@ export function getSortedParticipantIds(stateful: IStateful) {
     const dominantId = dominantSpeaker?.id;
     const local = remoteRaisedHandParticipants.has(id ?? '') ? [] : [ id ];
 
+    console.log("--dominantId-215-", dominantId);
+    console.log("--local-217-", local);
+    
     // In case dominat speaker has raised hand, keep the order in the raised hand queue.
     // In case they don't have raised hand, goes first in the participants list.
     if (dominantId && dominantId !== id && !remoteRaisedHandParticipants.has(dominantId)) {

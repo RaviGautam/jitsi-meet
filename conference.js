@@ -218,6 +218,7 @@ function sendData(command, value) {
  * @param {boolean} muted - if audio stream should be muted or unmuted.
  */
 function muteLocalAudio(muted) {
+    console.log("--muted-221-", muted)
     APP.store.dispatch(setAudioMuted(muted));
 }
 
@@ -680,11 +681,13 @@ export default {
 
     startConference(tracks) {
         tracks.forEach((track) => {
+            console.log("--track-683-", track);
             if (
                 (track.isAudioTrack() && this.isLocalAudioMuted()) ||
                 (track.isVideoTrack() && this.isLocalVideoMuted())
             ) {
                 const mediaType = track.getType();
+                console.log("--mediaType-683-", mediaType);
 
                 sendAnalytics(createTrackMutedEvent(mediaType, "initial mute"));
                 logger.log(`${mediaType} mute: initially muted.`);
@@ -936,6 +939,7 @@ export default {
         if (!this._localTracksInitialized) {
             // This will only modify base/media.audio.muted which is then synced
             // up with the track at the end of local tracks initialization.
+            console.log("--muteLocalAudio-939-",mute )
             muteLocalAudio(mute);
             this.updateAudioIconEnabled();
 
@@ -1101,6 +1105,7 @@ export default {
      */
     toggleVideoMuted(showUI = true, ensureTrack = false) {
         const mute = !this.isLocalVideoMuted();
+        console.log("--mute-1108-", mute)
 
         APP.store.dispatch(handleToggleVideoMuted(mute, showUI, ensureTrack));
     },
@@ -1576,12 +1581,15 @@ export default {
 
         APP.store.dispatch(toggleScreenshotCaptureSummary(false));
         const tracks = APP.store.getState()["features/base/tracks"];
+        console.log("--tracks-1582-", tracks)
         const duration =
             getLocalVideoTrack(tracks)?.jitsiTrack.getDuration() ?? 0;
 
         // If system audio was also shared stop the AudioMixerEffect and dispose of the desktop audio track.
         if (this._mixerEffect) {
             const localAudio = getLocalJitsiAudioTrack(APP.store.getState());
+
+            console.log("--localAudio-1589-", localAudio)
 
             await localAudio.setEffect(undefined);
             await this._desktopAudioStream.dispose();
@@ -1872,6 +1880,7 @@ export default {
         });
 
         room.on(JitsiConferenceEvents.TRACK_ADDED, (track) => {
+            console.log("--track-1883--", track)
             if (!track || track.isLocal()) {
                 return;
             }
@@ -1899,18 +1908,22 @@ export default {
 
         room.on(JitsiConferenceEvents.TRACK_AUDIO_LEVEL_CHANGED, (id, lvl) => {
             const localAudio = getLocalJitsiAudioTrack(APP.store.getState());
+            console.log("--localAudio--1908--",localAudio)
             let newLvl = lvl;
 
             if (this.isLocalId(id)) {
+                console.log("--localAudio-1912-")
                 APP.store.dispatch(localParticipantAudioLevelChanged(lvl));
             }
 
             if (this.isLocalId(id) && localAudio?.isMuted()) {
+                console.log("--localAudio-1917-")
                 newLvl = 0;
             }
 
             if (config.debug) {
                 this.audioLevelsMap[id] = newLvl;
+                console.log("--this.audioLevelsMap[id]--1923--", this.audioLevelsMap[id])
                 if (config.debugAudioLevels) {
                     logger.log(`AudioLevel:${id}/${newLvl}`);
                 }
@@ -1922,6 +1935,7 @@ export default {
         room.on(
             JitsiConferenceEvents.TRACK_MUTE_CHANGED,
             (track, participantThatMutedUs) => {
+                console.log("--participantThatMutedUs-1935-", participantThatMutedUs)
                 if (participantThatMutedUs) {
                     APP.store.dispatch(
                         participantMutedUs(participantThatMutedUs, track)
@@ -2163,18 +2177,21 @@ export default {
         room.on(
             JitsiConferenceEvents.START_MUTED_POLICY_CHANGED,
             ({ audio, video }) => {
+                console.log("--audio, video-2179-", audio, video);
                 APP.store.dispatch(onStartMutedPolicyChanged(audio, video));
             }
         );
         room.on(JitsiConferenceEvents.STARTED_MUTED, () => {
             const audioMuted = room.isStartAudioMuted();
             const videoMuted = room.isStartVideoMuted();
+            console.log("--audioMuted-2184-", audioMuted)
             const localTracks = getLocalTracks(
                 APP.store.getState()["features/base/tracks"]
             );
             const promises = [];
 
             APP.store.dispatch(setAudioMuted(audioMuted));
+
             APP.store.dispatch(setVideoMuted(videoMuted));
 
             // Remove the tracks from the peerconnection.
@@ -2372,6 +2389,7 @@ export default {
      * @private
      * @returns {void}
      */
+    
     _onConferenceJoined() {
         const { dispatch } = APP.store;
 
@@ -2381,6 +2399,7 @@ export default {
         dispatch(conferenceJoined(room));
 
         const jwt = APP.store.getState()["features/base/jwt"];
+        console.log("--jwt-2387-", jwt);
 
         if (jwt?.user?.hiddenFromRecorder) {
             dispatch(muteLocal(true, MEDIA_TYPE.AUDIO));
@@ -2436,7 +2455,9 @@ export default {
         const state = APP.store.getState();
         const { filteredDevices, ignoredDevices } =
             filterIgnoredDevices(devices);
+        console.log("--filteredDevices, ignoredDevices-2443-", filteredDevices, ignoredDevices)
         const oldDevices = state["features/base/devices"].availableDevices;
+        console.log("--oldDevices-2445-", oldDevices);
 
         if (
             !areDevicesDifferent(
@@ -2444,12 +2465,14 @@ export default {
                 filteredDevices
             )
         ) {
+
             return Promise.resolve();
         }
 
         logDevices(ignoredDevices, "Ignored devices on device list changed:");
 
         const localAudio = getLocalJitsiAudioTrack(state);
+        console.log("--localAudio-2460-", localAudio)
         const localVideo = getLocalJitsiVideoTrack(state);
 
         APP.store.dispatch(updateDeviceList(filteredDevices));
@@ -2461,6 +2484,7 @@ export default {
             oldDevices,
             filteredDevices
         );
+        console.log("--newLabelsOnly-2472-", newLabelsOnly)
         const newDevices =
             mediaDeviceHelper.getNewMediaDevicesAfterDeviceListChanged(
                 filteredDevices,
@@ -2468,14 +2492,17 @@ export default {
                 localAudio,
                 newLabelsOnly
             );
+        console.log("--newDevices-2472-", newDevices)
+
         const promises = [];
         const requestedInput = {
             audio: Boolean(newDevices.audioinput),
             video: Boolean(newDevices.videoinput),
         };
-
+        console.log("--requestedInput-2487-", requestedInput)
         if (typeof newDevices.audiooutput !== "undefined") {
             const { dispatch } = APP.store;
+
             const setAudioOutputPromise = setAudioOutputDeviceId(
                 newDevices.audiooutput,
                 dispatch
@@ -2484,7 +2511,7 @@ export default {
                     `Failed to set the audio output device to ${newDevices.audiooutput} - ${err}`
                 );
             });
-
+            console.log("---setAudioOutputPromise---2499", setAudioOutputPromise)
             promises.push(setAudioOutputPromise);
         }
 
@@ -2493,6 +2520,7 @@ export default {
         // If the default device is changed we need to first stop the local streams and then call GUM. Otherwise GUM
         // will return a stream using the old default device.
         if (requestedInput.audio && localAudio) {
+            console.log("--2508--", requestedInput.audio)
             localAudio.stopStream();
         }
 
@@ -2505,6 +2533,8 @@ export default {
             APP.store.getState()["features/base/devices"].availableDevices;
         let newAudioDevices = [];
         let oldAudioDevices = [];
+
+        console.log("--newAvailDevices-2522--", newAvailDevices)
 
         if (typeof newDevices.audiooutput === "undefined") {
             newAudioDevices = newAvailDevices.audioOutput;
@@ -2627,17 +2657,21 @@ export default {
      */
     updateAudioIconEnabled() {
         const localAudio = getLocalJitsiAudioTrack(APP.store.getState());
+        console.log("--localAudio-2631-", localAudio)
         const audioMediaDevices =
             APP.store.getState()["features/base/devices"].availableDevices
                 .audioInput;
+        console.log("--audioMediaDevices-2635-", audioMediaDevices)     
         const audioDeviceCount = audioMediaDevices
             ? audioMediaDevices.length
             : 0;
 
+        console.log("--audioDeviceCount-2635-", audioMediaDevices)   
+
         // The audio functionality is considered available if there are any
         // audio devices detected or if the local audio stream already exists.
         const available = audioDeviceCount > 0 || Boolean(localAudio);
-
+        console.log("--available-2645-", available)
         APP.store.dispatch(setAudioAvailable(available));
     },
 

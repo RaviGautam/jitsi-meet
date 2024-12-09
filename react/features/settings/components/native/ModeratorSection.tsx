@@ -19,8 +19,13 @@ const ModeratorSection = () => {
         startReactionsMuted
     } = useSelector((state: IReduxState) => getModeratorTabProps(state));
 
-    const { disableReactionsModeration } = useSelector((state: IReduxState) => state['features/base/config']);
+    console.log("--startAudioMuted, startVideoMuted-22-", followMeEnabled,
+        startAudioMuted,
+        startVideoMuted,
+        startReactionsMuted);
 
+    const { disableReactionsModeration } = useSelector((state: IReduxState) => state['features/base/config']);
+    console.log("--disableReactionsModeration-25-", disableReactionsModeration);
     const onStartAudioMutedToggled = useCallback((enabled?: boolean) => {
         dispatch(setStartMutedPolicy(
             Boolean(enabled), Boolean(startVideoMuted)));
@@ -64,7 +69,10 @@ const ModeratorSection = () => {
             }
         ];
 
+        console.log("--moderation-69-", moderation);
+        console.log("--disableReactionsModeration-70-", disableReactionsModeration);
         if (disableReactionsModeration) {
+            console.log("--72-")
             moderation.pop();
         }
 

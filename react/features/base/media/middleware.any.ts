@@ -99,6 +99,7 @@ MiddlewareRegistry.register(store => next => action => {
         const state = store.getState();
         const tracks = state['features/base/tracks'];
         const isAudioMuted = isLocalTrackMuted(tracks, MEDIA_TYPE.AUDIO);
+        console.log("--isAudioMuted-102-", isAudioMuted)
 
         if (blocked && isAudioMuted && !skipNotification) {
             store.dispatch(showWarningNotification({
@@ -165,6 +166,8 @@ function _appStateChanged({ dispatch, getState }: IStore, next: Function, action
         const { appState } = action;
         const mute = appState !== 'active' && !isLocalVideoTrackDesktop(getState());
 
+        console.log("--mute-169-", mute)
+
         sendAnalytics(createTrackMutedEvent('video', 'background mode', mute));
 
         dispatch(setVideoMuted(mute, VIDEO_MUTISM_AUTHORITY.BACKGROUND));
@@ -225,6 +228,8 @@ function _setRoom({ dispatch, getState }: IStore, next: Function, action: AnyAct
     if (roomIsValid || navigator.product === 'ReactNative') {
         const audioMuted = roomIsValid ? getStartWithAudioMuted(state) : _AUDIO_INITIAL_MEDIA_STATE.muted;
         const videoMuted = roomIsValid ? getStartWithVideoMuted(state) : _VIDEO_INITIAL_MEDIA_STATE.muted;
+
+        console.log("--audioMuted-65-", audioMuted);
 
         sendAnalytics(createStartMutedConfigurationEvent('local', audioMuted, Boolean(videoMuted)));
         logger.log(`Start muted: ${audioMuted ? 'audio, ' : ''}${videoMuted ? 'video' : ''}`);

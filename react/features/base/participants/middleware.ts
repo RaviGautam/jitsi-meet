@@ -469,8 +469,11 @@ StateListenerRegistry.register(
 
             // update properties for the participants that are already in the conference
             conference.getParticipants().forEach((participant: any) => {
+                console.log("--participant-472-", participant);
                 Object.keys(propertyHandlers).forEach(propertyName => {
+                    console.log("--propertyName-474-", propertyName);
                     const value = participant.getProperty(propertyName);
+                    console.log("--value-474-", value);
 
                     if (value !== undefined) {
                         propertyHandlers[propertyName as keyof typeof propertyHandlers](participant, value);
@@ -482,12 +485,15 @@ StateListenerRegistry.register(
             conference.on(
                 JitsiConferenceEvents.PARTICIPANT_PROPERTY_CHANGED,
                 (participant: IJitsiParticipant, propertyName: string, oldValue: string, newValue: string) => {
+
+                    console.log("--participant-489-", participant, "---propertyName---", propertyName, "---oldValue---", oldValue, "--newValue--", newValue)
                     if (propertyHandlers.hasOwnProperty(propertyName)) {
                         propertyHandlers[propertyName](participant, newValue);
                     }
                 });
         } else {
             const localParticipantId = getLocalParticipant(store.getState)?.id;
+            console.log("--localParticipantId-496-", localParticipantId)
 
             // We left the conference, the local participant must be updated.
             _e2eeUpdated(store, conference, localParticipantId ?? '', false);
@@ -591,7 +597,7 @@ function _maybePlaySounds({ getState, dispatch }: IStore, action: AnyAction) {
     const state = getState();
     const { startAudioMuted } = state['features/base/config'];
     const { soundsParticipantJoined: joinSound, soundsParticipantLeft: leftSound } = state['features/base/settings'];
-
+    console.log("--startAudioMuted-594-", startAudioMuted)
     // We're not playing sounds for local participant
     // nor when the user is joining past the "startAudioMuted" limit.
     // The intention there was to not play user joined notification in big
@@ -600,18 +606,21 @@ function _maybePlaySounds({ getState, dispatch }: IStore, action: AnyAction) {
             && (!startAudioMuted
                 || getParticipantCount(state) < startAudioMuted)) {
         const { isReplacing, isReplaced } = action.participant;
-
+        console.log("--isReplacing, isReplaced-603-", isReplacing, isReplaced)
         if (action.type === PARTICIPANT_JOINED) {
             if (!joinSound) {
+                console.log("--joinSound-606-")
                 return;
             }
             const { presence } = action.participant;
-
+            console.log("--presence-610-", presence)
             // The sounds for the poltergeist are handled by features/invite.
             if (presence !== INVITED && presence !== CALLING && !isReplacing) {
+                console.log("--PARTICIPANT_JOINED_SOUND_ID-613-", PARTICIPANT_JOINED_SOUND_ID)
                 dispatch(playSound(PARTICIPANT_JOINED_SOUND_ID));
             }
         } else if (action.type === PARTICIPANT_LEFT && !isReplaced && leftSound) {
+            console.log("--PARTICIPANT_LEFT_SOUND_ID-617-", PARTICIPANT_LEFT_SOUND_ID)
             dispatch(playSound(PARTICIPANT_LEFT_SOUND_ID));
         }
     }
@@ -660,6 +669,7 @@ function _participantJoinedOrUpdated(store: IStore, next: Function, action: AnyA
     }
 
     if (overwrittenNameList[id]) {
+        console.log("--overwrittenNameList-666-", overwrittenNameList[id])
         action.participant.name = overwrittenNameList[id];
     }
 
@@ -772,9 +782,12 @@ function _raiseHandUpdated({ dispatch, getState }: IStore, conference: IJitsiCon
     }
 
     const isModerator = isLocalParticipantModerator(state);
+    console.log("--isModerator-785-", isModerator)
     const participant = getParticipantById(state, participantId);
+    console.log("--participant-787-", participant)
     let shouldDisplayAllowAction = false;
-
+    console.log("--shouldDisplayAllowAction-789-", shouldDisplayAllowAction)
+    
     if (isModerator) {
         shouldDisplayAllowAction = isForceMuted(participant, MEDIA_TYPE.AUDIO, state)
             || isForceMuted(participant, MEDIA_TYPE.VIDEO, state);

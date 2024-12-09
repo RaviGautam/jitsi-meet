@@ -187,6 +187,7 @@ export function localParticipantLeft() {
 export function localParticipantRoleChanged(role: string) {
     return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const participant = getLocalParticipant(getState);
+        console.log("-localParticipantRoleChanged-")
 
         if (participant) {
             return dispatch(participantRoleChanged(participant.id, role));
@@ -206,6 +207,7 @@ export function localParticipantRoleChanged(role: string) {
  * }}
  */
 export function muteRemoteParticipant(id: string, mediaType: string) {
+    console.log("--muteRemoteParticipant-210--")
     return {
         type: MUTE_REMOTE_PARTICIPANT,
         id,
@@ -831,6 +833,7 @@ export function raiseHandUpdateQueue(participant: IParticipant) {
  * }}
  */
 export function localParticipantAudioLevelChanged(level: number) {
+    console.log("--level-834-", level)
     return {
         type: LOCAL_PARTICIPANT_AUDIO_LEVEL_CHANGED,
         level,
