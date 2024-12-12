@@ -35,6 +35,14 @@ const DialogContainerWrapper = Platform.select({
  */
 interface IProps extends AbstractAppProps {
 
+    waitingAreaText?: String;
+    meetingTitle?: String;
+    lobyTitle?: String;
+    lobyDescription?: String;
+    minBitrate?: Number;
+    stdBitrate?: Number;
+    maxBitrate?: Number;
+
     /**
      * An object with the feature flags.
      */
@@ -112,6 +120,31 @@ export class App extends AbstractApp<IProps> {
     async _extraInit() {
         const { dispatch, getState } = this.state.store ?? {};
         const { flags = {}, url, userInfo } = this.props;
+
+         // Function to extract custom parameters based on platform
+         const extractCustomParams = (props) => {
+            if (Platform.OS === "ios") {
+                // Extract custom params from URL object for iOS
+                return props.url?.config ?? {};
+            } else if (Platform.OS === "android") {
+                // Directly access custom params for Android
+                return {
+                    minBitrate: props.minBitrate,
+                    stdBitrate: props.stdBitrate,
+                    maxBitrate: props.maxBitrate,
+                    waitingAreaText: props.waitingAreaText,
+                    meetingTitle: props.meetingTitle,
+                    lobyTitle: props.lobyTitle,
+                    lobyDescription: props.lobyDescription,
+                };
+            } else {
+                // Handle other platforms if needed
+                return {};
+            }
+        };
+
+        // Extract custom parameters based on platform
+        const customParams = extractCustomParams(this.props);
         let callIntegrationEnabled = flags[CALL_INTEGRATION_ENABLED as keyof typeof flags];
 
         // CallKit does not work on the simulator, make sure we disable it.
@@ -166,6 +199,7 @@ export class App extends AbstractApp<IProps> {
 
         // @ts-ignore
         dispatch?.(updateSettings(userInfo || {}));
+       
 
         // Update settings with feature-flag.
         if (typeof callIntegrationEnabled !== 'undefined') {

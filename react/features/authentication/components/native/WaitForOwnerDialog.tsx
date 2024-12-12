@@ -5,6 +5,8 @@ import { IReduxState, IStore } from '../../../app/types';
 import ConfirmDialog from '../../../base/dialog/components/native/ConfirmDialog';
 import { translate } from '../../../base/i18n/functions';
 import { cancelWaitForOwner, login } from '../../actions.native';
+import { getFeatureFlag } from '../../../base/flags/functions';
+import { DIRECT_JOIN_MEETING_ENABLED } from '../../../base/flags/constants';
 
 
 /**
@@ -22,6 +24,8 @@ interface IProps {
      */
     _isConfirmHidden?: boolean;
 
+    _isDirectJoin?: boolean;
+    
     /**
      * Redux store dispatch function.
      */
@@ -61,16 +65,25 @@ class WaitForOwnerDialog extends Component<IProps> {
      * @returns {ReactElement}
      */
     render() {
-        const { _isConfirmHidden } = this.props;
+        const { _isConfirmHidden, _isDirectJoin } = this.props;
 
         return (
-            <ConfirmDialog
-                cancelLabel = { this.props._alternativeCancelText ? 'dialog.WaitingForHostButton' : 'dialog.Cancel' }
-                confirmLabel = 'dialog.IamHost'
-                descriptionKey = 'dialog.WaitForHostMsg'
-                isConfirmHidden = { _isConfirmHidden }
-                onCancel = { this._onCancel }
-                onSubmit = { this._onLogin } />
+            <>
+            {!_isDirectJoin ? (
+                <ConfirmDialog
+                    cancelLabel={
+                        this.props._alternativeCancelText
+                            ? "dialog.WaitingForHostButton"
+                            : "dialog.Cancel"
+                    }
+                    confirmLabel="dialog.IamHost"
+                    descriptionKey="dialog.WaitForHostMsg"
+                    isConfirmHidden={_isConfirmHidden}
+                    onCancel={this._onCancel}
+                    onSubmit={this._onLogin}
+                />
+            ) : null}
+        </>
         );
     }
 
@@ -109,7 +122,10 @@ function mapStateToProps(state: IReduxState) {
 
     return {
         _alternativeCancelText: membersOnly && lobbyWaitingForHost,
-        _isConfirmHidden: locationURL?.hostname?.includes('8x8.vc')
+        _isConfirmHidden: locationURL?.hostname?.includes('8x8.vc'),
+        _isDirectJoin: Boolean(
+            getFeatureFlag(state, DIRECT_JOIN_MEETING_ENABLED, false)
+        )
     };
 }
 

@@ -20,6 +20,7 @@ import { App } from './react/features/app/components/App.native';
 import { setAudioOnly } from './react/features/base/audio-only/actions';
 import { setAudioMuted, setVideoMuted } from './react/features/base/media/actions';
 import { getRoomsInfo } from './react/features/breakout-rooms/functions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 interface IEventListeners {
@@ -43,12 +44,27 @@ interface IUserInfo {
     email: string;
 }
 
+interface IFlags {
+    "prejoinpage.enabled"?: boolean;
+    "directJoin.enabled"?: boolean;
+    "backButtonHandler.enabled"?: boolean;
+    "endMeetingOptions.enabled"?: boolean;
+    "moderatorEnable.enabled"?: boolean;
+}
+
 interface IAppProps {
     config: object;
     eventListeners?: IEventListeners;
-    flags?: object;
+    flags?: IFlags;
     room: string;
     serverURL?: string;
+    waitingAreaText?: string;
+    meetingTitle?: string;
+    lobyTitle?: string;
+    lobyDescription?: string;
+    minBitrate: number;
+    stdBitrate: number;
+    maxBitrate: number;
     style?: Object;
     token?: string;
     userInfo?: IUserInfo;
@@ -71,13 +87,22 @@ export const JitsiMeeting = forwardRef<JitsiRefProps, IAppProps>((props, ref) =>
     const {
         config,
         eventListeners,
-        flags,
+        flags= {},
         room,
         serverURL,
         style,
         token,
-        userInfo
+        userInfo,
+        waitingAreaText,
+        meetingTitle,
+        lobyTitle,
+        lobyDescription,
+        minBitrate,
+        stdBitrate,
+        maxBitrate
     } = props;
+
+    flags["prejoinpage.enabled"] =  flags["directJoin.enabled"] ?  false : true
 
     // eslint-disable-next-line arrow-body-style
     useImperativeHandle(ref, () => ({
@@ -130,6 +155,9 @@ export const JitsiMeeting = forwardRef<JitsiRefProps, IAppProps>((props, ref) =>
                 };
             }
 
+            saveBitrateValues(minBitrate, stdBitrate, maxBitrate);
+            saveTitleValues(meetingTitle, waitingAreaText, lobyTitle, lobyDescription);
+
             setAppProps({
                 'flags': flags,
                 'rnSdkHandlers': {
@@ -147,10 +175,39 @@ export const JitsiMeeting = forwardRef<JitsiRefProps, IAppProps>((props, ref) =>
                     onReadyToClose: eventListeners?.onReadyToClose
                 },
                 'url': urlProps,
-                'userInfo': userInfo
+                'userInfo': userInfo,
+                'waitingAreaText': waitingAreaText,
+                'meetingTitle': meetingTitle,
+                'minBitrate': minBitrate,
+                'stdBitrate': stdBitrate,
+                'maxBitrate': maxBitrate,
+                'lobyTitle': lobyTitle,
+                'lobyDescription': lobyDescription,
             });
         }, []
     );
+
+    const saveBitrateValues = async(minBitrate: number, stdBitrate: number, maxBitrate: number)=> {
+        try {
+            await AsyncStorage.setItem("minBitrate", minBitrate.toString());
+            await AsyncStorage.setItem("stdBitrate", stdBitrate.toString());
+            await AsyncStorage.setItem("maxBitrate", maxBitrate.toString());
+     
+        } catch (error) {
+            console.error("Set the value of minBitrate, stdBitrate, maxBitrate", error);
+        }
+    }
+
+    const saveTitleValues = async(meetingTitle: string, waitingAreaText: string, lobyTitle: string, lobyDescription: string) =>{
+        try {
+            await AsyncStorage.setItem("meetingTitle", meetingTitle.toString());
+            await AsyncStorage.setItem("waitingText", waitingAreaText.toString());
+            await AsyncStorage.setItem("lobyTitle", lobyTitle.toString());
+            await AsyncStorage.setItem("lobyDescription", lobyDescription.toString());
+        } catch (error) {
+            console.error("Error saving bitrate values:", error);
+        }
+    }
 
     // eslint-disable-next-line arrow-body-style
     useLayoutEffect(() => {

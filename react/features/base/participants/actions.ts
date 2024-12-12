@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IStore } from '../../app/types';
 import { showNotification } from '../../notifications/actions';
 import { NOTIFICATION_TIMEOUT_TYPE } from '../../notifications/constants';
@@ -513,35 +514,73 @@ export function createVirtualScreenshareParticipant(sourceName: string, local: b
  * @param {JitsiParticipant} kicked - Information about participant that was kicked.
  * @returns {Promise}
  */
+// export function participantKicked(kicker: any, kicked: any) {
+//     return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
+//         const state = getState();
+//         const localParticipant = getLocalParticipant(state);
+//         const kickedId = kicked.getId();
+//         const kickerId = kicker?.getId();
+
+//         dispatch({
+//             type: PARTICIPANT_KICKED,
+//             kicked: kickedId,
+//             kicker: kickerId
+//         });
+
+//         if (kicked.isReplaced?.() || !kickerId || kickerId === localParticipant?.id) {
+//             return;
+//         }
+
+//         dispatch(showNotification({
+//             titleArguments: {
+//                 kicked:
+//                     getParticipantDisplayName(state, kickedId),
+//                 kicker:
+//                     getParticipantDisplayName(state, kickerId)
+//             },
+//             titleKey: 'notify.kickParticipant'
+//         }, NOTIFICATION_TIMEOUT_TYPE.MEDIUM));
+//     };
+// }
+
 export function participantKicked(kicker: any, kicked: any) {
-    return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
-        const state = getState();
-        const localParticipant = getLocalParticipant(state);
-        const kickedId = kicked.getId();
-        const kickerId = kicker?.getId();
+    return async (
+        dispatch: IStore["dispatch"],
+        getState: IStore["getState"]
+    ) => {
+        try {
+            let KickerId = await AsyncStorage.getItem("Kicker");
 
-        dispatch({
-            type: PARTICIPANT_KICKED,
-            kicked: kickedId,
-            kicker: kickerId
-        });
+            if (KickerId) {
+                KickerId = KickerId.split("/").pop();
+            } else {
+                console.log("KickerId not found in AsyncStorage.");
+            }
 
-        if (kicked.isReplaced?.() || !kickerId || kickerId === localParticipant?.id) {
-            return;
+            console.log(
+                "--KickerId--594",
+                KickerId,
+                kicker?.getId(),
+                "--kicked.getId(),--",
+                kicked.getId()
+            );
+
+            dispatch({
+                type: PARTICIPANT_KICKED,
+                kicked: kicked.getId(),
+                kicker: kicker?.getId() ? kicker.getId() : KickerId,
+            });
+
+            if (kicked.isReplaced?.()) {
+                return;
+            }
+
+            // Optional: Add notification or additional logic here
+        } catch (error) {
+            console.log("Error in participantKicked:", error);
         }
-
-        dispatch(showNotification({
-            titleArguments: {
-                kicked:
-                    getParticipantDisplayName(state, kickedId),
-                kicker:
-                    getParticipantDisplayName(state, kickerId)
-            },
-            titleKey: 'notify.kickParticipant'
-        }, NOTIFICATION_TIMEOUT_TYPE.MEDIUM));
     };
 }
-
 /**
  * Create an action which pins a conference participant.
  *

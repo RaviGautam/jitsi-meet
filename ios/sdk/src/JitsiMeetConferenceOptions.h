@@ -30,6 +30,38 @@
  */
 @property (nonatomic, copy, nullable) NSString *room;
 /**
+ * Waiting Area Text.
+ */
+@property (nonatomic, copy, nullable) NSString *waitingAreaText;
+/**
+ * Meeting Title.
+ */
+@property (nonatomic, copy, nullable) NSString *meetingTitle;
+/**
+ * lobby Title.
+ */
+@property (nonatomic, copy, nullable) NSString *lobyTitle;
+/**
+ * Lobby Description.
+ */
+@property (nonatomic, copy, nullable) NSString *lobyDescription;
+
+/**
+ * MinBitrate.
+ */
+@property (nonatomic, copy, nullable) NSNumber *minBitrate;
+
+/**
+ * StdBitrate.
+ */
+@property (nonatomic, copy, nullable) NSNumber *stdBitrate;
+
+/**
+ * MaxBitrate.
+ */
+@property (nonatomic, copy, nullable) NSNumber *maxBitrate;
+
+/**
  * JWT token used for authentication.
  */
 @property (nonatomic, copy, nullable) NSString *token;
@@ -61,6 +93,14 @@
 - (void)setCallUUID:(NSUUID *_Nonnull)callUUID;
 - (void)setSubject:(NSString *_Nonnull)subject;
 
+- (void)setWaitingAreaText:(NSString * _Nullable)waitingAreaText;
+- (void)setMeetingTitle:(NSString * _Nullable)meetingTitle;
+- (void)setLobyTitle:(NSString * _Nullable)lobyTitle;
+- (void)setLobyDescription:(NSString * _Nullable)lobyDescription;
+- (void)setMinBitrate:(nullable NSNumber *)minBitrate;
+- (void)setStdBitrate:(nullable NSNumber *)stdBitrate;
+- (void)setMaxBitrate:(nullable NSNumber *)maxBitrate;
+
 @end
 
 @interface JitsiMeetConferenceOptions : NSObject
@@ -69,6 +109,15 @@
 
 @property (nonatomic, copy, nullable, readonly) NSString *room;
 @property (nonatomic, copy, nullable, readonly) NSString *token;
+
+@property (nonatomic, copy, nullable, readonly) NSString *waitingAreaText;
+@property (nonatomic, copy, nullable, readonly) NSString *meetingTitle;
+@property (nonatomic, copy, nullable, readonly) NSString *lobyTitle;
+@property (nonatomic, copy, nullable, readonly) NSString *lobyDescription;
+@property (nonatomic, copy, nullable, readonly) NSNumber *minBitrate;
+@property (nonatomic, copy, nullable, readonly) NSNumber *stdBitrate;
+@property (nonatomic, copy, nullable, readonly) NSNumber *maxBitrate;
+
 
 @property (nonatomic, readonly, nonnull) NSDictionary *featureFlags;
 

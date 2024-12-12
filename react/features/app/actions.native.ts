@@ -1,42 +1,26 @@
-import { setRoom } from '../base/conference/actions';
-import { getConferenceState } from '../base/conference/functions';
-import {
-    configWillLoad,
-    loadConfigError,
-    setConfig,
-    storeConfig
-} from '../base/config/actions';
-import {
-    createFakeConfig,
-    restoreConfig
-} from '../base/config/functions.native';
-import { connect, disconnect, setLocationURL } from '../base/connection/actions.native';
-import { JITSI_CONNECTION_URL_KEY } from '../base/connection/constants';
-import { loadConfig } from '../base/lib-jitsi-meet/functions.native';
-import { createDesiredLocalTracks } from '../base/tracks/actions.native';
-import isInsecureRoomName from '../base/util/isInsecureRoomName';
-import { parseURLParams } from '../base/util/parseURLParams';
-import {
-    appendURLParam,
-    getBackendSafeRoomName,
-    parseURIString,
-    toURLString
-} from '../base/util/uri';
-import { isPrejoinPageEnabled } from '../mobile/navigation/functions';
-import {
-    goBackToRoot,
-    navigateRoot
-} from '../mobile/navigation/rootNavigationContainerRef';
-import { screen } from '../mobile/navigation/routes';
-import { clearNotifications } from '../notifications/actions';
-import { isUnsafeRoomWarningEnabled } from '../prejoin/functions';
+import { setRoom } from "../base/conference/actions";
+import { getConferenceState } from "../base/conference/functions";
+import { configWillLoad, loadConfigError, setConfig, storeConfig } from "../base/config/actions";
+import { createFakeConfig, restoreConfig } from "../base/config/functions.native";
+import { connect, disconnect, setLocationURL } from "../base/connection/actions.native";
+import { JITSI_CONNECTION_URL_KEY } from "../base/connection/constants";
+import { loadConfig } from "../base/lib-jitsi-meet/functions.native";
+import { createDesiredLocalTracks } from "../base/tracks/actions.native";
+import isInsecureRoomName from "../base/util/isInsecureRoomName";
+import { parseURLParams } from "../base/util/parseURLParams";
+import { appendURLParam, getBackendSafeRoomName, parseURIString, toURLString } from "../base/util/uri";
+import { isPrejoinPageEnabled } from "../mobile/navigation/functions";
+import { goBackToRoot, navigateRoot } from "../mobile/navigation/rootNavigationContainerRef";
+import { screen } from "../mobile/navigation/routes";
+import { clearNotifications } from "../notifications/actions";
+import { isUnsafeRoomWarningEnabled } from "../prejoin/functions";
 
-import { maybeRedirectToTokenAuthUrl } from './actions.any';
-import { addTrackStateToURL, getDefaultURL } from './functions.native';
-import logger from './logger';
-import { IReloadNowOptions, IStore } from './types';
+import { maybeRedirectToTokenAuthUrl } from "./actions.any";
+import { addTrackStateToURL, getDefaultURL } from "./functions.native";
+import logger from "./logger";
+import { IReloadNowOptions, IStore } from "./types";
 
-export * from './actions.any';
+export * from "./actions.any";
 
 /**
  * Triggers an in-app navigation to a specific route. Allows navigation to be
@@ -48,10 +32,10 @@ export * from './actions.any';
  * @param {Object} [options] - Options.
  * @returns {Function}
  */
-export function appNavigate(uri?: string, options: IReloadNowOptions = {}) {
+export function appNavigate(uri?: string, options: IReloadNowOptions = {}, _isDirectJoin?: boolean) {
     logger.info(`appNavigate to ${uri}`);
 
-    return async (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
+    return async (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         let location = parseURIString(uri);
 
         // If the specified location (URI) does not identify a host, use the app's
@@ -65,8 +49,7 @@ export function appNavigate(uri?: string, options: IReloadNowOptions = {}) {
                 // FIXME Turn location's host, hostname, and port properties into
                 // setters in order to reduce the risks of inconsistent state.
                 location.hostname = defaultLocation.hostname;
-                location.pathname
-                    = defaultLocation.pathname + location.pathname.substr(1);
+                location.pathname = defaultLocation.pathname + location.pathname.substr(1);
                 location.port = defaultLocation.port;
                 location.protocol = defaultLocation.protocol;
             } else {
@@ -74,14 +57,13 @@ export function appNavigate(uri?: string, options: IReloadNowOptions = {}) {
             }
         }
 
-        location.protocol || (location.protocol = 'https:');
+        location.protocol || (location.protocol = "https:");
         const { contextRoot, host, hostname, pathname, room } = location;
         const locationURL = new URL(location.toString());
         const { conference } = getConferenceState(getState());
 
         if (room) {
             if (conference) {
-
                 // We need to check if the location is the same with the previous one.
                 const currentLocationURL = conference?.getConnection()[JITSI_CONNECTION_URL_KEY];
                 const { hostname: currentHostName, pathname: currentPathName } = currentLocationURL;
@@ -104,17 +86,17 @@ export function appNavigate(uri?: string, options: IReloadNowOptions = {}) {
 
         // The React Native app supports an app-specific scheme which is sure to not
         // be supported by fetch.
-        protocol !== 'http:' && protocol !== 'https:' && (protocol = 'https:');
+        protocol !== "http:" && protocol !== "https:" && (protocol = "https:");
 
-        const baseURL = `${protocol}//${host}${contextRoot || '/'}`;
+        const baseURL = `${protocol}//${host}${contextRoot || "/"}`;
         let url = `${baseURL}config.js`;
 
         // XXX In order to support multiple shards, tell the room to the deployment.
-        room && (url = appendURLParam(url, 'room', getBackendSafeRoomName(room) ?? ''));
+        room && (url = appendURLParam(url, "room", getBackendSafeRoomName(room) ?? ""));
 
-        const { release } = parseURLParams(location, true, 'search');
+        const { release } = parseURLParams(location, true, "search");
 
-        release && (url = appendURLParam(url, 'release', release));
+        release && (url = appendURLParam(url, "release", release));
 
         let config;
 
@@ -138,14 +120,14 @@ export function appNavigate(uri?: string, options: IReloadNowOptions = {}) {
                     }
 
                     // If there is no room (we are on the welcome page), don't fail, just create a fake one.
-                    logger.warn('Failed to load config but there is no room, applying a fake one');
+                    logger.warn("Failed to load config but there is no room, applying a fake one");
                     config = createFakeConfig(baseURL);
                 }
             }
         }
 
-        if (getState()['features/base/config'].locationURL !== locationURL) {
-            dispatch(loadConfigError(new Error('Config no longer needed!'), locationURL));
+        if (getState()["features/base/config"].locationURL !== locationURL) {
+            dispatch(loadConfigError(new Error("Config no longer needed!"), locationURL));
 
             return;
         }
@@ -163,11 +145,26 @@ export function appNavigate(uri?: string, options: IReloadNowOptions = {}) {
         dispatch(createDesiredLocalTracks());
         dispatch(clearNotifications());
 
+        if (_isDirectJoin) {
+            dispatch(connect());
+            navigateRoot(screen.conference.root);
+
+            return;
+        } else {
+            navigateRoot(screen.preJoin);
+        }
+
         if (!options.hidePrejoin && isPrejoinPageEnabled(getState())) {
             if (isUnsafeRoomWarningEnabled(getState()) && isInsecureRoomName(room)) {
                 navigateRoot(screen.unsafeRoomWarning);
             } else {
-                navigateRoot(screen.preJoin);
+                // navigateRoot(screen.preJoin);
+                if (_isDirectJoin) {
+                    dispatch(connect());
+                    navigateRoot(screen.conference.root);
+                } else {
+                    navigateRoot(screen.preJoin);
+                }
             }
         } else {
             dispatch(connect());
@@ -196,10 +193,9 @@ export function maybeRedirectToWelcomePage(_options?: any): any {
  * @returns {Function}
  */
 export function reloadNow() {
-    return (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
-
+    return (dispatch: IStore["dispatch"], getState: IStore["getState"]) => {
         const state = getState();
-        const { locationURL } = state['features/base/connection'];
+        const { locationURL } = state["features/base/connection"];
 
         // Preserve the local tracks muted state after the reload.
         // @ts-ignore
@@ -208,9 +204,11 @@ export function reloadNow() {
         const reloadAction = () => {
             logger.info(`Reloading the conference using URL: ${locationURL}`);
 
-            dispatch(appNavigate(toURLString(newURL), {
-                hidePrejoin: true
-            }));
+            dispatch(
+                appNavigate(toURLString(newURL), {
+                    hidePrejoin: true,
+                })
+            );
         };
 
         if (maybeRedirectToTokenAuthUrl(dispatch, getState, reloadAction)) {

@@ -25,6 +25,7 @@ import AbstractLobbyScreen, {
     _mapStateToProps as abstractMapStateToProps } from '../AbstractLobbyScreen';
 
 import styles from './styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface IProps extends AbstractProps {
 
@@ -39,17 +40,42 @@ interface IProps extends AbstractProps {
     _roomName: string;
 }
 
+interface IState {
+    meetingTitle: string | null;
+    lobyTitle: string | null;
+    lobyDescription: string | null;
+}
 /**
  * Implements a waiting screen that represents the participant being in the lobby.
  */
-class LobbyScreen extends AbstractLobbyScreen<IProps> {
+class LobbyScreen extends AbstractLobbyScreen<IProps, IState> {
     /**
      * Implements {@code PureComponent#render}.
      *
      * @inheritdoc
      */
+
+    constructor(props: IProps) {
+        super(props);
+        this.state = {
+            meetingTitle: null,
+            lobyTitle: null,
+            lobyDescription: null
+        };
+    }
+
+    async componentDidMount() {
+        const meetingTitle = await AsyncStorage.getItem("meetingTitle");
+        const lobyTitle = await AsyncStorage.getItem("lobyTitle");
+        const lobyDescription = await AsyncStorage.getItem("lobyDescription");
+console.log("--meetingTitle, lobyTitle, lobyDescription--", meetingTitle, lobyTitle, lobyDescription)
+        this.setState({ meetingTitle, lobyTitle, lobyDescription });
+    }
+
     render() {
         const { _aspectRatio, _roomName } = this.props;
+        const { meetingTitle } = this.state;
+
         let contentWrapperStyles;
         let contentContainerStyles;
         let largeVideoContainerStyles;
@@ -65,23 +91,19 @@ class LobbyScreen extends AbstractLobbyScreen<IProps> {
         }
 
         return (
-            <JitsiScreen
-                safeAreaInsets = { [ 'right' ] }
-                style = { contentWrapperStyles }>
+            <JitsiScreen safeAreaInsets={["right"]} style={contentWrapperStyles}>
                 <BrandingImageBackground />
-                <View style = { largeVideoContainerStyles as ViewStyle }>
-                    <View style = { preJoinStyles.displayRoomNameBackdrop as ViewStyle }>
-                        <Text
-                            numberOfLines = { 1 }
-                            style = { preJoinStyles.preJoinRoomName }>
-                            { _roomName }
+                <View style={largeVideoContainerStyles as ViewStyle}>
+                    <View style={preJoinStyles.displayRoomNameBackdrop as ViewStyle}>
+                        <Text numberOfLines={1} style={preJoinStyles.preJoinRoomName}>
+                            {meetingTitle || _roomName}
                         </Text>
                     </View>
                     <LargeVideo />
                 </View>
-                <View style = { contentContainerStyles as ViewStyle }>
-                    { this._renderToolbarButtons() }
-                    { this._renderContent() }
+                <View style={contentContainerStyles as ViewStyle}>
+                    {this._renderToolbarButtons()}
+                    {this._renderContent()}
                 </View>
             </JitsiScreen>
         );
@@ -103,18 +125,28 @@ class LobbyScreen extends AbstractLobbyScreen<IProps> {
      * @inheritdoc
      */
     _renderJoining() {
+        
+        const {   lobyTitle, lobyDescription } = this.state;
         return (
-            <View style = { styles.lobbyWaitingFragmentContainer }>
-                <Text style = { styles.lobbyTitle }>
-                    { this.props.t('lobby.joiningTitle') }
-                </Text>
-                <LoadingIndicator
-                    color = { BaseTheme.palette.icon01 }
-                    style = { styles.loadingIndicator } />
-                <Text style = { styles.joiningMessage as TextStyle }>
-                    { this.props.t('lobby.joiningMessage') }
-                </Text>
-                { this._renderStandardButtons() }
+            <View style={styles.lobbyWaitingFragmentContainer}>
+                {lobyTitle ? (
+                    <Text style={styles.lobbyTitle}>{lobyTitle}</Text>
+                ) : (
+                    <Text style={styles.lobbyTitle}>
+                        {this.props.t("lobby.joiningTitle")}
+                    </Text>
+                )}
+                <LoadingIndicator color={BaseTheme.palette.icon01} style={styles.loadingIndicator} />
+                {lobyDescription ? (
+                    <Text style={styles.joiningMessage as TextStyle}>
+                        {lobyDescription}
+                    </Text>
+                ) : (
+                    <Text style={styles.joiningMessage as TextStyle}>
+                        {this.props.t("lobby.joiningMessage")}
+                    </Text>
+                )}
+                {this._renderStandardButtons()}
             </View>
         );
     }

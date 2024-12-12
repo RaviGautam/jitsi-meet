@@ -1,5 +1,7 @@
 import { IReduxState, IStore } from '../app/types';
 import { getCurrentConference } from '../base/conference/functions';
+import { MODERATOR_OPTION } from '../base/flags/constants';
+import { getFeatureFlag } from '../base/flags/functions';
 import {
     PARTICIPANT_JOINED,
     PARTICIPANT_LEFT,
@@ -161,28 +163,45 @@ MiddlewareRegistry.register(store => next => action => {
         return next(action);
     }
     case PARTICIPANT_UPDATED: {
-        const { disableModeratorIndicator } = state['features/base/config'];
+        const { disableModeratorIndicator } = state["features/base/config"];
+
+        const isModeratorEnable = getFeatureFlag(
+            state,
+            MODERATOR_OPTION,
+            false
+        );
 
         if (disableModeratorIndicator) {
             return next(action);
         }
-
         const { id, role } = action.participant;
+     
         const localParticipant = getLocalParticipant(state);
-
+  
         if (localParticipant?.id !== id) {
             return next(action);
         }
 
         const oldParticipant = getParticipantById(state, id);
+        
         const oldRole = oldParticipant?.role;
-
-        if (oldRole && oldRole !== role && role === PARTICIPANT_ROLE.MODERATOR) {
-
-            store.dispatch(showNotification({
-                titleKey: 'notify.moderator'
-            },
-            NOTIFICATION_TIMEOUT_TYPE.SHORT));
+        
+        if (
+            oldRole &&
+            oldRole !== role &&
+            role === PARTICIPANT_ROLE.MODERATOR && !isModeratorEnable
+        ) {
+         
+        
+                store.dispatch(
+                    showNotification(
+                        {
+                            titleKey: "notify.moderator",
+                        },
+                        NOTIFICATION_TIMEOUT_TYPE.SHORT
+                    )
+                );
+           
         }
 
         return next(action);

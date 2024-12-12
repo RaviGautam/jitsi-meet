@@ -726,11 +726,75 @@ export function endpointMessageReceived(participant: Object, data: Object) {
  *
  * @returns {Function}
  */
-export function endConference() {
-    return async (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
-        const { conference } = getConferenceState(toState(getState));
+// export function endConference() {
+//     return async (dispatch: IStore['dispatch'], getState: IStore['getState']) => {
+//         const { conference } = getConferenceState(toState(getState));
 
-        conference?.end();
+//         conference?.end();
+//     };
+// }
+
+export function endConference() {
+    return async (
+        dispatch: IStore["dispatch"],
+        getState: IStore["getState"]
+    ) => {
+        const state = toState(getState());
+        const { conference } = getConferenceState(state);
+        console.log("--conference-916-");
+
+        if (conference) {
+            const participants = conference.getParticipants();
+            console.log("--participants-919-");
+
+            if (Array.isArray(participants) || participants instanceof Map) {
+                for (const [key, participant] of participants.entries()) {
+                    // Safe access check for room and myroomjid
+                    const myRoomJid = participant._conference?.room?.myroomjid;
+
+                    if (myRoomJid) {
+                        await AsyncStorage.setItem("Kicker", myRoomJid);
+                        console.log("--participant--927-", participant.getId());
+
+                        if (participant && participant.getId()) {
+                            try {
+                                console.log(
+                                    `Kicking out participant: ${participant.getId()}`
+                                );
+                                conference.kickParticipant(participant.getId());
+                            } catch (error) {
+                                console.log(
+                                    `Failed to kick out participant: ${error}`
+                                );
+                            }
+                        } else {
+                            console.log(
+                                "Encountered an invalid participant:",
+                                participant
+                            );
+                        }
+                    } else {
+                        console.log("Participant room or myroomjid is not available for participant", participant.getId());
+                    }
+                }
+            } else {
+                console.log(
+                    "Participants is neither an array nor a map:",
+                    participants
+                );
+            }
+
+            try {
+                console.log("end the conference:");
+                await conference.end();
+                dispatch(appNavigate(undefined));
+            } catch (error) {
+                console.log("Failed to end the conference:", error);
+            }
+        } else {
+            dispatch(appNavigate(undefined));
+            console.log("No active conference found.");
+        }
     };
 }
 

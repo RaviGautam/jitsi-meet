@@ -29,6 +29,13 @@
         _serverURL = nil;
         _room = nil;
         _token = nil;
+        _waitingAreaText = nil;
+        _meetingTitle = nil;
+        _lobyTitle = nil;
+        _lobyDescription = nil;
+        _minBitrate = nil;
+        _stdBitrate = nil;
+        _maxBitrate = nil;
 
         _config = [[NSMutableDictionary alloc] init];
         _featureFlags = [[NSMutableDictionary alloc] init];
@@ -71,6 +78,34 @@
     [self setConfigOverride:@"subject" withValue:subject];
 }
 
+- (void)setWaitingAreaText:(NSString *)waitingAreaText {
+    [self setConfigOverride:@"waitingAreaText" withValue:waitingAreaText];
+}
+
+- (void)setMeetingTitle:(NSString *)meetingTitle {
+    [self setConfigOverride:@"meetingTitle" withValue:meetingTitle];
+}
+
+- (void)setLobyTitle:(NSString *)lobyTitle {
+    [self setConfigOverride:@"lobyTitle" withValue:lobyTitle];
+}
+
+- (void)setLobyDescription:(NSString *)lobyDescription {
+    [self setConfigOverride:@"lobyDescription" withValue:lobyDescription];
+}
+
+- (void)setMinBitrate:(NSNumber *) minBitrate {
+    [self setConfigOverride:@"minBitrate" withValue:minBitrate];
+}
+
+- (void)setMaxBitrate:(NSNumber *) maxBitrate {
+    [self setConfigOverride:@"maxBitrate" withValue:maxBitrate];
+}
+
+- (void)setStdBitrate:(NSNumber *)stdBitrate {
+    [self setConfigOverride:@"stdBitrate" withValue:stdBitrate];
+}
+
 - (void)setConfigOverride:(NSString *_Nonnull)config withBoolean:(BOOL)value {
     [self setConfigOverride:config withValue:[NSNumber numberWithBool:value]];
 }
@@ -101,6 +136,13 @@
         _serverURL = builder.serverURL;
         _room = builder.room;
         _token = builder.token;
+        _waitingAreaText = builder.waitingAreaText;
+        _meetingTitle = builder.meetingTitle;
+        _lobyTitle = builder.lobyTitle;
+        _lobyDescription = builder.lobyDescription;
+        _minBitrate = builder.minBitrate;
+        _stdBitrate = builder.stdBitrate;
+        _maxBitrate = builder.maxBitrate;
 
         _config = builder.config;
 
@@ -144,6 +186,34 @@
 
     if (_token != nil) {
         urlProps[@"jwt"] = _token;
+    }
+
+    if (_waitingAreaText != nil){
+        urlProps[@"waitingAreaText"] = _waitingAreaText;
+    }
+    
+    if (_meetingTitle != nil){
+        urlProps[@"meetingTitle"] = _meetingTitle;
+    }
+    
+    if (_lobyTitle != nil){
+        urlProps[@"lobyTitle"] = _lobyTitle;
+    }
+
+    if (_lobyDescription != nil){
+        urlProps[@"lobyDescription"] = _lobyDescription;
+    }
+
+    if(_minBitrate != nil){
+        urlProps[@"minBitrate"] = _minBitrate;
+    }
+    
+    if(_stdBitrate != nil){
+        urlProps[@"stdBitrate"] = _stdBitrate;
+    }
+    
+    if(_maxBitrate != nil){
+        urlProps[@"maxBitrate"] = _maxBitrate;
     }
 
     if (_userInfo != nil) {

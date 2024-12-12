@@ -1,5 +1,5 @@
 {
-    "name": "@jitsi/react-native-sdk",
+    "name": "react-native-sdk-fmtech",
     "version": "0.0.0",
     "description": "React Native SDK for Jitsi Meet.",
     "main": "index.tsx",
@@ -8,7 +8,7 @@
     "homepage": "https://jitsi.org",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/jitsi/jitsi-meet.git"
+        "url": "git+https://github.com/RaviGautam/jitsi-meet.git"
     },
     "dependencies": {
         "@braintree/sanitize-url": "0.0.0",
@@ -95,7 +95,7 @@
         "prepare": "node prepare_sdk.js"
     },
     "bugs": {
-        "url": "https://github.com/jitsi/jitsi-meet/issues"
+        "url": "https://github.com/RaviGautam/jitsi-meet/issues"
     },
     "keywords": [
         "react-native"

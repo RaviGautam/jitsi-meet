@@ -87,11 +87,13 @@ export default class AbstractRecentList<P extends IProps> extends AbstractPage<P
      * @param {string} url - The url string to navigate to.
      * @returns {void}
      */
-    _onPress(url: string) {
+    _onPress(url: string, _isDirectJoin: boolean, _room: String) {
         const { dispatch } = this.props;
+   console.log("--url-101---", url, )
 
-        sendAnalytics(createRecentClickedEvent('meeting.tile'));
-
-        dispatch(appNavigate(url));
+        sendAnalytics(createRecentClickedEvent("meeting.tile"));
+      
+            dispatch(appNavigate(url,{},_isDirectJoin));
+   
     }
 }

@@ -914,6 +914,24 @@ export function createWelcomePageEvent(action: string, actionSubject?: string, a
     };
 }
 
+export function createDirectJoinMeetingEvent(action: string, actionSubject?: string, attributes = {}) {
+    return {
+        action: 'directJoin',
+        actionSubject,
+        attributes,
+        source: 'directJoinMeeting',
+    };
+}
+
+export function createModeratorEnableEvent(action: string, actionSubject?: string, attributes = {}) {
+    return {
+        action: 'moderatorEnable',
+        actionSubject,
+        attributes,
+        source: 'moderatorEnable',
+    };
+}
+
 /**
  * Creates an event which indicates a screenshot of the screensharing has been taken.
  *
@@ -976,3 +994,57 @@ export function createRestrictWhiteboardEvent() {
         action: 'whiteboard.restrict'
     };
 }
+
+//Set waiting Text
+
+export function createWaitingTextAreaEvent() {
+    return {
+        action: 'waitingText'
+    };
+}
+
+//Set meeting title
+
+export function createMeetingTitleEvent() {
+    return {
+        action: 'meetingTitle'
+    };
+}
+
+//Set loby title
+
+export function createLobyTitleEvent() {
+    return {
+        action: 'lobyTitle'
+    };
+}
+
+//Set loby description
+
+export function createLobyDescriptionEvent() {
+    return {
+        action: 'lobyDescription'
+    };
+}
+
+
+export function createMinBitrateEvent() {
+    return {
+        action: 'minBitrate'
+    };
+}
+
+export function createStdBitrateEvent() {
+    return {
+        action: 'stdBitrate'
+    };
+}
+
+export function createMaxBitrateEvent() {
+    return {
+        action: 'maxBitrate'
+    };
+}
+
+
+
