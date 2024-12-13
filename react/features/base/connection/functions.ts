@@ -64,8 +64,8 @@ export function getInviteURL(stateOrGetState: IStateful): string {
 
         return `${inviteDomain}/${meetingId}`;
     }
-
-    return urlWithoutParams.href;
+    // return urlWithoutParams.href;
+    return `${urlWithoutParams?.origin}/?mid=${state['features/base/conference']?.room}`;
 }
 
 /**
